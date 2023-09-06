@@ -86,3 +86,9 @@ l <- list(x1,x2,x3,x4,x5)
 sapply(l, function(x) sd(x)/sqrt(length(x)))
 ```
 
+
+```{r}
+library(psych)
+data <- readRDS("C:/BioStat_2023/GitHub/numeric_data.rds")
+round(describe(data), 2)
+```
