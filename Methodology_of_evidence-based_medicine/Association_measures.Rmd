@@ -1,0 +1,118 @@
+---
+title: "Association measures"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+# Задание 1
+
+```{r, message=FALSE}
+hypertension <- read_csv("./data/hypertension.csv")
+```
+
+```{r}
+RR <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (b)) / (c / (d)))
+}
+
+RD <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (b)) - (c / (d)))
+}
+
+OR <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (b)) / (c / (d)))
+}
+
+m_df <- hypertension %>%
+  filter(`мужчина` == 1)
+f_df <- hypertension %>%
+  filter(`мужчина` == 0)
+data.frame('RR' = RR(m_df$гипертония, f_df$гипертония),
+       'RD' = RD(m_df$гипертония, f_df$гипертония), row.names = "Мужчина")
+```
+Относительный риск показывает, что вероятность заболеть гипертонией у мужчин в 2,24 раза выше, чем у женщин. 
+Абсолютная разница в рисках показывает, что вероятность заболеть у мужчин на 7,6% выше, чем у женщин.
+
+# Задание 2
+
+```{r, message=FALSE}
+otravlenie <- read_csv("./data/otravlenie.csv")
+```
+
+```{r}
+poisoning <- otravlenie %>%
+  filter(`отравление` == 1)
+healthy  <- otravlenie %>%
+  filter(`отравление` == 0)
+data.frame('мясо' = RD(poisoning$мясо, healthy$мясо),
+       'рыба' = RD(poisoning$рыба, healthy$рыба),
+       'салат' = RD(poisoning$салат, healthy$салат),
+       row.names = "RD"
+       )
+```
+Абсолютная разница в рисках показывает, что риск отравиться мясом на 31,25% выше, чем быть здоровым. Отрицательные здачения RD для рыбы и салата показывают, что они вряд ли являлись причиной отравления.
+
+# Задание 3
+
+```{r, message=FALSE}
+carrental <- read_csv("./data/carrental.csv", col_select = 2:5)
+```
+Без учета времени поездки:
+```{r}
+experience <- carrental %>% 
+  mutate(drive = (stop - start)) %>% 
+  select(drive, experience, accident) %>% 
+  filter(experience==1)
+no_experience <- carrental %>% 
+  mutate(drive = (stop - start)) %>% 
+  select(drive, experience, accident) %>% 
+  filter(experience==0)
+data.frame('RR' = RR(experience$accident, no_experience$accident),
+'RD' = RD(experience$accident, no_experience$accident),
+'OR' = OR(experience$accident, no_experience$accident),
+row.names = "experience")
+```
+RD показывает, что наличие стажа снижает риск ДТП на 18,5% без учета продолжительности аренды.
+
+С учетем времени поездки (не придумал ничего лучше, чем сделать логистическую регрессию, добавив переменную drive = stop - start):
+```{r}
+carrental_with_drive <- carrental %>% 
+  mutate(drive = (stop - start)) %>% 
+  select(drive, experience, accident)
+carrental_with_drive
+```
+
+```{r}
+glm(accident ~ ., family = "binomial", data=carrental_with_drive) %>% 
+  step() %>% 
+  summary()
+```
+
+Коэффициент -1.3213 означает, что при увеличении наличии стажа, логарифм отношения шансов ДТП уменьшается на 1.3213 единицы, p = 0.047 показывает, что этот результат статистически значим.
+
+```{r}
+glm(accident ~ drive, family = "binomial", data=carrental_with_drive) %>% 
+  summary()
+```
+Судя по всему, продолжительность поездки - незначимая переменная.
+
