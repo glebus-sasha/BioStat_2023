@@ -14,10 +14,6 @@ library(tidyverse)
 
 # Задание 1
 
-```{r, message=FALSE}
-hypertension <- read_csv("./data/hypertension.csv")
-```
-
 ```{r}
 RR <- function(v1, v2){
   a <- sum(v1)
@@ -40,9 +36,16 @@ OR <- function(v1, v2){
   b <- length(v1)
   c <- sum(v2)
   d <- length(v2)
-  return((a / (b)) / (c / (d)))
+  return((a / (a - b)) / (c / (c - d)))
 }
 
+```
+
+```{r, message=FALSE}
+hypertension <- read_csv("./data/hypertension.csv")
+```
+
+```{r}
 m_df <- hypertension %>%
   filter(`мужчина` == 1)
 f_df <- hypertension %>%
@@ -50,6 +53,7 @@ f_df <- hypertension %>%
 data.frame('RR' = RR(m_df$гипертония, f_df$гипертония),
        'RD' = RD(m_df$гипертония, f_df$гипертония), row.names = "Мужчина")
 ```
+
 Относительный риск показывает, что вероятность заболеть гипертонией у мужчин в 2,24 раза выше, чем у женщин. 
 Абсолютная разница в рисках показывает, что вероятность заболеть у мужчин на 7,6% выше, чем у женщин.
 
@@ -64,55 +68,50 @@ poisoning <- otravlenie %>%
   filter(`отравление` == 1)
 healthy  <- otravlenie %>%
   filter(`отравление` == 0)
-data.frame('мясо' = RD(poisoning$мясо, healthy$мясо),
-       'рыба' = RD(poisoning$рыба, healthy$рыба),
-       'салат' = RD(poisoning$салат, healthy$салат),
-       row.names = "RD"
+data.frame('мясо' = OR(poisoning$мясо, healthy$мясо),
+       'рыба' = OR(poisoning$рыба, healthy$рыба),
+       'салат' = OR(poisoning$салат, healthy$салат),
+       row.names = "OR"
        )
 ```
-Абсолютная разница в рисках показывает, что риск отравиться мясом на 31,25% выше, чем быть здоровым. Отрицательные здачения RD для рыбы и салата показывают, что они вряд ли являлись причиной отравления.
+Мясо имеет наибольшее значение OR (4.205128), что указывает на то, что потребление мяса сильно связано с отравлением. Это означает, что студенты, потреблявшие мясо на обед, имели более чем в 4 раза больше шансов быть отравленными по сравнению с теми, кто не ел мясо. Низкие значения для рыбы и салата, говорят о том, что они вряд ли стали причиной отравления.
 
 # Задание 3
 
 ```{r, message=FALSE}
 carrental <- read_csv("./data/carrental.csv", col_select = 2:5)
 ```
+
 Без учета времени поездки:
 ```{r}
-experience <- carrental %>% 
-  mutate(drive = (stop - start)) %>% 
-  select(drive, experience, accident) %>% 
-  filter(experience==1)
-no_experience <- carrental %>% 
-  mutate(drive = (stop - start)) %>% 
-  select(drive, experience, accident) %>% 
-  filter(experience==0)
-data.frame('RR' = RR(experience$accident, no_experience$accident),
-'RD' = RD(experience$accident, no_experience$accident),
-'OR' = OR(experience$accident, no_experience$accident),
-row.names = "experience")
-```
-RD показывает, что наличие стажа снижает риск ДТП на 18,5% без учета продолжительности аренды.
-
-С учетем времени поездки (не придумал ничего лучше, чем сделать логистическую регрессию, добавив переменную drive = stop - start):
-```{r}
-carrental_with_drive <- carrental %>% 
-  mutate(drive = (stop - start)) %>% 
-  select(drive, experience, accident)
-carrental_with_drive
+carrental <- carrental %>% 
+  mutate(`person-time` = (stop - start))
+carrental %>% head()
 ```
 
 ```{r}
-glm(accident ~ ., family = "binomial", data=carrental_with_drive) %>% 
-  step() %>% 
-  summary()
+exp_acc <- carrental %>% 
+  filter(experience == 1 & accident == 1) %>% 
+  select(`person-time`) %>% 
+  sum()
+exp_not_acc <- carrental %>% 
+  filter(experience == 1, accident == 0) %>% 
+  select(`person-time`) %>% 
+  sum()
+not_exp_acc <- carrental %>% 
+  filter(experience == 0, accident == 1) %>% 
+  select(`person-time`) %>% 
+  sum()
+  
+not_exp_not_acc <- carrental %>% 
+  filter(experience == 0, accident == 0) %>% 
+  select(`person-time`) %>% 
+  sum()
+
+HR = (not_exp_acc / not_exp_not_acc) / (exp_acc / exp_not_acc)
+
+data.frame("HR" = HR)
 ```
-
-Коэффициент -1.3213 означает, что при увеличении наличии стажа, логарифм отношения шансов ДТП уменьшается на 1.3213 единицы, p = 0.047 показывает, что этот результат статистически значим.
-
-```{r}
-glm(accident ~ drive, family = "binomial", data=carrental_with_drive) %>% 
-  summary()
-```
-Судя по всему, продолжительность поездки - незначимая переменная.
-
+Я посчитал Hazard rate как отношение "человеко-время без опыта с аварией" / "человеко-время без опыта без аварии" и
+"человеко-время с опытом с аварией" / "человеко-время с опытом без аварии". 
+HR = 2.92, это означает, что водители с без опыта имеют почти в 2.92 раза больше вероятность попасть в ДТП по сравнению опытными водителями.
