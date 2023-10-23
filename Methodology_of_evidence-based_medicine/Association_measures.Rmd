@@ -1,0 +1,117 @@
+---
+title: "Association measures"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+# Задание 1
+
+```{r}
+RR <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (b)) / (c / (d)))
+}
+
+RD <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (b)) - (c / (d)))
+}
+
+OR <- function(v1, v2){
+  a <- sum(v1)
+  b <- length(v1)
+  c <- sum(v2)
+  d <- length(v2)
+  return((a / (a - b)) / (c / (c - d)))
+}
+
+```
+
+```{r, message=FALSE}
+hypertension <- read_csv("./data/hypertension.csv")
+```
+
+```{r}
+m_df <- hypertension %>%
+  filter(`мужчина` == 1)
+f_df <- hypertension %>%
+  filter(`мужчина` == 0)
+data.frame('RR' = RR(m_df$гипертония, f_df$гипертония),
+       'RD' = RD(m_df$гипертония, f_df$гипертония), row.names = "Мужчина")
+```
+
+Относительный риск показывает, что вероятность заболеть гипертонией у мужчин в 2,24 раза выше, чем у женщин. 
+Абсолютная разница в рисках показывает, что вероятность заболеть у мужчин на 7,6% выше, чем у женщин.
+
+# Задание 2
+
+```{r, message=FALSE}
+otravlenie <- read_csv("./data/otravlenie.csv")
+```
+
+```{r}
+poisoning <- otravlenie %>%
+  filter(`отравление` == 1)
+healthy  <- otravlenie %>%
+  filter(`отравление` == 0)
+data.frame('мясо' = OR(poisoning$мясо, healthy$мясо),
+       'рыба' = OR(poisoning$рыба, healthy$рыба),
+       'салат' = OR(poisoning$салат, healthy$салат),
+       row.names = "OR"
+       )
+```
+Мясо имеет наибольшее значение OR (4.205128), что указывает на то, что потребление мяса сильно связано с отравлением. Это означает, что студенты, потреблявшие мясо на обед, имели более чем в 4 раза больше шансов быть отравленными по сравнению с теми, кто не ел мясо. Низкие значения для рыбы и салата, говорят о том, что они вряд ли стали причиной отравления.
+
+# Задание 3
+
+```{r, message=FALSE}
+carrental <- read_csv("./data/carrental.csv", col_select = 2:5)
+```
+
+Без учета времени поездки:
+```{r}
+carrental <- carrental %>% 
+  mutate(`person-time` = (stop - start))
+carrental %>% head()
+```
+
+```{r}
+exp_acc <- carrental %>% 
+  filter(experience == 1 & accident == 1) %>% 
+  select(`person-time`) %>% 
+  sum()
+exp_not_acc <- carrental %>% 
+  filter(experience == 1, accident == 0) %>% 
+  select(`person-time`) %>% 
+  sum()
+not_exp_acc <- carrental %>% 
+  filter(experience == 0, accident == 1) %>% 
+  select(`person-time`) %>% 
+  sum()
+  
+not_exp_not_acc <- carrental %>% 
+  filter(experience == 0, accident == 0) %>% 
+  select(`person-time`) %>% 
+  sum()
+
+HR = (not_exp_acc / not_exp_not_acc) / (exp_acc / exp_not_acc)
+
+data.frame("HR" = HR)
+```
+Я посчитал Hazard rate как отношение "человеко-время без опыта с аварией" / "человеко-время без опыта без аварии" и
+"человеко-время с опытом с аварией" / "человеко-время с опытом без аварии". 
+HR = 2.92, это означает, что водители с без опыта имеют почти в 2.92 раза больше вероятность попасть в ДТП по сравнению опытными водителями.
