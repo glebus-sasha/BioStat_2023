@@ -1,0 +1,244 @@
+---
+title: "Task 4"
+author: "Evgeny Bakin"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(broom)
+
+```
+
+# Сравнение вероятностей наступления события в двухгрупповом исследовании
+
+## 1. Модель пациента
+
+```{r model}
+
+p_R <- 0.1 # Истинная вероятность выздоровления для референса (в ГЕНЕРАЛЬНОЙ СОВОКУПНОСТИ)
+
+p_T <- 0.2 # Истинная вероятность выздоровления для теста (в ГЕНЕРАЛЬНОЙ СОВОКУПНОСТИ)
+
+true_OR <- (p_T/(1-p_T))/(p_R/(1-p_R)) # Истинное отношение шансов
+
+```
+## 2. Генерация однократной выборки
+
+```{r one_sample}
+
+sample_size <- 100 # Количество пациентов в каждой из групп
+
+df_trial <- data.frame(
+  arm = rep(c('R', 'T'), each = sample_size),
+  patient_ID = rep(1:sample_size, 2),
+  recovery_status = c(sample(c(1,0), sample_size, replace = TRUE, prob = c(p_R, 1 - p_R)),
+                      sample(c(1,0), sample_size, replace = TRUE, prob = c(p_T, 1 - p_T)))
+)
+
+```
+## 3. Построение ДИ для разницы вероятностей
+
+```{r diff}
+
+df_prop <- df_trial %>% 
+  group_by(arm) %>% # Группировка типу интервенции (тест/референс)
+  dplyr::summarise(x = sum(recovery_status), # Подсчет числа положительных исходов (единиц)
+                   n = n()) %>% # Подсчет общего числа пациентов в группе
+  ungroup() %>% 
+  dplyr::summarise(X = list(x), N = list(n)) %>% # Соединение все x и n в отдельные вектора
+  rowwise() %>% 
+  mutate(tst = list(broom::tidy(prop.test(X, N)))) %>% # Вычисление ДИ на разницу пропорций
+  unnest(tst) %>% # Раскладка результатов prop.test по столбцам 
+  mutate(catch = ifelse(conf.low < p_R-p_T & p_R-p_T < conf.high, "Catch", "Miss"))
+  
+print(df_prop)
+
+```
+
+## ЗАДАНИЕ №1
+
+- Повторить этот эксперимент 1000 раз, каждый раз фиксирую факт накрытия истинной разницы в вероятностях (p_R-p_T). 
+- Оценить полученную вероятность накрытия с заданной по умолчанию (0.95).
+- Построить гистограмму точечной оценки разницы вероятностей (estimate1-estimae2) и подумать о ее распределении. 
+- Проверить, корректно ли работает методика построения ДИ, реализованная в prop.test, при различных значениях p_R и p_T.
+
+Для удобства оформил создание сэмпла в одтельную функцию:
+
+```{r}
+sample_generate <- function(sample_size = 100, p_R = 0.1, p_T = 0.2) {
+  true_OR <- (p_T/(1-p_T))/(p_R/(1-p_R)) # Истинное отношение шансов
+  data.frame(
+  arm = rep(c('R', 'T'), each = sample_size),
+  patient_ID = rep(1:sample_size, 2),
+  recovery_status = c(sample(c(1,0), sample_size, replace = TRUE, prob = c(p_R, 1 - p_R)),
+                      sample(c(1,0), sample_size, replace = TRUE, prob = c(p_T, 1 - p_T)))
+  )
+}
+```
+
+Так же создал функцию для проведения эксперимента (наверное можно было проще как-то сделать)
+```{r}
+do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.2) {
+  df %>% 
+  group_by(arm) %>% # Группировка типу интервенции (тест/референс)
+  dplyr::summarise(x = sum(recovery_status), # Подсчет числа положительных исходов (единиц)
+                   n = n()) %>% # Подсчет общего числа пациентов в группе
+  ungroup() %>% 
+  dplyr::summarise(X = list(x), N = list(n)) %>% # Соединение все x и n в отдельные вектора
+  rowwise() %>% 
+  mutate(tst = list(broom::tidy(prop.test(X, N)))) %>% # Вычисление ДИ на разницу пропорций
+  unnest(tst) %>% # Раскладка результатов prop.test по столбцам 
+  mutate(catch = ifelse(conf.low < p_R-p_T & p_R-p_T < conf.high, "Catch", "Miss"))
+}
+```
+
+Проведем 1000 экспериментов с заданными значениями (p_R = 0,1, p_T = 0,2)
+```{r}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = p_R, p_T = p_T)) %>% bind_rows()
+result_df %>% head()
+```
+Посчитаем количество накрытых и ненакрытих доверительными интервалами значений и их пропорцию.
+Процент накрытых согласуется с заявленной вероятностью 95%
+```{r}
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df))
+```
+Строим гистограмму точечной оценки разницы вероятностей.
+```{r}
+result_df <- result_df %>% 
+  mutate(p_dif = estimate1 - estimate2)
+
+result_df %>% 
+  ggplot(fill="blue") +
+  aes(p_dif) + 
+  geom_histogram(binwidth = 0.01)+
+  theme_minimal()
+```
+Выглядит как нормальное, но лучше проверить.
+```{r}
+shapiro.test(result_df$p_dif)
+```
+Распределение уже не кажется нормальным.
+
+```{r}
+library(goft)
+cauchy_test(result_df$p_dif)
+```
+
+Похоже, что это распределение Коши.
+
+Теперь поменяем p_R = 0.1, p_T = 0.15
+
+```{r}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.15)) %>% bind_rows()
+```
+
+
+```{r}
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df))
+```
+При уменьшении разности вероятностей снижается процент накрытых доверительными интервалами.
+
+```{r}
+result_df %>% 
+  mutate(p_dif = estimate1 - estimate2) %>% 
+  ggplot(fill="blue") +
+  aes(p_dif) + 
+  geom_histogram(binwidth = 0.01)+
+  theme_minimal()
+```
+Теперь поменяем p_R = 0.1, p_T = 0.9
+
+```{r}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.9)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df))
+```
+А почти максимальной разницу p_R и p_T, накрытие становится равно 100%.
+
+Теперь поменяем p_R = 0.1, p_T = 0.4
+```{r}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.4)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df))
+```
+При значительной разницу p_R и p_T, вероятность накрытия снижается.
+
+```{r}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.3, p_T = 0.4)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df))
+```
+Вероятность накрытия имеет сложную зависимость от соотношения вероятностьей p_R и p_T, но судя по всему, слабо зависит от величины вероятности.
+
+## 4. Построение ДИ для отношения шансов
+
+```{r OR}
+
+df_OR <- df_trial %>%
+  dplyr::summarise(broom::tidy(fisher.test(table(.$arm, .$recovery_status)))) %>% 
+  mutate(catch = ifelse(conf.low < true_OR & true_OR < conf.high, "Catch", "Miss"))
+
+print(df_OR)
+```
+
+## ЗАДАНИЕ №2
+
+- Повторить этот эксперимент 1000 раз, каждый раз фиксирую факт накрытия истинного отношения шансов (true_OR). 
+- Оценить полученную вероятность накрытия с заданной по умолчанию (0.95).
+- Построить гистограмму точечной оценки отношения шансов (estimate) и подумать о ее распределении. 
+- Проверить, корректно ли работает методика построения ДИ, реализованная в fisher.test, при различных значениях p_R и p_T.
+
+
+```{r}
+do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.1) {
+  df %>% 
+    dplyr::summarise(broom::tidy(fisher.test(table(.$arm, .$recovery_status)))) %>% 
+    mutate(catch = ifelse(conf.low < true_OR & true_OR < conf.high, "Catch", "Miss"))
+}
+```
+
+```{r}
+num_repeats = 1000
+my_df <- do_experiment()
+for (i in 1:(num_repeats-1)) {
+    my_df <- rbind(my_df, do_experiment())
+}
+```
+
+```{r}
+my_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(my_df)*100)
+```
+
+```{r}
+my_df %>% 
+  ggplot(fill="blue") +
+  aes(estimate) + 
+  geom_histogram(binwidth = 0.01)+
+  theme_minimal()
+```
+```
+
