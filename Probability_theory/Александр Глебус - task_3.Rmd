@@ -68,7 +68,7 @@ print(df_prop)
 
 Для удобства оформил создание сэмпла в одтельную функцию:
 
-```{r}
+```{r sample_generate}
 sample_generate <- function(sample_size = 100, p_R = 0.1, p_T = 0.2) {
   true_OR <- (p_T/(1-p_T))/(p_R/(1-p_R)) # Истинное отношение шансов
   data.frame(
@@ -81,7 +81,7 @@ sample_generate <- function(sample_size = 100, p_R = 0.1, p_T = 0.2) {
 ```
 
 Так же создал функцию для проведения эксперимента (наверное можно было проще как-то сделать)
-```{r}
+```{r do_experiment}
 do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.2) {
   df %>% 
   group_by(arm) %>% # Группировка типу интервенции (тест/референс)
@@ -97,21 +97,21 @@ do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.2) {
 ```
 
 Проведем 1000 экспериментов с заданными значениями (p_R = 0,1, p_T = 0,2)
-```{r}
+```{r experiments}
 num_repeats = 1000
 result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = p_R, p_T = p_T)) %>% bind_rows()
 result_df %>% head()
 ```
 Посчитаем количество накрытых и ненакрытих доверительными интервалами значений и их пропорцию.
 Процент накрытых согласуется с заявленной вероятностью 95%
-```{r}
+```{r res_1}
 result_df %>% 
   group_by(catch) %>% 
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
 Строим гистограмму точечной оценки разницы вероятностей.
-```{r}
+```{r plot}
 result_df <- result_df %>% 
   mutate(p_dif = estimate1 - estimate2)
 
@@ -121,28 +121,26 @@ result_df %>%
   geom_histogram(binwidth = 0.01)+
   theme_minimal()
 ```
+
 Выглядит как нормальное, но лучше проверить.
-```{r}
+```{r norm_test}
 shapiro.test(result_df$p_dif)
 ```
 Распределение уже не кажется нормальным.
 
-```{r}
+```{r cauchy_test, message=FALSE}
 library(goft)
 cauchy_test(result_df$p_dif)
 ```
 
-Похоже, что это распределение Коши.
+Похоже, что это не распределение Коши.
 
 Теперь поменяем p_R = 0.1, p_T = 0.15
 
-```{r}
+```{r res_2}
 num_repeats = 1000
 result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.15)) %>% bind_rows()
-```
 
-
-```{r}
 result_df %>% 
   group_by(catch) %>% 
   summarize(n = n(),
@@ -150,7 +148,7 @@ result_df %>%
 ```
 При уменьшении разности вероятностей снижается процент накрытых доверительными интервалами.
 
-```{r}
+```{r res_3}
 result_df %>% 
   mutate(p_dif = estimate1 - estimate2) %>% 
   ggplot(fill="blue") +
@@ -158,9 +156,10 @@ result_df %>%
   geom_histogram(binwidth = 0.01)+
   theme_minimal()
 ```
+
 Теперь поменяем p_R = 0.1, p_T = 0.9
 
-```{r}
+```{r res_4}
 num_repeats = 1000
 result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.9)) %>% bind_rows()
 result_df %>% 
@@ -171,7 +170,7 @@ result_df %>%
 А почти максимальной разницу p_R и p_T, накрытие становится равно 100%.
 
 Теперь поменяем p_R = 0.1, p_T = 0.4
-```{r}
+```{r res_5}
 num_repeats = 1000
 result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.4)) %>% bind_rows()
 result_df %>% 
@@ -181,7 +180,7 @@ result_df %>%
 ```
 При значительной разницу p_R и p_T, вероятность накрытия снижается.
 
-```{r}
+```{r res_6}
 num_repeats = 1000
 result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.3, p_T = 0.4)) %>% bind_rows()
 result_df %>% 
@@ -210,7 +209,8 @@ print(df_OR)
 - Проверить, корректно ли работает методика построения ДИ, реализованная в fisher.test, при различных значениях p_R и p_T.
 
 
-```{r}
+Создадим функцию для эксперимента
+```{r do_experiment_2}
 do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.1) {
   df %>% 
     dplyr::summarise(broom::tidy(fisher.test(table(.$arm, .$recovery_status)))) %>% 
@@ -218,27 +218,81 @@ do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.1) {
 }
 ```
 
-```{r}
+Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.2)
+```{r experiment_2}
 num_repeats = 1000
-my_df <- do_experiment()
-for (i in 1:(num_repeats-1)) {
-    my_df <- rbind(my_df, do_experiment())
-}
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.2)) %>% bind_rows()
+result_df %>% head()
 ```
 
-```{r}
-my_df %>% 
+```{r res_fisher_1}
+result_df %>% 
   group_by(catch) %>% 
   summarize(n = n(),
-            p = n / nrow(my_df)*100)
+            p = n / nrow(result_df)*100)
 ```
+Результат согласуется с заявленной вероятностью 95%
 
-```{r}
-my_df %>% 
+
+```{r res_fisher_2}
+result_df %>% 
   ggplot(fill="blue") +
   aes(estimate) + 
-  geom_histogram(binwidth = 0.01)+
+  geom_histogram()+
   theme_minimal()
 ```
+
+Распределение не нормальное.
+```{r lnorm_test}
+lnorm_test(result_df$estimate)
+```
+Это не логнормальное распределение (хотя похоже)
+
+Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.15)
+```{r res_fisher_3}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.15)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df)*100)
 ```
 
+
+По прежнему всё результат согласуется с заявленной вероятностью 95%
+
+Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.9)
+```{r res_fisher_4}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.15)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df)*100)
+```
+
+По прежнему всё хорошо
+
+Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.5)
+```{r res_fisher_5}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.5)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df)*100)
+```
+
+Всё хорошо
+
+Выполняем эксперимент 1000 раз (p_R = 0.5, p_T = 0.6)
+```{r res_fisher_6}
+num_repeats = 1000
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.5, p_T = 0.6)) %>% bind_rows()
+result_df %>% 
+  group_by(catch) %>% 
+  summarize(n = n(),
+            p = n / nrow(result_df)*100)
+```
+
+Видимо, методика построения ДИ, реализованная в fisher.test, при различных значениях p_R и p_T работает корректно.
