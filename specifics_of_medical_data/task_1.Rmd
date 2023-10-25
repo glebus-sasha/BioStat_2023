@@ -132,7 +132,7 @@ roc_curve_GSC %>%
   ggtitle(paste0('AUC = ', round(roc_curve_GSC$auc, 2))) +
   theme_minimal()
 ```
-Определим пороговое значение, чувствительность и специфичность для данного критерия.
+Определим пороговое значение по методу closest.topleft, чувствительность и специфичность для данного критерия.
 ```{r}
 roc_curve_GSC %>% coords(x = "best", best.method = "closest.topleft")
 ```
