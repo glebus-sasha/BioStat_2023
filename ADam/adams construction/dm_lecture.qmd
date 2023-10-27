@@ -1,0 +1,380 @@
+---
+title: "Управление данными. Создание ADaM."
+format: pptx
+editor: visual
+---
+
+## Какие датасеты нужны для анализа?
+
+-   их создание эффективно;
+-   анализ на таких данных можно повторить;
+-   понятно, как проводить ревью такого анализа.
+
+Analysis Data Model (ADaM) позволяют стат.программистам и биостатистикам удобно производить анализ данных. Регулятор (или Спонсор), если им нужно провести ревью, ясно понимают, что и откуда взялось.
+
+[Основной опорный материал для практики \-- Implementation Guide](https://www.cdisc.org/system/files/members/standard/foundational/ADaMIG_v1.3.pdf)
+
+## Регуляторы
+
+-   FDA требует следование стандартам CDISC;
+-   EMA, China FDA рекоммендуют следовать им;
+-   Минздрав не требует и воспроизводимость не отслеживает.
+
+Важные файлы для ревьюера:
+
+-   собственно ADaM'ы;
+
+-   файл Define.xml;
+
+-   Analysis Data Reviewer's Guide (ADRG).
+
+[ссылка на Phuse, где об этом подробнее](https://advance.phuse.global/display/WEL/Analysis+Data+Reviewer%27s+Guide+%28ADRG%29+Package)
+
+## Основные принципы ADaM
+
+1.  Ясная и недвусмысленная взаимосвязь;
+
+2.  Прослеживаемость от SDTM;
+
+3.  Датасет должен быть в распространенном формате.
+
+Также датасеты должны сопровождаться метаданными и быть готовыми к анализу, не требовать дальнейших преобразований.
+
+## Прослеживаемость ADaM
+
+-   между переменной анализа и ее исходным набором данных и переменной, необходимой для соответствия требованиям ADaM;
+
+-   а также между результатом анализа (например, p-значением) и набором данных анализа.
+
+Как достигаем?
+
+Описываем алгоритма для получения из непосредственного предшественника.
+
+## Прослеживаемость ADaM (2)
+
+Прослеживаемость точек данных позволяет пользователю перейти непосредственно к конкретной записи (записям) предшественника:
+
+-   Как? Путем обеспечения четких ссылок на конкретные значения данных, использованные в качестве исходных для анализируемого значения.
+
+## Define.xml
+
+![Пример заголовка define файла](images/define.png){width="340"}
+
+[Папка, содержащая up-to-date гайд по Define](https://www.cdisc.org/system/files/members/standard/foundational/DefineV216.zip)
+
+## Из чего состоит ADaM?
+
+![Структура ADaM датасетов](adam%20structure.png){fig-align="center"}
+
+## ADSL - subject level analysis data set
+
+ADSL содержит 1 запись на одного субъекта, независимо от типа дизайна клинического исследования. В исследовании только один такой датасет.
+
+Любые другие наборы данных с 1 записью на субъект будут принадлежать к другие классы (например, классы "BASIC DATA STRUCTURE" и "ADAM OTHER").
+
+## ADSL - subject level analysis data set (2)
+
+ADSL содержит такие переменные, как флаги популяции на уровне субъекта, переменные планируемого и фактического лечения, демографическая информация, факторы рандомизации, переменные подгруппировки, факторы стратификации и важные даты.
+
+## ADSL - subject level analysis data set (3)
+
+ADSL содержит обязательные переменные (как указано в разделе 3.2 "Переменные ADSL"), а также другие переменные на уровне субъекта, которые важны для описания его состояния. другие переменные на уровне субъекта, которые важны для описания опыта субъекта в исследовании.
+
+Такая структура позволяет объединить ее с любым другим набором данных, включая наборы данных ADaM и SDTM. ADSL является источником переменных уровня субъекта, используемых в других наборах данных ADaM.
+
+## Basic Data Structure (BDS)
+
+Набор данных BDS содержит 1 или более записей для каждого субъекта, для каждого параметра анализа, для каждой временной точки анализа. Временная точка анализа требуется условно, в зависимости от анализа. В ситуациях, когда временная точка анализа отсутствует, структура представляет собой одну или несколько записей на субъект для каждого параметра анализа.
+
+## Basic Data Structure (BDS) (2)
+
+Временная точка анализа здесь представляет собой 1 или несколько фактических переменных, таких как Analysis Visit (AVISIT), Analysis Timepoint (ATPT) или другие временные переменные. Кроме того, для более полного описания структуры данного набора данных BDS могут потребоваться другие переменные.
+
+Например, Baseline Type (BASETYPE) необходима, когда в одном наборе данных имеется более одного определения бейзлайна для данного параметра анализа (PARAM).
+
+## Basic Data Structure (BDS) (3)
+
+Эти переменные включают анализируемое значение (например, AVAL) и описание анализируемого значения (например, PARAM). Другие переменные набора данных предоставляют дополнительную информацию об анализируемой величине (например, идентификация субъекта), описывают и отслеживают ее получение (например, DTYPE) или позволяют проводить ее анализ (например, переменные обработки, ковариаты).
+
+## Structure for Occurrence Data (OCCDS)
+
+Анализ встречаемости, например, с какой частотой происходило то или иное явление.
+
+Яркий пример -- ADAE, датасет, содержащий нежелательные вления. Данные по НЯ проходят медицинское кодирование.
+
+[Подробно о ключевых переменных \-- Implementation Guide](https://www.cdisc.org/system/files/members/standard/foundational/ADaM_OCCDS_Implementation_Guide%20v1.1.pdf)
+
+## Приступаем к сборке своего ADaM-like датасета
+
+![Рассмотрим перекрестное исследование с двумя группами](images/protocol.png)
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(openxlsx)
+```
+
+```{r}
+files <- list.files(path = "./sdtm-like files/", pattern = NULL, all.files = FALSE, full.names = FALSE)
+
+supp_ds <- read.xlsx(paste0("./sdtm-like files/", files[grepl("SUPPDS_DISPOSITION", files)]) , na.strings = NA)
+
+inc_excl <- read.xlsx(paste0("./sdtm-like files/",files[grepl("IE_", files)][1]), na.strings = NA)
+
+vital_signs <- read.xlsx(paste0("./sdtm-like files/", files[grepl("VS_", files)][1]), na.strings = NA)
+
+subj_vis <- read.xlsx(paste0("./sdtm-like files/", files[grepl("SV_", files)][1]), na.strings = NA)
+
+stat_data <- read.xlsx(paste0("./sdtm-like files/", files[grepl("Patient", files)][1]), na.strings = NA)
+```
+
+```{r}
+colnames(stat_data) <- c('STUDYID', 'SUBJID', 'STATUS', 'RANDN', 'PP', 'DOREASPP', 'SAF', 'DOREASSAF')
+stat_data$PPEFF <- ifelse(stat_data$PP=="Да", "Нет", "Да")
+stat_data$SAFEFF <- ifelse(stat_data$SAF=="Да", "Нет", "Да")
+
+stat_data <- stat_data %>%
+  select(SUBJID, 
+         PPEFF, DOREASPP,
+         SAFEFF, DOREASSAF,
+         STATUS)
+```
+
+```{r}
+demography <- read.xlsx(paste0("./sdtm-like files/", files[grepl("DM", files)][1]), na.strings = NA)
+demography <- demography %>%
+  select(SUBJID, SITEID,
+         AGE, SEX, RACE, ARM) %>%
+   mutate(AGE = as.numeric(AGE), 
+          AGEU = "лет",
+          TRTP = if_else(ARM == "RT", "drug1", if_else(ARM == "TR", "drug2", "")),
+          TRTPN = case_when(TRTP == "drug1" ~ 1,
+                            TRTP == "drug2" ~ 2))
+```
+
+```{r}
+substance_use <- read.xlsx(paste0("./sdtm-like files/", files[grepl("SU", files)][2]), na.strings = NA)
+substance_use <- substance_use %>%
+  select(SUBJID, SUCAT, SUDOSTXT) %>%
+  spread(SUCAT, SUDOSTXT) %>%
+  rename(SMOKDC = 'Табак',
+         ALCDC = 'Алкоголь') %>%
+  mutate(SMOKDC = case_when(SMOKDC == 'Non-user' ~ 'Нет',
+                                SMOKDC == 'Current user' ~ 'Да',
+                                SMOKDC == 'Ex-user' ~ 'Курил ранее',
+                                is.na(SMOKDC) ~ 'Не известно'),
+         ALCCDC = case_when(ALCDC == 'Non-user' ~ 'Нет',
+                           ALCDC == 'Current user' ~ 'Да',
+                           ALCDC == 'Ex-user' ~ 'Употреблял ранее',
+                           is.na(ALCDC) ~ 'Не известно'))
+```
+
+```{r}
+supp_ds2 <- supp_ds %>%
+  filter(DSSEQ == 2) %>%
+  mutate(DOREAS = DSREAS) %>%
+  select(SUBJID, DOREAS, RANDID = DSNUM)
+
+supp_ds3 <- supp_ds %>%
+  filter(DSSEQ == 3) %>%
+  mutate(ECREAS = DSREAS) %>%
+  select(SUBJID, ECREAS, DSSTATUS)
+supp_ds <- left_join(supp_ds2, supp_ds3, by = c("SUBJID"))
+
+supp_ds <- 
+  supp_ds %>% 
+  mutate(COMPLFL = ifelse((grepl('Субъект досрочно выбыл из исследования', DSSTATUS) | is.na(DSSTATUS)), 'N', 'Y')) %>% 
+  select(-DSSTATUS)
+```
+
+Теперь нам нужно создать датасет, который будет содержать следующие даты:
+- дату подписания ИС;
+- дату рандомизации;
+- дату окончания исследования;
+- даты начала каждого из двух периодов;
+- даты конца периодов;
+
+```{r}
+disposition <- read.xlsx(paste0("./sdtm-like files/", files[grepl("DS", files)][1]), na.strings = NA)
+disposition <- disposition %>%
+  select(STUDYID, SUBJID, DSSEQ, DSSTDTC) %>%
+  mutate(DSSTDTC = format(as.Date(DSSTDTC, format = "%Y-%m-%d"), "%d.%m.%Y")) %>%
+  spread(DSSEQ, DSSTDTC) %>%
+  select(STUDYID, SUBJID, RFICDT = '1', RANDDT = "2", EOSDT = "3")
+```
+
+Приведем в порядок формат дат.
+```{r}
+subj_vis <- 
+  subj_vis %>% 
+  mutate(SVSTDTC = format(as.Date(SVSTDTC, format = "%Y-%m-%d"), "%d.%m.%Y")) %>% 
+  spread(VISIT, SVSTDTC) %>% 
+  select(SUBJID,
+         AP01SDT = 'Период 1 (Госпитализация)',
+         AP01EDT = 'Период 1 (День приема ИП)',
+         AP02SDT = 'Период 2 (Госпитализация)',
+         AP02EDT = 'Период 2 (День приема ИП)') %>% 
+  mutate(AP01EDT= as.Date(AP01EDT, "%d.%m.%Y")+hours(48),
+         AP02EDT= as.Date(AP02EDT, "%d.%m.%Y")+hours(48)) %>%
+  mutate(AP01EDT=format(as.Date(AP01EDT, format = "%Y-%m-%d"), "%d.%m.%Y"),
+         AP02EDT=format(as.Date(AP02EDT, format = "%Y-%m-%d"), "%d.%m.%Y"))
+```
+
+Расставим согласно датам значения "Завершил исследование" или "Вышел из исследования".
+
+```{r}
+disposition <- left_join(disposition, subj_vis, 'SUBJID')
+
+disposition <- disposition %>% 
+  mutate(AP02EDT = ifelse(is.na(AP02SDT), NA, AP02EDT),
+         EOSDT = ifelse(is.na(EOSDT), NA, EOSDT),
+         EOP01STT = ifelse(is.na(AP01EDT), 'Discontinued', 'Completed'), 
+         EOP02STT = ifelse(is.na(AP02EDT), 'Discontinued', 'Completed'))
+```
+
+Запишем в датасет значения массы, роста и ИМТ на baseline.
+
+```{r}
+vital_signs <- 
+  vital_signs %>% 
+  filter(VISIT == 'Визит 1', VSTEST %in% c('Масса тела','Рост','ИМТ')) %>% 
+  select(SUBJID, VSTEST, VSORRES) %>% 
+  spread(VSTEST, VSORRES) %>% 
+  rename(WEIGHTBL = 'Масса тела',
+         HEIGHTBL = 'Рост',
+         BMIBL = 'ИМТ') %>% 
+  mutate(WEIGHTBL = as.numeric(WEIGHTBL),
+         HEIGHTBL = as.numeric(HEIGHTBL),
+         BMIBL = as.numeric(BMIBL))
+```
+
+Нам также нужна информация о включениях и исключениях из исследования.
+
+```{r}
+included <- inc_excl %>% 
+  filter(IESEQ == 1) %>% 
+  select(SUBJID, IECAT, IEORRES, IESPID) %>%
+  rename(INCLCAT = IECAT, INCLRES = IEORRES, INCLN = IESPID)
+
+excluded <- inc_excl %>% 
+  filter(IESEQ == 7) %>% 
+  select(SUBJID, IECAT, IEORRES, IESPID) %>%
+  rename(EXCLCAT = IECAT, EXCLRES = IEORRES, EXCLN = IESPID)
+
+ie_data <- left_join(included, excluded, 'SUBJID')
+```
+
+
+
+````{r}
+exposure <- read.xlsx(paste0("./sdtm-like files/", files[grepl("EX_EXPOSURE", files)][1]), na.strings = NA)
+exposure_trt <- 
+  exposure %>% 
+  mutate(VISITN = case_when(VISIT == "Период 1" ~ "P2",
+                            VISIT == "Период 2" ~ "P3")) %>% 
+  select(SUBJID, VISITN, EXTRT) %>% 
+  spread(VISITN, EXTRT) %>% 
+  select(SUBJID, TRT01P = P2, TRT02P = P3) 
+
+
+exposure_dates <- 
+  exposure %>% 
+  mutate(VISITN = case_when(VISIT == "Период 1" ~ "P2",
+                            VISIT == "Период 2" ~ "P3"),
+         EXSTDTC = gsub('......$', '', EXSTDTC),
+         EXSTDTC = format(as.Date(EXSTDTC, format = "%Y-%m-%d"), "%d.%m.%Y")) %>%
+  select(SUBJID, VISITN, EXSTDTC) %>% 
+  spread(VISITN, EXSTDTC) %>% 
+  select(SUBJID, TRT01SDT = P2,TRT02SDT = P3) %>% 
+  mutate(TRT01EDT = TRT01SDT,
+         TRT02EDT = TRT02SDT)
+
+
+exposure <- left_join(exposure_trt, exposure_dates, 'SUBJID') %>% 
+  mutate(TRT01EDT = as.Date(TRT01SDT,"%d.%m.%Y")+ hours(48),
+         TRT02EDT = as.Date(TRT02SDT,"%d.%m.%Y")+ hours(48))%>%
+  mutate(TRT01EDT=format(as.Date(TRT01EDT, format = "%Y-%m-%d"), "%d.%m.%Y"),
+         TRT02EDT=format(as.Date(TRT02EDT, format = "%Y-%m-%d"), "%d.%m.%Y"))
+```
+
+Соберем все датасеты вместе.
+
+```{r}
+ADSL <- supp_ds
+ADSL <- left_join(ADSL, vital_signs, 'SUBJID')
+ADSL <- left_join(ADSL, substance_use, 'SUBJID')
+ADSL <- left_join(ADSL, demography, 'SUBJID')
+ADSL <- left_join(ADSL, stat_data, 'SUBJID')
+ADSL <- left_join(ADSL, exposure, 'SUBJID')
+ADSL <- left_join(ADSL, disposition, 'SUBJID')
+ADSL <- left_join(ADSL, ie_data, 'SUBJID')
+```
+
+И выберем нужные колонки в соответсвии со спецификацией и запишем в файл.
+
+```{r}
+ADSL <- 
+  ADSL %>% 
+  mutate(RANDFL = ifelse(is.na(RANDDT), 'N', 'Y'),
+         DOREAS = ifelse((STATUS == "Not included" & is.na(DOREAS) & INCLRES == "Нет"), "Несоответствие критериям включения",
+                         ifelse((STATUS == "Not included" & is.na(DOREAS) & EXCLRES == "Нет"), "Неоответствие критериям невключения",
+                                DOREAS)),
+         DOREASPP = ifelse(COMPLFL == 'N', 'Выбыл из исследования', DOREASPP),
+         SAFFL = ifelse(SAFEFF == 'Да' | RANDFL == 'N', 'N', 'Y'),
+         PPROTFL = ifelse(PPEFF == 'Да' | COMPLFL == 'N' | RANDFL == 'N', 'N', 'Y'),
+         TRTSEQP = ARM,
+         TRTSEQP = ifelse(is.na(TRTSEQP), "", TRTSEQP),
+         TRTSEQPN = case_when(TRTSEQP == 'TR' ~ 1,
+                              TRTSEQP == 'RT' ~ 2),
+         TRT01P = case_when(TRTSEQP == 'TR'~ "drug1",
+                            TRTSEQP == 'RT'~ "drug2"),
+         TRT02P = case_when(TRTSEQP == 'RT'~ "drug1",
+                            TRTSEQP == 'TR'~"drug2"),
+         TRT01PN = c(1, 2)[match(TRT01P, c("drug1", "drug2"))],
+         TRT02PN = c(1, 2)[match(TRT02P, c("drug1", "drug2"))])
+```
+
+
+```{r}
+ADSL$SAFFL <- ifelse(is.na(ADSL$SAFFL), 'Y', ADSL$SAFFL)
+ADSL$PPROTFL <- ifelse(is.na(ADSL$PPROTFL), 'Y', ADSL$PPROTFL)
+
+ADSL <- ADSL %>%
+  mutate(TRT01EDT = if_else(as.Date(TRT01EDT, '%d.%m.%Y') <= as.Date(EOSDT, '%d.%m.%Y'), TRT01EDT, EOSDT),
+         TRT02EDT = if_else(as.Date(TRT02EDT, '%d.%m.%Y') <= as.Date(EOSDT, '%d.%m.%Y'), TRT02EDT, EOSDT),
+         
+         AP01EDT = ifelse(!is.na(TRT01EDT), TRT01EDT, ""),
+         AP02EDT = ifelse(!is.na(TRT02EDT), TRT02EDT, ""))
+
+ADSL <- ADSL %>% 
+  mutate(USUBJID = paste(STUDYID, SUBJID, sep = '-')) %>% 
+  mutate(AGE = as.numeric(AGE),
+         SITEID = as.character(SITEID),
+         TRTSEQPN = as.numeric(TRTSEQPN),
+         TRT01PN = as.numeric(TRT01PN),
+         TRT02PN = as.numeric(TRT02PN),
+         TR01DURD = round(as.numeric(difftime(format(as.Date(TRT01EDT, format = "%d.%m.%Y"), "%Y-%m-%d"), format(as.Date(TRT01SDT, format = "%d.%m.%Y"), "%Y-%m-%d"),units="days"))),
+         TR02DURD = round(as.numeric(difftime(format(as.Date(TRT02EDT, format = "%d.%m.%Y"), "%Y-%m-%d"), format(as.Date(TRT02SDT, format = "%d.%m.%Y"), "%Y-%m-%d"),units="days"))),
+         TR01DURD = as.character(TR01DURD),
+         TR02DURD = as.character(TR02DURD),
+         TR01DURD = case_when(TR01DURD == 0 ~ "<1",
+                              TR01DURD > 0 ~ as.character(TR01DURD), 
+                              is.na(TR01DURD) ~ ""),
+         TR02DURD = case_when(TR02DURD == 0 ~ "<1",
+                              TR02DURD > 0 ~ as.character(TR02DURD), 
+                              is.na(TR02DURD) ~ ""),
+         WEIGHTBL = as.numeric(WEIGHTBL),
+         HEIGHTBL = as.numeric(HEIGHTBL),
+         BMIBL = as.numeric(BMIBL),
+         RANDID = as.numeric(RANDID)) %>% 
+  select(STUDYID, SUBJID, USUBJID,SITEID,RANDID, 
+         TRTSEQP, TRTSEQPN, TRT01P, TRT01PN,TRT02P, TRT02PN,
+         TRT01SDT, TRT01EDT, TRT02SDT, TRT02EDT, AP01SDT, AP01EDT, AP02SDT, AP02EDT, 
+         RFICDT, RANDDT, TR01DURD, TR02DURD, EOP01STT, EOP02STT, EOSDT,
+         AGE, AGEU, SEX, RACE, WEIGHTBL, HEIGHTBL, BMIBL, SMOKDC, ALCCDC,
+         DOREAS, ECREAS, DOREASPP, DOREASSAF,  
+         RANDFL, PPROTFL, SAFFL, COMPLFL) %>% 
+  arrange(as.numeric(SUBJID))
+
+write.xlsx(ADSL, "./ADSL.xlsx")
+```
