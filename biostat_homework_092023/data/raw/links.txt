@@ -1,0 +1,7 @@
+1) healthcare-dataset-stroke-data.csv — https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset?resource=download
+
+2) cardio_train_big.csv / cardio_train_not_too_big.csv — https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset
+
+3) food.csv — https://www.kaggle.com/datasets/mexwell/food-vitamins-minerals-macronutrient
+
+4) framingham — https://www.kaggle.com/datasets/dileep070/heart-disease-prediction-using-logistic-regression
