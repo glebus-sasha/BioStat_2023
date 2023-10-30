@@ -1,0 +1,128 @@
+---
+title: "HW 1"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(ggplot2)
+```
+
+## 1. Загрузите датасет insurance_cost.csv (лежит в папке домашнего задания). Это данные по базовым показателям здоровья индивида и сумме, которую страховая компания заплатила за его лечение в год. Обычно эти данные используют, чтобы потренироваться в предсказании того, как определённые характеристики индивида повышают траты страховой компании (и, соответственно, должны быть заложены в цену страховки).
+
+```{r}
+insurance_cost <- readr::read_csv('insurance_cost.csv', show_col_types = FALSE)
+insurance_cost %>% glimpse()
+```
+
+```{r}
+library(skimr)
+skim(insurance_cost)
+```
+
+```{r}
+library(gtsummary)
+insurance_cost %>% 
+  tbl_summary()
+```
+
+
+```{r}
+library(GGally)
+
+ggpairs(insurance_cost,
+        title = 'Correlations in PIMA dataset',progress = F) +
+    theme_minimal() +
+    scale_fill_manual(values = c('#69b3a2')) +
+    scale_colour_manual(values = c('#69b3a2'))
+```
+
+## 2. Выведите гистограммы всех нумерических переменных.
+
+
+```{r, fig.width = 5, fig.height=5}
+insurance_cost %>% ggplot() +
+  aes(age) + 
+  geom_histogram(binwidth = 2, color="blue", fill="lightblue") +
+  theme_minimal()
+```
+
+```{r, fig.width = 5, fig.height=5}
+insurance_cost %>% ggplot() +
+  aes(bmi) + 
+  geom_histogram(binwidth = 1, color="blue", fill="lightblue") +
+  theme_minimal()
+```
+
+```{r, fig.width = 5, fig.height=5}
+insurance_cost %>% ggplot() +
+  aes(children) + 
+  geom_histogram(bins = 6, color="blue", fill="lightblue") +
+  theme_minimal()
+```
+```{r, fig.width = 5, fig.height=5}
+insurance_cost %>% ggplot() +
+  aes(charges) + 
+  geom_histogram(bins = 30, color="blue", fill="lightblue") +
+  theme_minimal()
+```
+
+## 3. Нарисуйте график плотности по колонке charges. Отметьте вертикальные линии средней и медианы на графике. Раскрасьте текст и линии средней и медианы разными цветами. Добавьте текстовые пояснения, значения средней и медианы.Подберите тему для графика. Назовите оси.
+
+```{r, fig.width = 5, fig.height=5}
+fig <- insurance_cost %>% ggplot() +
+  aes(charges) + 
+  geom_density(fill = "lightblue", color = "blue", alpha = 0.5) +
+  geom_vline(aes(xintercept = mean(charges), color = "grey"), linetype = "dashed") +
+  geom_vline(aes(xintercept = median(charges), color = "green"), linetype = "dashed") +
+  annotate("text", x = mean(insurance_cost$charges), y = 0.00003, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "grey") +
+  annotate("text", x = median(insurance_cost$charges), y = 0.00004, label = paste("mean =", round(median(insurance_cost$charges), 2)), color = "green") +
+  labs(x = "charges", y = "density") +
+  scale_color_manual(values = c("mean" = "grey", "median" = "green")) +
+  ggtitle("charges density") +
+  theme_minimal()
+fig
+```
+## 4. Сделайте три box_plot по отношению переменных charges и (1) sex (2) smoker (3) region. Подберите тему для графика. Назовите оси.
+
+```{r, fig.width = 5, fig.height=5}
+fig1 <- insurance_cost %>% 
+  ggplot(aes(x = sex, y = charges, fill = sex)) +
+  geom_boxplot() +
+  ggtitle("Box Plot charges by gender") +
+  theme_minimal()
+fig1
+```
+
+
+```{r, fig.width = 5, fig.height=5}
+fig2 <- insurance_cost %>% 
+  ggplot(aes(x = smoker, y = charges, fill = smoker)) +
+  geom_boxplot() +
+  ggtitle("Box Plot charges by gender") +
+  theme_minimal()
+fig2
+```
+
+
+```{r, fig.width = 5, fig.height=5}
+fig3 <- insurance_cost %>% 
+  ggplot(aes(x = region, y = charges, fill = region)) +
+  geom_boxplot() +
+  ggtitle("Box Plot charges by gender") +
+  theme_minimal()
+fig3
+```
+
+## 5.Объедините графики из заданий 3 и 4 в один так, чтобы сверху шёл один график из задания 3, а под ним 3 графика из задания 4. Сделайте общее название для графика.
+
+```{r fig.width = 5, fig.height=10}
+library(ggpubr)
+fig5 <- ggarrange(fig, fig1, fig2, fig3, nrow = 4)
+annotate_figure(fig5, top = text_grob("Combined graph", size=20))
+```
+
