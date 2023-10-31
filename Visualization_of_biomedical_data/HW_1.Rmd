@@ -24,12 +24,6 @@ library(skimr)
 skim(insurance_cost)
 ```
 
-```{r}
-library(gtsummary)
-insurance_cost %>% 
-  tbl_summary()
-```
-
 
 ```{r}
 library(GGally)
@@ -77,23 +71,24 @@ insurance_cost %>% ggplot() +
 fig <- insurance_cost %>% ggplot() +
   aes(charges) + 
   geom_density(fill = "lightblue", color = "blue", alpha = 0.5) +
-  geom_vline(aes(xintercept = mean(charges), color = "grey"), linetype = "dashed") +
-  geom_vline(aes(xintercept = median(charges), color = "green"), linetype = "dashed") +
-  annotate("text", x = mean(insurance_cost$charges), y = 0.00003, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "grey") +
-  annotate("text", x = median(insurance_cost$charges), y = 0.00004, label = paste("mean =", round(median(insurance_cost$charges), 2)), color = "green") +
+  geom_vline(aes(xintercept = mean(charges), color = "blueviolet"), linetype = "dashed") +
+  geom_vline(aes(xintercept = median(charges), color = "darkslategray"), linetype = "dashed") +
+  annotate("text", x = mean(insurance_cost$charges), y = 0.00004, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "blueviolet") +
+  annotate("text", x = median(insurance_cost$charges), y = 0.00005, label = paste("median =", round(median(insurance_cost$charges), 2)), color = "darkslategray") +
   labs(x = "charges", y = "density") +
   ggtitle("charges density") +
   theme_minimal() +
   theme(legend.position = "none")
 fig
 ```
+
 ## 4. Сделайте три box_plot по отношению переменных charges и (1) sex (2) smoker (3) region. Подберите тему для графика. Назовите оси.
 
 ```{r, fig.width = 5, fig.height=5}
 fig1 <- insurance_cost %>% 
   ggplot(aes(x = sex, y = charges, fill = sex)) +
   geom_boxplot() +
-  ggtitle("Box Plot charges by gender") +
+  ggtitle("Box Plot charges by sex") +
   theme_minimal()
 fig1
 ```
@@ -103,7 +98,7 @@ fig1
 fig2 <- insurance_cost %>% 
   ggplot(aes(x = smoker, y = charges, fill = smoker)) +
   geom_boxplot() +
-  ggtitle("Box Plot charges by gender") +
+  ggtitle("Box Plot charges by smoker") +
   theme_minimal()
 fig2
 ```
@@ -113,7 +108,7 @@ fig2
 fig3 <- insurance_cost %>% 
   ggplot(aes(x = region, y = charges, fill = region)) +
   geom_boxplot() +
-  ggtitle("Box Plot charges by gender") +
+  ggtitle("Box Plot charges by region") +
   theme_minimal()
 fig3
 ```
@@ -133,16 +128,17 @@ annotate_figure(fig5, top = text_grob("Combined graph", size=20))
 insurance_cost %>% ggplot() +
   aes(charges) + 
   geom_density(fill = "lightblue", color = "blue", alpha = 0.5) +
-  geom_vline(aes(xintercept = mean(charges), color = "grey"), linetype = "dashed") +
-  geom_vline(aes(xintercept = median(charges), color = "green"), linetype = "dashed") +
-  annotate("text", x = mean(insurance_cost$charges) + 10000, y = 0.00003, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "grey") +
-  annotate("text", x = median(insurance_cost$charges) + 10000, y = 0.00004, label = paste("mean =", round(median(insurance_cost$charges), 2)), color = "green") +
+  geom_vline(aes(xintercept = mean(charges), color = "blueviolet"), linetype = "dashed") +
+  geom_vline(aes(xintercept = median(charges), color = "darkslategray"), linetype = "dashed") +
+  annotate("text", x = mean(insurance_cost$charges) + 10000, y = 0.00004, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "blueviolet") +
+  annotate("text", x = median(insurance_cost$charges) + 10000, y = 0.00005, label = paste("median =", round(median(insurance_cost$charges), 2)), color = "darkslategray") +
   labs(x = "charges", y = "density") +
   ggtitle("charges density") +
   theme_minimal() +
   facet_wrap(~ region, ncol = 2) +
   theme(legend.position = "none") 
 ```
+
 ## 7. Постройте scatter plot отношения переменных age и charges. Добавьте названия осей, название графика и тему. Сделайте так, чтобы числа по оси Х отображались 14 шрифтом.
 
 ```{r fig.width = 5, fig.height=5}
@@ -176,8 +172,41 @@ fig6 +
 insurance_cost %>% ggplot() +
   aes(x = bmi, y = charges, col = smoker) +
   geom_point() +
-  labs(x = "Возраст", y = "Затраты на страховку", title = "Scatter Plot между возрастом и затратами") +
+  labs(x = "Возраст", y = "Затраты на страховку", title = "Scatter Plot между возрастом и ИМТ") +
   theme(axis.text.x = element_text(size = 14)) +
   geom_smooth(method = lm) +
   theme_minimal()
+```
+
+
+
+## 14. (это задание засчитывается за два) Приблизительно повторите график.
+
+```{r}
+insurance_cost_group <- insurance_cost %>%
+  mutate(age_group = case_when(
+    age < 21 ~ "Under 21",
+    age >= 21 & age <= 34 ~ "age: 21-34",
+    age >= 35 & age < 49 ~ "age: 35-49",
+    age >= 50 ~ "age: 50+")) %>% 
+  mutate(age_group = as.factor(age_group)) %>% 
+  filter(age_group %in% c("age: 21-34", "age: 35-49", "age: 50+"))
+  
+```
+
+
+
+```{r fig.width = 7, fig.height=5}
+insurance_cost_group %>%  ggplot() +
+  aes(x = bmi, y = log(charges)) +
+  geom_point(color = "darkorchid4", alpha = 0.5) +
+  labs(title = "Отношение индекса массы тела к логарифму трат по возрастным группам") +
+  theme(axis.text.x = element_text(size = 14)) +
+  geom_smooth(method = lm,  aes(color = age_group), size = 1.1) +
+  facet_wrap(~ age_group) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),  
+    legend.position = "bottom"
+  )
 ```
