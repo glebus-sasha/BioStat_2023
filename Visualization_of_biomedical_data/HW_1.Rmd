@@ -82,9 +82,9 @@ fig <- insurance_cost %>% ggplot() +
   annotate("text", x = mean(insurance_cost$charges), y = 0.00003, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "grey") +
   annotate("text", x = median(insurance_cost$charges), y = 0.00004, label = paste("mean =", round(median(insurance_cost$charges), 2)), color = "green") +
   labs(x = "charges", y = "density") +
-  scale_color_manual(values = c("mean" = "grey", "median" = "green")) +
   ggtitle("charges density") +
-  theme_minimal()
+  theme_minimal() +
+  theme(legend.position = "none")
 fig
 ```
 ## 4. Сделайте три box_plot по отношению переменных charges и (1) sex (2) smoker (3) region. Подберите тему для графика. Назовите оси.
@@ -126,3 +126,58 @@ fig5 <- ggarrange(fig, fig1, fig2, fig3, nrow = 4)
 annotate_figure(fig5, top = text_grob("Combined graph", size=20))
 ```
 
+## 6. Сделайте фасет графика из задания 3 по колонке region.
+  
+```{r, fig.width = 5, fig.height=5}
+
+insurance_cost %>% ggplot() +
+  aes(charges) + 
+  geom_density(fill = "lightblue", color = "blue", alpha = 0.5) +
+  geom_vline(aes(xintercept = mean(charges), color = "grey"), linetype = "dashed") +
+  geom_vline(aes(xintercept = median(charges), color = "green"), linetype = "dashed") +
+  annotate("text", x = mean(insurance_cost$charges) + 10000, y = 0.00003, label = paste("mean =", round(mean(insurance_cost$charges), 2)), color = "grey") +
+  annotate("text", x = median(insurance_cost$charges) + 10000, y = 0.00004, label = paste("mean =", round(median(insurance_cost$charges), 2)), color = "green") +
+  labs(x = "charges", y = "density") +
+  ggtitle("charges density") +
+  theme_minimal() +
+  facet_wrap(~ region, ncol = 2) +
+  theme(legend.position = "none") 
+```
+## 7. Постройте scatter plot отношения переменных age и charges. Добавьте названия осей, название графика и тему. Сделайте так, чтобы числа по оси Х отображались 14 шрифтом.
+
+```{r fig.width = 5, fig.height=5}
+fig6 <- insurance_cost %>% ggplot() +
+  aes(x = age, y = charges) +
+  geom_point() +
+  labs(x = "Возраст", y = "Затраты на страховку", title = "Scatter Plot между возрастом и затратами") +
+  theme(axis.text.x = element_text(size = 14)) +
+  theme_minimal()
+fig6
+```
+
+## 8. Проведите линию тренда для предыдущего графика.
+
+```{r fig.width = 5, fig.height=5}
+fig6 + 
+  geom_smooth()
+```
+
+## 9. Сделайте разбивку предыдущего графика по колонке smokers (у вас должно получится две линии тренда для курящих и нет).
+
+```{r fig.width = 5, fig.height=5}
+fig6 + 
+  geom_smooth() +
+  aes(col = smoker)
+```
+
+## 10. Сделайте график из заданий 7-9, но вместо переменной age используйте переменную bmi.
+
+```{r fig.width = 5, fig.height=5}
+insurance_cost %>% ggplot() +
+  aes(x = bmi, y = charges, col = smoker) +
+  geom_point() +
+  labs(x = "Возраст", y = "Затраты на страховку", title = "Scatter Plot между возрастом и затратами") +
+  theme(axis.text.x = element_text(size = 14)) +
+  geom_smooth(method = lm) +
+  theme_minimal()
+```
