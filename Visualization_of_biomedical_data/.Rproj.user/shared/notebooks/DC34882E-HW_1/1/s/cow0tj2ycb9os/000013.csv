@@ -1,0 +1,4 @@
+"0","insurance_cost %>% ggplot() +"
+"0","  aes(bmi) + "
+"0","  geom_histogram(binwidth = 1, color=""black"", fill=""grey"") +"
+"0","  theme_minimal()"

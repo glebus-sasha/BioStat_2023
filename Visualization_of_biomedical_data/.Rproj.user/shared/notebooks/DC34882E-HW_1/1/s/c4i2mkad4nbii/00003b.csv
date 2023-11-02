@@ -1,0 +1,3 @@
+"0","library(ggpubr)"
+"0","fig5 <- ggarrange(fig, fig1, fig2, fig3, nrow = 4)"
+"0","annotate_figure(fig5, top = text_grob(""Combined graph"", size=20))"

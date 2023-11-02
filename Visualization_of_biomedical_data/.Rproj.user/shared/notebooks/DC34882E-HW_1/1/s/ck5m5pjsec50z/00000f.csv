@@ -1,0 +1,4 @@
+"0","insurance_cost %>% ggplot() +"
+"0","  aes(children) + "
+"0","  geom_histogram(bins = 6, color=""black"", fill=""grey"") +"
+"0","  theme_minimal()"

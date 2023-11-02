@@ -1,0 +1,24 @@
+"0","library(skimr)"
+"0","skim(insurance_cost)"
+"1","── Data Summary ────────────────────────
+"
+"1","                           Values        
+"
+"1","Name                       insurance_cost
+"
+"1","Number of rows             1338          
+"
+"1","Number of columns          7             
+"
+"1","_______________________                  
+"
+"1","Column type frequency:                   
+"
+"1","  character                3             
+"
+"1","  numeric                  4             
+"
+"1","________________________                 
+"
+"1","Group variables            None          
+"

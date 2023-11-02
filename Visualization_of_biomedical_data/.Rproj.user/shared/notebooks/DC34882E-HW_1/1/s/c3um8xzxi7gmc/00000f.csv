@@ -1,0 +1,10 @@
+"0","library(GGally)"
+"2","Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2
+"
+"0","ggpairs(insurance_cost,"
+"0","        title = 'Correlations in PIMA dataset',progress = F) +"
+"0","    theme_minimal() +"
+"0","    scale_fill_manual(values = c('#69b3a2')) +"
+"0","    scale_colour_manual(values = c('#69b3a2'))"

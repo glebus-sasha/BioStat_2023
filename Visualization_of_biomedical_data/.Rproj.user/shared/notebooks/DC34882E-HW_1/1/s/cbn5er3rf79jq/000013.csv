@@ -1,0 +1,6 @@
+"0","fig2 <- insurance_cost %>% "
+"0","  ggplot(aes(x = smoker, y = charges, fill = smoker)) +"
+"0","  geom_boxplot() +"
+"0","  ggtitle(""Box Plot charges by gender"") +"
+"0","  theme_minimal()"
+"0","fig2"
