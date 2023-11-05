@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Подгружаем библиотеки и читаем файлы
 
 ```{r}
 library(tidyverse)
@@ -21,11 +22,11 @@ ADSL <- read.xlsx('./ADSL.xlsx' , na.strings = NA)
 AE_ADVERSEEVENTS <- read.xlsx('./sdtm-like files/AE_ADVERSEEVENTS.xlsx' , na.strings = NA)
 ```
 
-
+## Содаем заготовку ADAE
 ```{r}
 ADAE <- ADSL
 ADAE <- left_join(ADAE, AE_ADVERSEEVENTS, 'SUBJID') 
-ADAE$STUDYID <- "XXXXX-XX-XX"
+ADAE$STUDYID <- "XXXXX-XX-XX" # костыль
 ADAE <- ADAE %>% 
   mutate(AP01SDT = format(as.Date(AP01SDT, format = "%d.%m.%Y"), "%Y-%m-%d")) %>% 
   mutate(AP01EDT = format(as.Date(AP01EDT, format = "%d.%m.%Y"), "%Y-%m-%d")) %>% 
@@ -34,6 +35,9 @@ ADAE <- ADAE %>%
 
 ```
 
+## Создадим ряд полесных функций
+
+Функция для AEBODSYS
 ```{r}
 translate_to_russian <- function(english_text) {
   # Словарь соответствий английских текстов и их русских переводов
@@ -52,6 +56,8 @@ translate_to_russian <- function(english_text) {
 }
 ```
 
+
+Функция для ASTDTF и AENDT
 ```{r}
 get_date_type <- function(date) {
   if (is.na(date) || grepl("^\\d{1,2}\\.\\d{1,2}\\.\\d{4}$", date)) {
@@ -66,6 +72,8 @@ get_date_type <- function(date) {
 }
 ```
 
+
+Функция для AEREL
 ```{r}
 map_AE_AEREL_to_RELGR1 <- function(AE_AEREL) {
   if (AE_AEREL %in% c("Определенная", "Вероятная", "Возможная", "Сомнительная", "Условная")) {
@@ -81,6 +89,7 @@ map_AE_AEREL_to_RELGR1 <- function(AE_AEREL) {
 ```
 
 
+## Изменим и добавим столбцы в соответствии со спецификацией
 ```{r}
 ADAE <- ADAE %>% 
   mutate(AREPIOD = ifelse(AESTDTC >= AP01SDT & AESTDTC <= AP01EDT, 1, 
@@ -164,6 +173,8 @@ ADAE <- ADAE %>%
   mutate(WEIGHT = as.numeric(WEIGHTBL)) 
 ```
 
+
+## Сохраним нужные столбцы в нужном порядке в ADAE.xlsx
 ```{r}
 ADAE %>% 
   select(

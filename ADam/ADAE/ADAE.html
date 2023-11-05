@@ -357,6 +357,8 @@ display: none;
 </div>
 
 
+<div id="подгружаем-библиотеки-и-читаем-файлы" class="section level2">
+<h2>Подгружаем библиотеки и читаем файлы</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.3     ✔ readr     2.1.4
@@ -373,14 +375,21 @@ library(openxlsx)
 library(stringr)</code></pre>
 <pre class="r"><code>ADSL &lt;- read.xlsx(&#39;./ADSL.xlsx&#39; , na.strings = NA)
 AE_ADVERSEEVENTS &lt;- read.xlsx(&#39;./sdtm-like files/AE_ADVERSEEVENTS.xlsx&#39; , na.strings = NA)</code></pre>
+</div>
+<div id="содаем-заготовку-adae" class="section level2">
+<h2>Содаем заготовку ADAE</h2>
 <pre class="r"><code>ADAE &lt;- ADSL
 ADAE &lt;- left_join(ADAE, AE_ADVERSEEVENTS, &#39;SUBJID&#39;) 
-ADAE$STUDYID &lt;- &quot;XXXXX-XX-XX&quot;
+ADAE$STUDYID &lt;- &quot;XXXXX-XX-XX&quot; # костыль
 ADAE &lt;- ADAE %&gt;% 
   mutate(AP01SDT = format(as.Date(AP01SDT, format = &quot;%d.%m.%Y&quot;), &quot;%Y-%m-%d&quot;)) %&gt;% 
   mutate(AP01EDT = format(as.Date(AP01EDT, format = &quot;%d.%m.%Y&quot;), &quot;%Y-%m-%d&quot;)) %&gt;% 
   mutate(AP02SDT = format(as.Date(AP02SDT, format = &quot;%d.%m.%Y&quot;), &quot;%Y-%m-%d&quot;)) %&gt;% 
   mutate(AP02EDT = format(as.Date(AP02EDT, format = &quot;%d.%m.%Y&quot;), &quot;%Y-%m-%d&quot;))</code></pre>
+</div>
+<div id="создадим-ряд-полесных-функций" class="section level2">
+<h2>Создадим ряд полесных функций</h2>
+<p>Функция для AEBODSYS</p>
 <pre class="r"><code>translate_to_russian &lt;- function(english_text) {
   # Словарь соответствий английских текстов и их русских переводов
   translation_dict &lt;- c(
@@ -396,6 +405,7 @@ ADAE &lt;- ADAE %&gt;%
   
   return(translated_text)
 }</code></pre>
+<p>Функция для ASTDTF и AENDT</p>
 <pre class="r"><code>get_date_type &lt;- function(date) {
   if (is.na(date) || grepl(&quot;^\\d{1,2}\\.\\d{1,2}\\.\\d{4}$&quot;, date)) {
     return(&quot;Y&quot;)
@@ -407,6 +417,7 @@ ADAE &lt;- ADAE %&gt;%
     return(&quot;&quot;)
   }
 }</code></pre>
+<p>Функция для AEREL</p>
 <pre class="r"><code>map_AE_AEREL_to_RELGR1 &lt;- function(AE_AEREL) {
   if (AE_AEREL %in% c(&quot;Определенная&quot;, &quot;Вероятная&quot;, &quot;Возможная&quot;, &quot;Сомнительная&quot;, &quot;Условная&quot;)) {
     return(&quot;Связано&quot;)
@@ -418,6 +429,9 @@ ADAE &lt;- ADAE %&gt;%
     return(NA)
   }
 }</code></pre>
+</div>
+<div id="изменим-и-добавим-столбцы-в-соответствии-со-спецификацией" class="section level2">
+<h2>Изменим и добавим столбцы в соответствии со спецификацией</h2>
 <pre class="r"><code>ADAE &lt;- ADAE %&gt;% 
   mutate(AREPIOD = ifelse(AESTDTC &gt;= AP01SDT &amp; AESTDTC &lt;= AP01EDT, 1, 
                           ifelse(AESTDTC &gt;= AP02SDT &amp; AESTDTC &lt;= AP02EDT, 2, NA))) %&gt;% 
@@ -504,6 +518,9 @@ ADAE &lt;- ADAE %&gt;%
 ## Caused by warning:
 ## ! в результате преобразования созданы NA
 ## ℹ Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</code></pre>
+</div>
+<div id="сохраним-нужные-столбцы-в-нужном-порядке-в-adae.xlsx" class="section level2">
+<h2>Сохраним нужные столбцы в нужном порядке в ADAE.xlsx</h2>
 <pre class="r"><code>ADAE %&gt;% 
   select(
     STUDYID, SUBJID, USUBJID, SITEID, TRTSEQP, TRTSEQPN, AP01SDT, AP01EDT, AP02SDT, AP02EDT,
@@ -512,6 +529,7 @@ ADAE &lt;- ADAE %&gt;%
     ASEVN, AEREL, AERELN, RELGR1, RELGR1N, AEACN, AERES, AERESN, AECMFL, SAFFL, AGE, SEX, WEIGHT, RACE
   ) %&gt;% 
   write.xlsx(&quot;./ADAE.xlsx&quot;)</code></pre>
+</div>
 
 
 
