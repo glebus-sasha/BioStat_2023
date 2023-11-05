@@ -82,7 +82,8 @@ sample_generate <- function(sample_size = 100, p_R = 0.1, p_T = 0.2) {
 
 Так же создал функцию для проведения эксперимента (наверное можно было проще как-то сделать)
 ```{r do_experiment}
-do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.2) {
+do_experiment <- function(p_R = 0.1, p_T = 0.2) {
+  df = sample_generate(p_R = p_T, p_T = p_T)
   df %>% 
   group_by(arm) %>% # Группировка типу интервенции (тест/референс)
   dplyr::summarise(x = sum(recovery_status), # Подсчет числа положительных исходов (единиц)
@@ -99,17 +100,18 @@ do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.2) {
 Проведем 1000 экспериментов с заданными значениями (p_R = 0,1, p_T = 0,2)
 ```{r experiments}
 num_repeats = 1000
-result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = p_R, p_T = p_T)) %>% bind_rows()
+result_df <- lapply(1:num_repeats, function(i) do_experiment(p_R = 0.1, p_T = 0.2)) %>% bind_rows()
 result_df %>% head()
 ```
 Посчитаем количество накрытых и ненакрытих доверительными интервалами значений и их пропорцию.
-Процент накрытых согласуется с заявленной вероятностью 95%
 ```{r res_1}
 result_df %>% 
   group_by(catch) %>% 
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
+Процент накрытых не согласуется с заявленной вероятностью 95%
+
 Строим гистограмму точечной оценки разницы вероятностей.
 ```{r plot}
 result_df <- result_df %>% 
@@ -146,7 +148,7 @@ result_df %>%
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
-При уменьшении разности вероятностей снижается процент накрытых доверительными интервалами.
+При уменьшении разности вероятностей меняется процент накрытых доверительными интервалами.
 
 ```{r res_3}
 result_df %>% 
@@ -167,7 +169,7 @@ result_df %>%
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
-А почти максимальной разницу p_R и p_T, накрытие становится равно 100%.
+А почти максимальной разницу p_R и p_T, ненакрытие становится равно 100%.
 
 Теперь поменяем p_R = 0.1, p_T = 0.4
 ```{r res_5}
@@ -178,7 +180,7 @@ result_df %>%
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
-При значительной разницу p_R и p_T, вероятность накрытия снижается.
+При значительной разницу p_R и p_T, вероятность накрытия опять другая.
 
 ```{r res_6}
 num_repeats = 1000
@@ -188,7 +190,7 @@ result_df %>%
   summarize(n = n(),
             p = n / nrow(result_df))
 ```
-Вероятность накрытия имеет сложную зависимость от соотношения вероятностьей p_R и p_T, но судя по всему, слабо зависит от величины вероятности.
+Вероятность накрытия имеет сложную зависимость от соотношения вероятностьей p_R и p_T.
 
 ## 4. Построение ДИ для отношения шансов
 
@@ -211,7 +213,8 @@ print(df_OR)
 
 Создадим функцию для эксперимента
 ```{r do_experiment_2}
-do_experiment <- function(df = sample_generate(), p_R = 0.1, p_T = 0.1) {
+do_experiment <- function(p_R = 0.1, p_T = 0.1) {
+  df = sample_generate(p_R = p_R, p_T = p_T)
   df %>% 
     dplyr::summarise(broom::tidy(fisher.test(table(.$arm, .$recovery_status)))) %>% 
     mutate(catch = ifelse(conf.low < true_OR & true_OR < conf.high, "Catch", "Miss"))
@@ -259,7 +262,7 @@ result_df %>%
 ```
 
 
-По прежнему всё результат согласуется с заявленной вероятностью 95%
+Результат ухудшился
 
 Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.9)
 ```{r res_fisher_4}
@@ -271,8 +274,6 @@ result_df %>%
             p = n / nrow(result_df)*100)
 ```
 
-По прежнему всё хорошо
-
 Выполняем эксперимент 1000 раз (p_R = 0.1, p_T = 0.5)
 ```{r res_fisher_5}
 num_repeats = 1000
@@ -283,7 +284,7 @@ result_df %>%
             p = n / nrow(result_df)*100)
 ```
 
-Всё хорошо
+Всё стало плохо
 
 Выполняем эксперимент 1000 раз (p_R = 0.5, p_T = 0.6)
 ```{r res_fisher_6}
@@ -295,4 +296,4 @@ result_df %>%
             p = n / nrow(result_df)*100)
 ```
 
-Видимо, методика построения ДИ, реализованная в fisher.test, при различных значениях p_R и p_T работает корректно.
+Видимо, методика построения ДИ, реализованная в fisher.test, при различных значениях p_R и p_T работает не корректно.
