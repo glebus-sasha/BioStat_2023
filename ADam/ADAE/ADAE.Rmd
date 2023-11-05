@@ -1,0 +1,178 @@
+---
+title: "ADAE"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(openxlsx)
+library(stringr)
+```
+
+```{r}
+ADSL <- read.xlsx('./ADSL.xlsx' , na.strings = NA)
+AE_ADVERSEEVENTS <- read.xlsx('./sdtm-like files/AE_ADVERSEEVENTS.xlsx' , na.strings = NA)
+```
+
+
+```{r}
+ADAE <- ADSL
+ADAE <- left_join(ADAE, AE_ADVERSEEVENTS, 'SUBJID') 
+ADAE$STUDYID <- "XXXXX-XX-XX"
+ADAE <- ADAE %>% 
+  mutate(AP01SDT = format(as.Date(AP01SDT, format = "%d.%m.%Y"), "%Y-%m-%d")) %>% 
+  mutate(AP01EDT = format(as.Date(AP01EDT, format = "%d.%m.%Y"), "%Y-%m-%d")) %>% 
+  mutate(AP02SDT = format(as.Date(AP02SDT, format = "%d.%m.%Y"), "%Y-%m-%d")) %>% 
+  mutate(AP02EDT = format(as.Date(AP02EDT, format = "%d.%m.%Y"), "%Y-%m-%d"))
+
+```
+
+```{r}
+translate_to_russian <- function(english_text) {
+  # Словарь соответствий английских текстов и их русских переводов
+  translation_dict <- c(
+    "General disorders and administration site conditions" = "Общие расстройства и состояния сайта администрирования",
+    "Renal and urinary disorders" = "Почечные и мочеполовые расстройства",
+    "Vascular disorders" = "Сосудистые расстройства",
+    "Respiratory, thoracic and mediastinal disorders" = "Респираторные, грудные и средостении расстройства",
+    "Reproductive system and breast disorders" = "Репродуктивная система и расстройства молочных желез"
+  )
+  
+  # Поиск соответствующего перевода в словаре, либо возвращение оригинального текста
+  translated_text <- ifelse(english_text %in% names(translation_dict), translation_dict[english_text], english_text)
+  
+  return(translated_text)
+}
+```
+
+```{r}
+get_date_type <- function(date) {
+  if (is.na(date) || grepl("^\\d{1,2}\\.\\d{1,2}\\.\\d{4}$", date)) {
+    return("Y")
+  } else if (grepl("^\\d{1,2}\\.\\d{4}$", date)) {
+    return("M")
+  } else if (grepl("^\\d{1,2}\\.\\d{1,2}\\.\\d{2}$", date)) {
+    return("D")
+  } else {
+    return("")
+  }
+}
+```
+
+```{r}
+map_AE_AEREL_to_RELGR1 <- function(AE_AEREL) {
+  if (AE_AEREL %in% c("Определенная", "Вероятная", "Возможная", "Сомнительная", "Условная")) {
+    return("Связано")
+  } else if (is.na(AE_AEREL) || AE_AEREL == "Не классифицируемая") {
+    return("NA")
+  } else if (AE_AEREL == "Не связано") {
+    return("Не связано")
+  } else {
+    return(NA)
+  }
+}
+```
+
+
+```{r}
+ADAE <- ADAE %>% 
+  mutate(AREPIOD = ifelse(AESTDTC >= AP01SDT & AESTDTC <= AP01EDT, 1, 
+                          ifelse(AESTDTC >= AP02SDT & AESTDTC <= AP02EDT, 2, NA))) %>% 
+  mutate(APERIODC = case_when(
+    AREPIOD == 1 ~ "Период 1",
+    AREPIOD == 2 ~ "Период 2",
+  )) %>% 
+  mutate(ASTDT = AESTDTC) %>% 
+  mutate(TRTEMFL = ifelse(ASTDT >= AP01SDT & ASTDT <= AP01EDT| (ASTDT >= AP02SDT & ASTDT <= AP02EDT), 'Y', NA)) %>% 
+  mutate(PREFL = ifelse(ASTDT < AP01SDT, 'Y', NA)) %>% 
+  mutate(TRTP = case_when(
+    AREPIOD == 1 ~ TRT01P,
+    AREPIOD == 2 ~ TRT02P
+  )) %>% 
+  mutate(TRTPN = case_when(
+    AREPIOD == 1 ~ TRT01PN,
+    AREPIOD == 2 ~ TRT02PN
+)) %>% 
+  mutate(AESEQ = as.numeric(AESEQ)) %>% 
+  mutate(AETERM = as.character(AETERM)) %>% 
+  mutate(AEBODSYS = paste0(translate_to_russian(AEBODSYS), ".", AEDECOD)) %>% 
+  mutate(AEDECOD = as.character(AEDECOD)) %>% 
+  mutate(TRTSEQPN = as.numeric(TRTSEQPN)) %>%
+  mutate(AP01SDT = format(as.Date(AP01SDT, format = "%Y-%m-%d"), "%d.%m.%Y")) %>% 
+  mutate(AP01EDT = format(as.Date(AP01EDT, format = "%Y-%m-%d"), "%d.%m.%Y")) %>% 
+  mutate(AP02SDT = format(as.Date(AP02SDT, format = "%Y-%m-%d"), "%d.%m.%Y")) %>% 
+  mutate(AP02EDT = format(as.Date(AP02EDT, format = "%Y-%m-%d"), "%d.%m.%Y")) %>% 
+  mutate(ASTDTF = sapply(ASTDT, get_date_type)) %>% 
+  mutate(AEENDTC = as.character(AEENDTC)) %>% 
+  mutate(AENDT = format(as.Date(AEENDTC, format = "%Y-%m-%d"), "%d.%m.%Y")) %>%
+  mutate(AENDTF = sapply(AENDT, get_date_type)) %>%
+  mutate(AEENRTPT = as.character(AEENRTPT)) %>% 
+  mutate(AEENRF = ifelse(AEENRTPT == 'ONGOING', 'ONGOING', "")) %>%
+  mutate(ADURN = as.numeric(AENDT) - as.numeric(ASTDT) + 1) %>% 
+  mutate(ADURU = 'день') %>% 
+  mutate(AESER = case_when(
+    AESER == 'да' ~ 'Y',
+    AESER == 'нет' ~ 'N'
+)) %>%  
+  mutate(APHASE = case_when(
+      PREFL == 'Y' ~ "Скрининг",
+      TRTEMFL == 'Y' ~ "Лечение"
+  )) %>% 
+  mutate(ASEV = AESEV) %>%
+  mutate(ASEVN = case_when(
+    AESEV == 'Легкая' ~ 1,
+    AESEV == 'Средняя' ~ 2,
+    AESEV == 'Тяжелая' ~ 3,
+  )) %>% 
+  mutate(AEREL = as.character(AEREL)) %>%
+  mutate(AERELN = case_when(
+    AEREL == 'Определенная' ~ 1,
+    AEREL == 'Вероятная' ~ 2,
+    AEREL == 'Возможная' ~ 3,
+    AEREL == 'Сомнительная' ~ 4,
+    AEREL == 'Условная' ~ 5,
+    AEREL == 'Не классифицируемая' ~ 6,
+    AEREL == 'Не связано' ~ 7
+  )) %>% 
+  mutate(RELGR1 = sapply(AEREL, map_AE_AEREL_to_RELGR1)) %>% 
+  mutate(RELGR1N = case_when(
+    RELGR1 == "Не связано" ~ 0,
+    RELGR1 == "Связано" ~ 1,
+    RELGR1 == "NA" ~ 2
+  )) %>% 
+  mutate(AEACN = AEACN) %>% 
+  mutate(AERES = AEOUT) %>% 
+    mutate(AERESN = case_when(
+    AERES == 'Выздоровление без осложнений' ~ 1,
+    AERES == 'Стадия выздоровления' ~ 2,
+    AERES == 'Без изменений' ~ 3,
+    AERES == 'Выздоровление с осложнениями' ~ 4,
+    AERES == 'Смерть' ~ 5,
+    AERES == 'Не известно' ~ 6
+  )) %>% 
+  mutate(AECMFL = ifelse(AECONTRT == 'Да', 'Y', 'N')) %>% 
+  mutate(SAFFL = as.character(SAFFL)) %>%
+  mutate(AGE = as.numeric(AGE)) %>%
+  mutate(SEX = as.character(SEX)) %>%
+  mutate(WEIGHT = as.numeric(WEIGHTBL)) 
+```
+
+```{r}
+ADAE %>% 
+  select(
+    STUDYID, SUBJID, USUBJID, SITEID, TRTSEQP, TRTSEQPN, AP01SDT, AP01EDT, AP02SDT, AP02EDT,
+    AREPIOD, APERIODC, TRTEMFL, PREFL, TRTP, TRTPN, AESEQ, AETERM, AEBODSYS, AEDECOD, AESTDTC,
+    ASTDT, ASTDTF, AEENDTC, AENDT, AENDTF, AEENRTPT, AEENRF, ADURN, ADURU, AESER, APHASE, ASEV,
+    ASEVN, AEREL, AERELN, RELGR1, RELGR1N, AEACN, AERES, AERESN, AECMFL, SAFFL, AGE, SEX, WEIGHT, RACE
+  ) %>% 
+  write.xlsx("./ADAE.xlsx")
+```
+
+
