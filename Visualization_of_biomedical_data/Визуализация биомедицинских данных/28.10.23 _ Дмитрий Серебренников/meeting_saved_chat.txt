@@ -1,0 +1,411 @@
+11:01:25 From Bogdan Sotnikov To Everyone:
+	Звук пока лучше.
+11:02:18 From Sergey Yarovoy To Everyone:
+	может, через подключение мобильного интернета будет лучше?)
+11:03:14 From Дмитрий To Everyone:
+	да
+11:17:26 From Иван Лебедев To Everyone:
+	Мощность выше?
+11:17:28 From Bogdan Sotnikov To Everyone:
+	Чаще находим различия.
+11:24:10 From Иван Лебедев To Everyone:
+	+
+11:24:11 From Olga Potanina To Everyone:
+	+
+11:24:12 From Galina Chernaya To Everyone:
+	+
+11:24:15 From Елизавета To Everyone:
+	+
+11:24:18 From Iuliia Matvienko To Everyone:
+	+
+11:24:19 From Ирина Филимонова To Everyone:
+	+
+11:31:36 From Анатолий Созонтов To Everyone:
+	42
+11:31:49 From Bogdan Sotnikov To Everyone:
+	Reacted to "42" with 🤙
+11:36:03 From Иван Лебедев To Everyone:
+	На ошибку первого рода
+11:40:57 From Galina Chernaya To Everyone:
+	Считаем отклонения о среднего сначала
+11:41:34 From Galina Chernaya To Everyone:
+	Ошиблась, отвергается
+11:42:13 From Bogdan Sotnikov To Everyone:
+	2
+11:42:14 From Елизавета To Everyone:
+	2
+11:42:15 From Galina Chernaya To Everyone:
+	2
+11:44:20 From Bogdan Sotnikov To Everyone:
+	2
+11:44:22 From Galina Chernaya To Everyone:
+	2
+11:44:23 From Елизавета To Everyone:
+	2
+11:44:28 From Sergey Yarovoy To Everyone:
+	где sd и дисперсия меньше
+11:45:13 From Galina Chernaya To Everyone:
+	Разделить
+11:45:53 From Bogdan Sotnikov To Everyone:
+	Опять двойка.
+11:46:53 From Анатолий Созонтов To Everyone:
+	sqrt(n) в числитель
+11:49:08 From Eugene Bakin To Everyone:
+	====
+11:49:08 From Stanislav Legkovoy To Everyone:
+	+
+11:49:13 From Iuliia Matvienko To Everyone:
+	+
+11:49:14 From Olga Potanina To Everyone:
+	+
+11:49:15 From Иван Лебедев To Everyone:
+	+
+11:49:19 From Bogdan Sotnikov To Everyone:
+	+
+11:49:19 From Nadja Lukashevich To Everyone:
+	+
+11:49:22 From Елизавета To Everyone:
+	+
+11:49:24 From Лидия Карпович To Everyone:
+	+
+11:49:25 From Ирина Филимонова To Everyone:
+	+
+11:49:31 From Galina Chernaya To Everyone:
+	+
+11:49:32 From Sergey Yarovoy To Everyone:
+	+
+11:51:59 From Eugene Bakin To Everyone:
+	=========
+11:52:05 From Bogdan Sotnikov To Everyone:
+	+
+11:52:06 From Olga Potanina To Everyone:
+	+
+11:52:09 From Ирина Филимонова To Everyone:
+	+
+11:52:10 From Galina Chernaya To Everyone:
+	+
+11:52:11 From Анатолий Созонтов To Everyone:
+	+
+11:52:13 From Stanislav Legkovoy To Everyone:
+	+
+11:52:17 From Anastasiia Soroka To Everyone:
+	+
+11:52:19 From Иван Лебедев To Everyone:
+	+
+11:52:22 From Iuliia Matvienko To Everyone:
+	+
+11:52:24 From Sergey Yarovoy To Everyone:
+	+
+11:52:38 From Nadja Lukashevich To Everyone:
+	+
+11:52:53 From Елизавета To Everyone:
+	+
+11:56:06 From Eugene Bakin To Everyone:
+	=====
+11:56:43 From Bogdan Sotnikov To Everyone:
+	Хорошо бы построить функцию плотности и найти 0.025 и 0.975 квантили.
+11:58:15 From Bogdan Sotnikov To Everyone:
+	Опять двойка.
+11:59:19 From Иван Лебедев To Everyone:
+	2
+11:59:54 From Bogdan Sotnikov To Everyone:
+	Посылка 1: распределение t-статистики должно быть t-распределением, которое похоже на нормальное, для которого указанные квантили -- +/- 1.96. Поэтому первая мысль -- проверить двойку.
+11:59:57 From Sergey Yarovoy To Everyone:
+	подбором визуально -2 и 2
+12:00:06 From Елизавета To Everyone:
+	подбором 2
+12:00:08 From Sergey Yarovoy To Everyone:
+	955 и 45
+12:00:24 From Анатолий Созонтов To Everyone:
+	alpha <- 0.05 # Уровень значимости (ошибка первого рода)
+	a <- qnorm(alpha/2) # Нижняя граница
+	b <- qnorm(1 - alpha/2) # Верхняя граница
+12:00:26 From Stanislav Legkovoy To Everyone:
+	квантилями как Богдан порекомендовал
+12:00:26 From Bogdan Sotnikov To Everyone:
+	При повторении несколько раз получаем соотношение примерно 950:50
+12:04:06 From Елизавета To Everyone:
+	16
+12:04:17 From Елизавета To Everyone:
+	да
+12:04:20 From Iuliia Matvienko To Everyone:
+	21%
+12:04:25 From Анатолий Созонтов To Everyone:
+	16%
+12:04:25 From Stanislav Legkovoy To Everyone:
+	плохо получится, 20%
+12:04:30 From Sergey Yarovoy To Everyone:
+	19%
+12:04:32 From Galina Chernaya To Everyone:
+	18%
+12:06:49 From Eugene Bakin To Everyone:
+	====
+12:07:01 From Daria der To Everyone:
+	1.97
+12:07:18 From Bogdan Sotnikov To Everyone:
+	Заработало, a и b около +/-4.3.
+12:07:19 From Olga Potanina To Everyone:
+	- 4.3, +4.3
+12:07:28 From Stanislav Legkovoy To Everyone:
+	+-4.3
+12:09:40 From Eugene Bakin To Everyone:
+	====
+12:09:42 From Stanislav Legkovoy To Everyone:
+	+
+12:09:43 From Иван Лебедев To Everyone:
+	+
+12:09:45 From Елизавета To Everyone:
+	+
+12:09:46 From Iuliia Matvienko To Everyone:
+	+
+12:09:53 From Nadja Lukashevich To Everyone:
+	+
+12:09:57 From Ирина Филимонова To Everyone:
+	+
+12:10:22 From Лидия Карпович To Everyone:
+	+
+12:10:27 From Sergey Yarovoy To Everyone:
+	++-
+12:12:57 From Olga Potanina To Everyone:
+	+
+12:13:05 From Sergey Yarovoy To Everyone:
+	может ли стать границе критической областью с одной стороны бесконечность?
+12:14:07 From Sergey Yarovoy To Everyone:
+	спасибо
+12:19:13 From Bogdan Sotnikov To Everyone:
+	За исключением одного прогона, всегда отвергается H0
+12:20:15 From Olga Potanina To Everyone:
+	Reject H0 	     1000
+12:20:24 From Sergey Yarovoy To Everyone:
+	Reacted to "За исключением одног..." with 👍
+12:20:37 From Елизавета To Everyone:
+	хм, у меня ошибка второго рода 8%
+12:21:21 From Galina Chernaya To Everyone:
+	0
+12:22:08 From Елизавета To Everyone:
+	ага, исправила
+12:22:28 From Елизавета To Everyone:
+	от 80%
+12:23:55 From Елизавета To Everyone:
+	70 пациентов
+12:24:04 From Galina Chernaya To Everyone:
+	70
+12:24:05 From Sergey Yarovoy To Everyone:
+	около 70
+12:25:05 From Анатолий Созонтов To Everyone:
+	Reacted to "около 70" with 👍
+12:50:50 From Bioinformatics Institute To Eugene Bakin(Privately):
+	ты готов?
+12:54:53 From Galina Chernaya To Everyone:
+	+
+12:54:54 From Bogdan Sotnikov To Everyone:
+	+
+12:54:54 From Sergey Yarovoy To Everyone:
+	+
+12:54:57 From Olga Potanina To Everyone:
+	+
+12:55:03 From Иван Лебедев To Everyone:
+	+
+12:58:22 From Stanislav Legkovoy To Everyone:
+	+
+12:58:23 From Glebus Alexandr To Everyone:
+	+
+12:58:25 From Bogdan Sotnikov To Everyone:
+	+
+12:58:27 From Ирина Филимонова To Everyone:
+	+
+12:58:28 From Eugene Bakin To Bioinformatics Institute(Privately):
+	===
+12:58:28 From Galina Chernaya To Everyone:
+	+
+12:58:28 From Eugene Bakin To Everyone:
+	===
+12:58:32 From Olga Potanina To Everyone:
+	+
+12:58:34 From Glebus Alexandr To Everyone:
+	+
+12:58:35 From Анатолий Созонтов To Everyone:
+	+
+12:58:35 From Иван Лебедев To Everyone:
+	+
+12:58:36 From Елизавета To Everyone:
+	+
+12:58:45 From Sergey Yarovoy To Everyone:
+	+
+12:58:49 From Anastasiia Soroka To Everyone:
+	+
+12:59:01 From Sergey Yarovoy To Everyone:
+	есть эпизоды зависания, но короткие
+13:02:01 From Stanislav Legkovoy To Everyone:
+	blue фиолетовый, интересно
+13:06:20 From Sergey Yarovoy To Everyone:
+	0,016
+13:12:43 From Galina Chernaya To Everyone:
+	Красная линия - граница 95% ДИ по модулю?
+13:16:00 From Galina Chernaya To Everyone:
+	Поняла, спасибо!
+13:16:50 From Galina Chernaya To Everyone:
+	1
+13:17:54 From Sergey Yarovoy To Everyone:
+	стремиться к 0
+13:41:20 From Eugene Bakin To Everyone:
+	===
+13:41:37 From Stanislav Legkovoy To Everyone:
+	+
+13:41:39 From Лидия Карпович To Everyone:
+	+
+13:41:39 From Иван Лебедев To Everyone:
+	+
+13:41:39 From Bogdan Sotnikov To Everyone:
+	+
+13:41:39 From Glebus Alexandr To Everyone:
+	+
+13:41:40 From Елизавета To Everyone:
+	+
+13:41:42 From Olga Potanina To Everyone:
+	+
+13:41:43 From Nadja Lukashevich To Everyone:
+	+
+13:41:44 From Sergey Yarovoy To Everyone:
+	+
+13:41:48 From Ирина Филимонова To Everyone:
+	+
+13:44:10 From Eugene Bakin To Everyone:
+	====
+13:44:27 From Иван Лебедев To Everyone:
+	Равномерное
+13:44:34 From Bogdan Sotnikov To Everyone:
+	Reacted to "Равномерное" with 🤙
+13:44:41 From Анатолий Созонтов To Everyone:
+	Reacted to "Равномерное" with 🤙
+13:44:58 From Анатолий Созонтов To Everyone:
+	У меня побыстрее посчиталось 🙂
+13:45:00 From Sergey Yarovoy To Everyone:
+	Иван оказался прав)
+13:46:50 From Galina Chernaya To Everyone:
+	от 0 до 0,2
+13:48:10 From Bogdan Sotnikov To Everyone:
+	20
+13:48:12 From Sergey Yarovoy To Everyone:
+	20%
+13:48:17 From Елизавета To Everyone:
+	1/5
+13:58:16 From Sergey Yarovoy To Everyone:
+	Hg_change = exp(- rnorm(sample_size*num_centers, mean = True_Hg_improve, sd = Hg_sd))	)
+13:58:21 From Sergey Yarovoy To Everyone:
+	я только 1 строку изменял
+13:58:31 From Sergey Yarovoy To Everyone:
+	но здесь не совсем корректно получится)
+13:58:54 From Eugene Bakin To Everyone:
+	rexp()
+13:59:30 From Daria der To Everyone:
+	у меня с такой функцией получается один бар непонятно как задать rate в этой функции, видимо из-за этого и один бар
+14:02:52 From Galina Chernaya To Everyone:
+	Можно вопрос по аргументам функций еще раз: rate = 1? А в t-test дописать m =0?
+14:06:29 From Sergey Yarovoy To Everyone:
+	повторите, пожалуйста, последнее условие
+14:09:24 From Eugene Bakin To Everyone:
+	====
+14:09:29 From Иван Лебедев To Everyone:
+	+
+14:09:30 From Iuliia Matvienko To Everyone:
+	+
+14:09:31 From Nadja Lukashevich To Everyone:
+	+
+14:09:32 From Glebus Alexandr To Everyone:
+	+
+14:09:36 From Olga Potanina To Everyone:
+	+
+14:09:37 From Galina Chernaya To Everyone:
+	+
+14:09:43 From Stanislav Legkovoy To Everyone:
+	++-
+14:09:45 From Лидия Карпович To Everyone:
+	+
+14:13:38 From Anna Krasheninnikova To Everyone:
+	Да мне кажется, сейчас никто не говорит "достоверно". В статьях точно не видела)
+14:13:58 From Bogdan Sotnikov To Everyone:
+	Replying to "Да мне кажется, сейч..."
+	
+	Увы, отнюдь.
+14:14:07 From Nadja Lukashevich To Everyone:
+	Reacted to "Увы, отнюд..." with ❤️
+14:14:39 From Anna Krasheninnikova To Everyone:
+	Replying to "Да мне кажется, сейч..."
+	
+	Видимо, я живу в мире статистически значимых пони и бабочек)
+14:14:57 From Sergey Yarovoy To Everyone:
+	Replying to "Да мне кажется, сейч..."
+	
+	у нас и профессора на докладе так могут сказать...
+14:17:11 From Дмитрий To Everyone:
+	Здесь, например, можно посмотреть про варианты интерпертации и их речевых оборотов
+	https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4741246/
+14:17:31 From Bogdan Sotnikov To Everyone:
+	Reacted to "Здесь, например, мож..." with 🤙
+14:19:01 From Anna Krasheninnikova To Everyone:
+	Я понимаю этих людей с тенденциями. Делаешь-делаешь исследование, а потом приходят статистики и портят все своими р-value ))
+14:19:22 From Дмитрий To Everyone:
+	Reacted to "Я понимаю ..." with 👍
+14:19:27 From Nadja Lukashevich To Everyone:
+	Reacted to "Я понимаю ..." with ❤️
+14:19:52 From Иван Лебедев To Everyone:
+	Это чтобы можно было использовать модель для теста, как я понимаю
+14:21:23 From Иван Лебедев To Everyone:
+	Синтаксис с тильдой как в lm, glm и тд
+14:26:08 From Galina Chernaya To Everyone:
+	Спасибо!
+14:26:17 From Иван Лебедев To Everyone:
+	Спасибо!
+15:15:50 From Galina Chernaya To Everyone:
+	Дмитрий, подскажите, пожалуйста, экспортировать такие графики можно только в html?
+15:16:35 From Galina Chernaya To Everyone:
+	Спасибо!
+15:31:16 From Galina Chernaya To Everyone:
+	+
+15:31:16 From Анатолий Созонтов To Everyone:
+	+
+15:31:16 From Bogdan Sotnikov To Everyone:
+	+
+15:31:17 From Iuliia Matvienko To Everyone:
+	+
+15:31:20 From Glebus Alexandr To Everyone:
+	+
+15:31:24 From Елизавета To Everyone:
+	+
+15:32:40 From Dmitrii Serebrennikov To Everyone:
+	ЗАДАНИЕ		В чанке ниже напишите код 3d графика по осям age, mass, pressure
+15:32:45 From Анатолий Созонтов To Everyone:
+	plot_ly(
+	  data = pima[(pima$age != 0) & (pima$mass != 0) & (pima$pressure != 0),],
+	  x = ~age,
+	  y = ~mass,
+	  z = ~pressure,
+	  color = ~age
+	)   %>%
+	  layout(
+	    title = 'Отношение возраста, массы и давления в данных PIMA',
+	    yaxis = list(title = 'Возраст',
+	                 zeroline = FALSE),  # Уберём выделения нулевых осей по y
+	    xaxis = list(title = 'масса',
+	                 zeroline = FALSE)) # Уберём выделения нулевых осей по y
+15:34:19 From Olga Potanina To Everyone:
+	plot_ly(	  data = pima[(pima$age != 0) & (pima$mass != 0) & (pima$pressure != 0),],	  x = ~ age,	  y = ~ mass,	  z = ~pressure,	  color = ~diabetes_ch	)
+15:35:24 From Bogdan Sotnikov To Everyone:
+	plot_ly(   data = pima[(pima$age != 0) & (pima$mass != 0) & (pima$pressure != 0),],   x = ~age,   y = ~mass,   z = ~pressure,   color = ~insulin,   text = ~age,    hoverinfo = "text" ) %>%    layout(     title = '3D-график на заказ',     yaxis = list(title = 'Индекс массы тела',                  zeroline = FALSE),  #     xaxis = list(title = 'Возраст',                  zeroline = FALSE),     zaxis = list(title = 'Давление',                  zeroline = FALSE))
+15:35:37 From Iuliia Matvienko To Everyone:
+	plot_ly(	  data = pima[(pima$glucose != 0) & (pima$pressure != 0),],	  x = ~ age,	  y = ~ mass,	  z = ~ pressure,	  color = ~diabetes_ch,	  text = ~age, 	  hoverinfo = "text"	)   %>%	  layout(	    yaxis = list(title = 'Возраст',	                 zeroline = FALSE),	    xaxis = list(title = 'Масса тела',	                 zeroline = FALSE))
+15:35:58 From Olga Potanina To Everyone:
+	можно ещё добавить colors = "Set3"
+15:38:20 From Bogdan Sotnikov To Everyone:
+	А если попробовать bad practice? hoverinfo = glue("Возраст пациента {text} лет")
+16:10:21 From Bogdan Sotnikov To Everyone:
+	А у ggcorplotа такие же проблемы?
+16:15:10 From Bogdan Sotnikov To Everyone:
+	Спасибо.
+16:21:46 From Sergey Yarovoy To Everyone:
+	👍
+16:35:59 From Olga Potanina To Everyone:
+	можно округлить: scale(pima_clear) %>% round(2)
+17:36:11 From Иван Лебедев To Everyone:
+	Можно broken stick использовать, чтобы посмотреть насколько PCA подходит
