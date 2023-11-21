@@ -1,0 +1,1852 @@
+;Name;Position;Nationality;Age;Height;Weight
+1;Tobias Sippel;Goalkeeper;German;NA;180;79
+2;Kevin Trapp;Goalkeeper;German;21;189;83
+3;Jan Simunek;Defender;Czech;NA;189;79
+4;Leon Jessen;Defender;Danish;25;182;75
+5;Martin Amedick;Defender;German;NA;194;85
+6;Matthias Abel;Defender;German;30;188;82
+7;Alexander Bugera;Defender;German;33;180;75
+8;Rodnei Francisco De Lima;Defender;Brazilian;26;190;90
+9;Florian Dick;Defender;German;26;184;83
+10;Oliver Kirch;Midfielder;German;NA;182;70
+11;Christian Tiffert;Midfielder;German;29;183;75
+12;Olcay Sahan;Midfielder;Turkish;24;177;70
+13;Thanos Petsos;Midfielder;Greek;20;184;80
+14;Gil Vermouth;Midfielder;Israeli;26;180;76
+15;Clemens Walch;Midfielder;Austrian;24;180;74
+16;Jiri Bilek;Midfielder;Czech;NA;183;73
+17;Pierre De Wit;Midfielder;German;NA;172;70
+18;Kostas Fortounis;Midfielder;Greek;18;182;69
+19;Itay Shechter;Forward;Israeli;24;179;76
+20;Ilijan Micanski;Forward;Bulgarian;NA;186;79
+21;Richard Sukuta- Pasu;Forward;German;21;188;88
+22;Chadli Amri;Forward;Algerian;NA;178;70
+23;Stiven Rivic;Forward;Croatian;NA;181;74
+24;Dorge Kouemaha;Forward;Cameroonian;28;190;85
+25;Adam Nemec;Forward;Slovakian;NA;190;84
+26;Michael Rensing;Goalkeeper;German;27;188;86
+27;Miro Varvodic;Goalkeeper;Croatian;22;191;81
+28;Miso Brecko;Defender;Slovenian;27;178;68
+29;Ammar Jemal;Defender;Tunisian;24;186;87
+30;Christian Eichner;Defender;German;28;183;76
+31;Sascha Riether;Defender;German;28;174;70
+32;Andrezinho;Defender;Brazilian;29;173;67
+33;Sereno;Defender;Portuguese;26;188;78
+34;Geromel;Defender;Brazilian;25;190;84
+35;Kevin Mckenna;Defender;Canadian;29;190;85
+36;Tomoaki Makino;Defender;Japanese;24;182;76
+37;Petit;Midfielder;Portuguese;34;176;72
+38;Martin Lanig;Midfielder;German;27;190;79
+39;Slawomir Peszko;Midfielder;Polish;26;172;64
+40;Kevin Pezzoni;Midfielder;German;22;193;91
+41;Mato Jajalo;Midfielder;Croatian;23;182;77
+42;Adam Matuschyk;Midfielder;Polish;22;183;73
+43;Christian Clemens;Midfielder;German;20;180;70
+44;Sebastian Freis;Forward;German;26;183;78
+45;Lukas Podolski;Forward;German;26;182;83
+46;Milivoje Novakovic;Forward;Slovenian;32;192;85
+47;Alexandru Ionita;Forward;Romanian;22;185;80
+48;Adil Chihi;Forward;German;23;183;78
+49;Wilfried Sanou;Forward;Burkinabe;27;165;64
+50;Raphael Sch<U+00E4>fer;Goalkeeper;German;32;190;91
+51;Alexander Stephan;Goalkeeper;German;25;189;81
+52;Per Nilsson;Defender;Swedish;29;190;86
+53;Dominic Maroh;Defender;Slovenian;24;186;73
+54;Timm Klose;Defender;Swiss;23;193;87
+55;Juri Judt;Defender;German;NA;173;71
+56;Javier Pinola;Defender;Argentinian;NA;180;79
+57;Philipp Wollscheid;Defender;German;22;194;84
+58;Timmy Simons;Midfielder;Belgian;34;186;79
+59;Markus Feulner;Midfielder;German;29;181;77
+60;Jens Hegeler;Midfielder;German;23;193;85
+61;Robert Mak;Midfielder;Slovakian;20;179;75
+62;Mike Frantz;Midfielder;German;24;180;77
+63;Almog Cohen;Midfielder;Israeli;23;169;71
+64;Daniel Didavi;Midfielder;German;21;179;73
+65;Timothy Chandler;Midfielder;American;21;186;81
+66;Markus Mendler;Midfielder;German;18;173;67
+67;Alexander Esswein;Midfielder;German;21;181;76
+68;Christian Eigler;Forward;German;NA;185;83
+69;Tomas Pekhart;Forward;Czech;22;194;88
+70;Albert Bunjaku;Forward;Swiss;27;178;77
+71;Christian Wetklo;Goalkeeper;German;31;190;90
+72;Heinz M<U+00FC>ller;Goalkeeper;German;33;193;88
+73;Bo Svensson;Defender;Danish;NA;190;85
+74;Malik Fathi;Defender;German;27;185;85
+75;Zdenek Pospech;Defender;Czech;32;174;74
+76;Nicolce Noveski;Defender;Macedonian;NA;190;87
+77;Radoslav Zabavnik;Defender;Slovakian;30;183;77
+78;Jan Kirchhoff;Defender;German;20;195;82
+79;Niko Bungert;Defender;German;24;188;75
+80;Fabian Sch<U+00F6>nheim;Defender;German;24;191;83
+81;Marco Caligiuri;Midfielder;German;NA;180;75
+82;Eugen Polanski;Midfielder;Polish;25;183;73
+83;Yunus Malli;Midfielder;German;19;179;70
+84;Julian Baumgartlinger;Midfielder;Austrian;23;181;78
+85;Florian Heller;Midfielder;German;29;179;75
+86;Elkin Soto;Midfielder;Colombian;31;179;76
+87;Marcel Risse;Midfielder;German;NA;183;72
+88;Andreas Ivanschitz;Midfielder;Austrian;27;183;79
+89;Nicolai M<U+00FC>ller;Midfielder;German;23;173;66
+90;Sami Allagui;Forward;Tunisian;25;182;77
+91;Eric Maxim Choupo-moting;Forward;Cameroonian;22;190;82
+92;Anthony Ujah;Forward;Nigerian;20;183;82
+93;Zoltan Stieber;Forward;Hungarian;22;175;67
+94;Mario Gavranovic;Forward;Swiss;21;175;68
+95;Adam Szalai;Forward;Hungarian;23;193;82
+96;Deniz Yilmaz;Forward;Turkish;23;182;79
+97;Ren<U+00E9> Adler;Goalkeeper;German;26;189;85
+98;David Yelldell;Goalkeeper;American;29;194;88
+99;Bernd Leno;Goalkeeper;German;19;190;79
+100;Fabian Giefer;Goalkeeper;German;21;196;86
+101;Daniel Schwaab;Defender;German;23;186;75
+102;Stefan Reinartz;Defender;German;22;190;85
+103;Bastian Oczipka;Defender;German;22;184;83
+104;Manuel Friedrich;Defender;German;32;189;83
+105;<U+00D6>mer Toprak;Defender;German;22;186;81
+106;Michal Kadlec;Defender;Czech;26;185;75
+107;Gonzalo Castro;Defender;German;24;171;72
+108;Simon Rolfes;Midfielder;German;29;191;83
+109;Tranquillo Barnetta;Midfielder;Swiss;27;176;69
+110;Lars Bender;Midfielder;German;NA;183;72
+111;Andr<U+00E9> Sch<U+00FC>rrle;Midfielder;German;20;184;75
+112;Renato Augusto;Midfielder;Brazilian;23;185;80
+113;Michael Ballack;Midfielder;German;34;189;80
+114;Hanno Balitsch;Midfielder;German;30;183;78
+115;Michael Ortega;Midfielder;Colombian;20;170;73
+116;Sidney Sam;Midfielder;German;23;174;70
+117;Stefan Kiessling;Forward;German;27;191;78
+118;Eren Derdiyok;Forward;Swiss;23;191;83
+119;Nicolai J<U+00F6>rgensen;Forward;Danish;20;190;83
+120;Karim Bellarabi;Forward;Moroccan;21;183;75
+121;Roman Weidenfeller;Goalkeeper;German;31;188;85
+122;Mitchell Langerak;Goalkeeper;Australian;23;191;80
+123;Julian Koch;Defender;German;20;181;75
+124;Neven Subotic;Defender;Serbian;22;193;88
+125;Mats Hummels;Defender;German;22;192;90
+126;Chris L<U+00F6>we;Defender;German;22;171;68
+127;Patrick Owomoyela;Defender;German;31;187;87
+128;Lukasz Piszczek;Defender;Polish;26;184;73
+129;Felipe Santana;Defender;Brazilian;25;194;80
+130;Marcel Schmelzer;Defender;German;23;181;74
+131;Sebastian Kehl;Midfielder;German;31;188;80
+132;Florian Kringe;Midfielder;German;29;187;83
+133;Moritz Leitner;Midfielder;German;18;174;65
+134;Antonio Da Silva;Midfielder;Brazilian;33;176;76
+135;Mario G<U+00F6>tze;Midfielder;German;19;171;64
+136;Ivan Perisic;Midfielder;Croatian;22;187;74
+137;Jakub Blaszczykowski;Midfielder;Polish;25;175;71
+138;Kevin Gro<U+00DF>kreutz;Midfielder;German;23;186;72
+139;Ilkay G<U+00FC>ndogan;Midfielder;German;20;180;78
+140;Sven Bender;Midfielder;German;22;185;72
+141;Shinji Kagawa;Midfielder;Japanese;22;172;63
+142;Robert Lewandowski;Forward;Polish;23;183;76
+143;Mohamed Zidan;Forward;Egyptian;29;172;71
+144;Lucas Barrios;Forward;Paraguayan;26;187;83
+145;Marc-andr<U+00E9> Ter Stegen;Goalkeeper;German;19;189;84
+146;Christofer Heimeroth;Goalkeeper;German;30;194;91
+147;Matthias Zimmermann;Defender;German;19;176;73
+148;Filip Daems;Defender;Belgian;32;181;79
+149;Roel Brouwers;Defender;Dutch;29;192;81
+150;Oscar Wendt;Defender;Swedish;25;181;83
+151;Tony Jantschke;Defender;German;21;177;74
+152;Dante Bonfim;Defender;Brazilian;27;188;85
+153;Martin Stranzl;Defender;Austrian;31;190;85
+154;Patrick Herrmann;Midfielder;German;20;179;68
+155;Lukas Rupp;Midfielder;German;20;178;64
+156;Marco Reus;Midfielder;German;22;180;75
+157;Roman Neust<U+00E4>dter;Midfielder;German;23;190;83
+158;Thorben Marx;Midfielder;German;30;184;83
+159;Havard Nordtveit;Midfielder;Norwegian;21;188;83
+160;Juan Arango;Midfielder;Venezuelan;31;180;76
+161;Yuki Otsu;Midfielder;Japanese;21;180;73
+162;Raul Bobadilla;Forward;Argentinian;NA;180;78
+163;Igor De Camargo;Forward;Belgian;28;187;83
+164;Mike Hanke;Forward;German;27;185;83
+165;Simon Jentzsch;Goalkeeper;German;35;196;97
+166;Mohamed Amsif;Goalkeeper;German;22;187;90
+167;Paul Verhaegh;Defender;Dutch;28;178;74
+168;Gibril Sankoh;Defender;Sierra Leonean;28;187;82
+169;Dominik Reinhardt;Defender;German;26;188;81
+170;Uwe M<U+00F6>hrle;Defender;German;31;188;81
+171;Jonas De Roeck;Defender;Belgian;31;188;79
+172;Axel Bellinghausen;Defender;German;28;182;77
+173;Sebastian Langkamp;Defender;German;23;190;85
+174;Marcel De Jong;Defender;Canadian;24;174;73
+175;Jan-ingwer Callsen- Bracker;Defender;German;26;189;85
+176;Hajime Hosogai;Midfielder;Japanese;25;177;64
+177;Daniel Baier;Midfielder;German;27;175;73
+178;Tobias Werner;Midfielder;German;26;177;67
+179;Marcel Ndjeng;Midfielder;Cameroonian;29;179;72
+180;Andrew Sinkala;Midfielder;Zambian;32;175;75
+181;Daniel Brinkmann;Midfielder;German;25;193;89
+182;Dawda Bah;Midfielder;Gambian;27;187;74
+183;Lorenzo Davids;Midfielder;Dutch;25;174;74
+184;Torsten Oehrl;Forward;German;25;191;84
+185;Nando Rafael;Forward;German;27;180;75
+186;Patrick Mayer;Forward;German;23;180;75
+187;Edmond Kapllani;Forward;Albanian;29;185;86
+188;Michael Thurk;Forward;German;35;178;68
+189;Sascha M<U+00F6>lders;Forward;German;26;187;79
+190;Stephan Hain;Forward;German;22;178;72
+191;Manuel Neuer;Goalkeeper;German;25;193;90
+192;Hans-j<U+00F6>rg Butt;Goalkeeper;German;37;191;91
+193;Rouven Sattelmaier;Goalkeeper;German;24;187;85
+194;Breno;Defender;Brazilian;21;187;83
+195;Daniel Van Buyten;Defender;Belgian;33;196;96
+196;Rafinha;Defender;Brazilian;26;172;68
+197;Jerome Boateng;Defender;German;23;192;90
+198;Philipp Lahm;Defender;German;27;170;65
+199;Diego Contento;Defender;German;21;176;70
+200;Holger Badstuber;Defender;German;22;189;78
+201;Franck Ribery;Midfielder;French;28;170;72
+202;Danijel Pranjic;Midfielder;Croatian;29;170;70
+203;Thomas M<U+00FC>ller;Midfielder;German;22;186;74
+204;David Alaba;Midfielder;Austrian;19;175;70
+205;Luiz Gustavo;Midfielder;Brazilian;24;187;80
+206;Bastian Schweinsteiger;Midfielder;German;27;183;79
+207;Toni Kroos;Midfielder;German;21;182;74
+208;Anatoliy Tymoshchuk;Midfielder;Ukrainian;32;181;70
+209;Nils Petersen;Forward;German;22;188;79
+210;Arjen Robben;Forward;Dutch;27;181;75
+211;Ivica Olic;Forward;Croatian;32;182;85
+212;Takashi Usami;Forward;Japanese;19;178;68
+213;Mario Gomez;Forward;German;26;189;86
+214;Ralf F<U+00E4>hrmann;Goalkeeper;German;22;194;89
+215;Mathias Schober;Goalkeeper;German;35;190;94
+216;Lars Unnerstall;Goalkeeper;German;21;198;100
+217;Hans Sarpei;Defender;Ghanaian;35;178;73
+218;Segio Escudero;Defender;Spanish;22;176;65
+219;Benedikt H<U+00F6>wedes;Defender;German;23;187;78
+220;Kyriakos Papadopoulos;Defender;Greek;19;183;85
+221;Christoph Metzelder;Defender;German;30;194;91
+222;Atsuto Uchida;Defender;Japanese;23;176;67
+223;Christian Fuchs;Defender;Austrian;25;186;82
+224;Tim Hoogland;Midfielder;German;26;183;81
+225;Lewis Holtby;Midfielder;German;20;176;72
+226;Alexander Baumjohann;Midfielder;German;24;178;75
+227;Marco H<U+00F6>ger;Midfielder;German;22;186;78
+228;Jermaine Jones;Midfielder;American;29;184;78
+229;Jan Moravek;Midfielder;Czech;21;180;75
+230;Jose Manuel Jurado;Midfielder;Spanish;25;173;72
+231;Peer Kluge;Midfielder;German;30;179;68
+232;Christoph Moritz;Midfielder;German;21;187;71
+233;Levan Kenia;Midfielder;Georgian;20;176;70
+234;Julian Draxler;Midfielder;German;17;185;70
+235;Joel Matip;Midfielder;Cameroonian;20;192;83
+236;Raul Gonzalez;Forward;Spanish;34;180;73
+237;Ciprian Marica;Forward;Romanian;25;184;78
+238;Jefferson Farfan;Forward;Peruvian;26;177;72
+239;Teemu Pukki;Forward;Finnish;21;172;67
+240;Klaas-jan Huntelaar;Forward;Dutch;28;186;78
+241;Jaroslav Drobny;Goalkeeper;Czech;31;192;90
+242;Tom Mickel;Goalkeeper;German;22;186;81
+243;Wolfgang Hesl;Goalkeeper;German;NA;185;85
+244;Slobodan Rajkovic;Defender;Serbian;22;191;89
+245;Dennis Diekmeier;Defender;German;21;188;79
+246;Michael Mancienne;Defender;English;23;184;74
+247;Heiko Westermann;Defender;German;28;190;87
+248;Jeffrey Bruma;Defender;Dutch;19;185;76
+249;Dennis Aogo;Defender;German;24;184;84
+250;Guy Demel;Defender;Ivorian;30;188;88
+251;Muhamed Besic;Defender;Bosnian;19;180;75
+252;Marcell Jansen;Midfielder;German;25;191;89
+253;Tomas Rincon;Midfielder;Venezuelan;23;175;75
+254;Ivo Ilicevic;Midfielder;Croatian;24;174;65
+255;Robert  Tesche;Midfielder;German;24;180;73
+256;David Jarolim;Midfielder;Czech;32;174;69
+257;G<U+00F6>khan T<U+00F6>re;Midfielder;Turkish;19;176;74
+258;Per Ciljan Skjelbred;Midfielder;Norwegian;24;175;62
+259;Tolgay Arslan;Midfielder;German;21;179;75
+260;Mickael Tavares;Midfielder;Senegalese;28;185;75
+261;Gojko Kacar;Midfielder;Serbian;24;185;79
+262;Paolo Guerrero;Forward;Peruvian;27;184;72
+263;Mladen Petric;Forward;Croatian;30;185;81
+264;Son Heung-min;Forward;South Korean;19;184;76
+265;Marcus Berg;Forward;Swedish;25;184;76
+266;Romeo Castelen;Forward;Dutch;28;170;65
+267;Ron-robert Zieler;Goalkeeper;German;22;188;83
+268;Markus Miller;Goalkeeper;German;29;189;89
+269;Emanuel Pogatetz;Defender;Austrian;28;191;90
+270;Mario Eggimann;Defender;Swiss;30;189;84
+271;Steven Cherundolo;Defender;American;32;172;66
+272;Christian Schulz;Defender;German;28;185;80
+273;Karim Haggui;Defender;Tunisian;27;190;83
+274;Sofian Chahed;Defender;Tunisian;28;178;73
+275;Christopher Avevor;Defender;German;19;184;81
+276;Leon Andreasen;Midfielder;Danish;28;188;81
+277;Sergio Pinto;Midfielder;German;30;176;72
+278;Altin Lala;Midfielder;Albanian;35;172;64
+279;Henning Hauger;Midfielder;Norwegian;26;183;75
+280;Daniel Royer;Midfielder;Austrian;21;177;73
+281;Moritz Stoppelkamp;Midfielder;German;24;180;79
+282;Christian Pander;Midfielder;German;28;186;80
+283;Lars Stindl;Midfielder;German;23;180;73
+284;Carlitos;Midfielder;Portuguese;29;175;72
+285;Manuel Schmiedebach;Midfielder;German;22;171;70
+286;Konstantin Rausch;Midfielder;German;21;182;76
+287;Artur Sobiech;Forward;Polish;21;184;75
+288;Didier Yah Konan;Forward;Ivorian;27;174;74
+289;Jan Schlaudraff;Forward;German;28;180;68
+290;Mohammed Abdellaoue;Forward;Norwegian;25;184;82
+291;Maikel Aerts;Goalkeeper;Dutch;35;196;91
+292;Sascha Burchert;Goalkeeper;German;21;188;78
+293;Thomas Kraft;Goalkeeper;German;23;187;82
+294;Christian Lell;Defender;German;27;183;80
+295;Roman Hubnik;Defender;Czech;27;191;84
+296;Andre Mijatovic;Defender;Croatian;31;191;80
+297;Christoph Janker;Defender;German;26;185;78
+298;Maik Franz;Defender;German;30;190;85
+299;Ronny;Defender;Brazilian;25;175;74
+300;Levan Kobiashvili;Midfielder;Georgian;34;183;79
+301;Andreas Ottl;Midfielder;German;26;185;77
+302;Raffael;Midfielder;Brazilian;26;174;69
+303;<U+00C4>nis Ben-hatira;Midfielder;German;23;181;78
+304;Peter Niemeyer;Midfielder;German;27;191;83
+305;Patrick Ebert;Midfielder;German;24;176;76
+306;Fanol Perdedaj;Midfielder;German;20;172;69
+307;Fabian Lustenberger;Midfielder;Swiss;23;180;70
+308;Adrian Ramos;Forward;Colombian;25;185;74
+309;Tunay Torun;Forward;Turkish;21;179;72
+310;Nikita Rukavytsya;Forward;Australian;24;183;74
+311;Rob Friend;Forward;Canadian;30;195;94
+312;Pierre-michel Lasogga;Forward;German;19;189;88
+313;Daniel Batz;Goalkeeper;German;20;190;86
+314;Manuel Salz;Goalkeeper;German;26;185;75
+315;Oliver Baumann;Goalkeeper;German;21;187;80
+316;Pavel Krmas;Defender;Czech;NA;193;86
+317;Felix Bastians;Defender;German;23;188;83
+318;Beg Ferati;Defender;Swiss;24;188;81
+319;Heiko Butscher;Defender;German;31;189;86
+320;Oliver Barth;Defender;German;31;188;80
+321;Mensur Mujdza;Defender;Bosnian;27;184;74
+322;Yacine Abdessadki;Midfielder;Moroccan;30;175;70
+323;Cedric Makiadi;Midfielder;DR Congolese;27;178;77
+324;Jan Rosenthal;Midfielder;German;25;186;75
+325;Maximilian Nicu;Midfielder;Romanian;28;185;75
+326;Anton Putsila;Midfielder;Belarusian;24;180;74
+327;Johannes Flum;Midfielder;German;23;189;80
+328;Julian Schuster;Midfielder;German;26;190;77
+329;Daniel Caligiuri;Midfielder;German;23;186;81
+330;Papiss Demba Cisse;Forward;Senegalese;26;183;73
+331;Kisho Yano;Forward;Japanese;27;185;76
+332;Erik Jendrisek;Forward;Slovakian;NA;176;74
+333;Stefan Reisinger;Forward;German;30;185;82
+334;Garra Dembele;Forward;Malian;25;186;75
+335;Tim Wiese;Goalkeeper;German;29;193;89
+336;Sebastian Mielitz;Goalkeeper;German;22;188;73
+337;Christian Vander;Goalkeeper;German;30;195;90
+338;Sebastian Boenisch;Defender;Polish;24;191;86
+339;Naldo;Defender;Brazilian;NA;198;89
+340;Clemens Fritz;Defender;German;30;183;81
+341;Lukas Schmitz;Defender;German;22;184;80
+342;Sebastian Pr<U+00F6>dl;Defender;Austrian;24;194;85
+343;Mikael Silvestre;Defender;French;34;184;83
+344;Sokratis Papastathopoulos;Defender;Greek;23;183;82
+345;Andreas Wolf;Defender;German;29;182;82
+346;Wesley Lopes Beltrame;Midfielder;Brazilian;24;179;63
+347;Tim Borowski;Midfielder;German;31;194;85
+348;Marko Marin;Midfielder;German;22;170;64
+349;Aaron Hunt;Midfielder;German;25;183;73
+350;Aleksandar Ignjovski;Midfielder;Serbian;20;174;68
+351;Mehmet Ekici;Midfielder;Turkish;21;180;74
+352;Tom Trybull;Midfielder;German;18;181;72
+353;Predrag Stevanovic;Midfielder;Serbian;20;178;63
+354;Florian Trinks;Midfielder;German;19;183;73
+355;Philipp Bargfrede;Midfielder;German;22;174;71
+356;Marko Arnautovic;Forward;Austrian;22;192;83
+357;Denni Avdic;Forward;Swedish;23;192;94
+358;Markus Rosenberg;Forward;Swedish;28;185;80
+359;Felix Kroos;Forward;German;20;184;70
+360;Sandro Wagner;Forward;German;23;194;90
+361;Claudio Pizarro;Forward;Peruvian;32;186;84
+362;Lennart Thy;Forward;German;19;184;75
+363;Daniel Haas;Goalkeeper;German;28;188;82
+364;Tom Starke;Goalkeeper;German;30;194;91
+365;Andreas Beck;Defender;German;24;180;76
+366;Matthias Jaissle;Defender;German;23;186;83
+367;Marvin Compper;Defender;German;26;185;77
+368;Isaac Vorsah;Defender;Ghanaian;23;192;85
+369;Andreas Ibertsberger;Defender;Austrian;29;178;77
+370;Edson Braafheid;Defender;Dutch;28;176;73
+371;Sebastian Rudy;Midfielder;German;21;179;73
+372;Boris Vukcevic;Midfielder;German;21;182;78
+373;Gylfi Sigurdsson;Midfielder;Icelandic;22;186;77
+374;Fabian Johnson;Midfielder;American;23;183;70
+375;Tobias Weis;Midfielder;German;26;170;68
+376;Roberto Firmino;Midfielder;Brazilian;19;180;76
+377;Sejad Salihovic;Midfielder;Bosnian;27;182;82
+378;Sven Schipplock;Forward;German;22;186;81
+379;Ryan Babel;Forward;Dutch;24;185;78
+380;Peniel Mlapa;Forward;German;20;193;85
+381;Vedad Ibisevic;Forward;Bosnian;27;188;80
+382;Chinedu Obasi;Forward;Nigerian;25;188;78
+383;Sven Ulreich;Goalkeeper;German;23;192;84
+384;Alexander Stolz;Goalkeeper;German;27;189;85
+385;Marc Ziegler;Goalkeeper;German;35;192;89
+386;Cristian Molinaro;Defender;Italian;28;180;76
+387;Serdar Tasci;Defender;German;24;186;80
+388;Georg Niedermeier;Defender;German;25;189;75
+389;Francisco Maza Rodriguez;Defender;Mexican;29;191;79
+390;Arthur Boka;Defender;Ivorian;28;166;67
+391;Mathieu Delpierre;Defender;French;30;193;86
+392;Khalid Boulahrouz;Defender;Dutch;29;183;74
+393;Stefano Celozzi;Defender;German;23;171;65
+394;William Kvist;Midfielder;Danish;26;184;80
+395;Zdravko Kuzmanovic;Midfielder;Serbian;23;187;80
+396;Johan Audel;Midfielder;French;27;181;78
+397;Timo Gebhart;Midfielder;German;22;182;78
+398;Ibrahima Traore;Midfielder;Guinean;23;170;61
+399;Christian Gentner;Midfielder;German;26;189;81
+400;Mamadou Bah;Midfielder;Guinean;23;183;79
+401;Tamas  Hajnal;Midfielder;Hungarian;30;168;67
+402;Martin Harnik;Forward;Austrian;24;185;75
+403;Cacau;Forward;German;30;179;74
+404;Julian Schieber;Forward;German;22;186;83
+405;Pavel Pogrebnyak;Forward;Russian;27;188;91
+406;Shinji Okazaki;Forward;Japanese;25;174;76
+407;Diego Benaglio;Goalkeeper;Swiss;28;193;88
+408;Andre Lenz;Goalkeeper;German;37;191;93
+409;Marvin Hitz;Goalkeeper;Swiss;23;191;89
+410;Arne Friedrich;Defender;German;32;185;80
+411;Marcel Sch<U+00E4>fer;Defender;German;27;184;76
+412;Sotiris Kyrgiakos;Defender;Greek;32;193;88
+413;Alexander Madlung;Defender;German;29;193;93
+414;Marco Russ;Defender;German;26;190;75
+415;Chris;Defender;Brazilian;33;185;78
+416;Hrvoje Cale;Defender;Croatian;26;184;76
+417;Patrick Ochs;Midfielder;German;27;179;76
+418;Ja-cheol Koo;Midfielder;South Korean;22;183;75
+419;Aliaksandr Hleb;Midfielder;Belarusian;30;185;74
+420;Josua;Midfielder;Brazilian;32;170;66
+421;Thomas Kahlenberg;Midfielder;Danish;28;183;72
+422;Thomas Hitzlsperger;Midfielder;German;29;183;80
+423;Hasan Salihamidzic;Midfielder;Bosnian;34;176;71
+424;Makoto Hasebe;Midfielder;Japanese;27;179;72
+425;Tolga Cigerci;Midfielder;German;19;185;75
+426;Christian Tr<U+00E4>sch;Midfielder;German;24;180;74
+427;Mateusz Klich;Midfielder;Polish;21;183;68
+428;Ashkan Dejagah;Midfielder;German;25;181;80
+429;Jan Polak;Midfielder;Czech;30;181;77
+430;Yohandry Orozco;Midfielder;Venezuelan;20;164;55
+431;Rasmus Jonsson;Forward;Swedish;21;192;70
+432;Srdjan Lakic;Forward;Croatian;27;186;81
+433;Mario Mandzukic;Forward;Croatian;25;186;76
+434;Patrick Helmes;Forward;German;27;182;81
+435;Manuel Almunia;Goalkeeper;Spanish;34;193;86
+436;Wojciech Szczesny;Goalkeeper;Polish;21;195;84
+437;Lukasz Fabianski;Goalkeeper;Polish;26;191;83
+438;Vito Mannone;Goalkeeper;Italian;23;191;80
+439;Bacary Sagna;Defender;French;28;176;72
+440;Per Mertesacker;Defender;German;26;198;90
+441;Thomas Vermaelen;Defender;Belgian;25;182;82
+442;Laurent Koscielny;Defender;French;26;186;75
+443;Andre Santos;Defender;Brazilian;28;180;74
+444;Sebastien Squillaci;Defender;French;31;184;76
+445;Johan Djourou;Defender;Swiss;24;193;87
+446;Kieran Gibbs;Defender;English;21;180;70
+447;Abou Diaby;Midfielder;French;25;188;75
+448;Tomas Rosicky;Midfielder;Czech;30;180;69
+449;Mikel Arteta;Midfielder;Spanish;29;176;69
+450;Aaron Ramsey;Midfielder;Welsh;20;178;76
+451;Alexandre Song;Midfielder;Cameroonian;24;185;78
+452;Jack Wilshere;Midfielder;English;19;173;68
+453;Andrei Arshavin;Midfielder;Russian;30;172;72
+454;Emmanuel Frimpong;Midfielder;Ghanaian;19;180;83
+455;Yossi Benayoun;Midfielder;Israeli;31;173;61
+456;Chu-young Park;Forward;South Korean;26;183;74
+457;Robin Van Persie;Forward;Dutch;28;185;71
+458;Theo Walcott;Forward;English;22;175;68
+459;Gervais Yao Kouassi Gervinho;Forward;Ivorian;24;179;68
+460;Marouane Chamakh;Forward;Moroccan;27;185;78
+461;Ryo Miyaichi;Forward;Japanese;18;183;71
+462;Sanchez Watt;Forward;English;20;180;76
+463;Shay Given;Goalkeeper;Irish;35;185;83
+464;Brad Guzan;Goalkeeper;American;27;193;95
+465;Andy Marshall;Goalkeeper;English;36;188;86
+466;Alan Hutton;Defender;Scottish;26;185;72
+467;Stephen Warnock;Defender;English;29;175;76
+468;Richard Dunne;Defender;Irish;31;188;98
+469;James Collins;Defender;Welsh;28;193;90
+470;Ciaran Clark;Defender;Irish;21;188;76
+471;Habib Beye;Defender;Senegalese;33;183;79
+472;Carlos Cuellar;Defender;Spanish;30;190;84
+473;Eric Lichaj;Defender;American;22;180;79
+474;Stephen Ireland;Midfielder;Irish;25;173;65
+475;Jermaine Jenas;Midfielder;English;28;180;76
+476;Charles N'zogbia;Midfielder;French;25;170;69
+477;Marc Albrighton;Midfielder;English;21;175;67
+478;Fabian Delph;Midfielder;English;21;174;60
+479;Stiliyan Petrov;Midfielder;Bulgarian;32;180;77
+480;Barry Bannan;Midfielder;Scottish;21;170;63
+481;Darren Bent;Forward;English;27;181;75
+482;Gabriel Agbonlahor;Forward;English;24;180;79
+483;Nathan Delfouneso;Forward;English;20;185;79
+484;Emile Heskey;Forward;English;33;188;88
+485;Paul Robinson;Goalkeeper;English;31;190;94
+486;Mark Bunn;Goalkeeper;English;26;183;77
+487;Michel Salgado;Defender;Spanish;35;174;75
+488;Martin Olsson;Defender;Swedish;23;177;77
+489;Christopher Samba;Defender;Congolese;27;193;90
+490;Gael Givet;Defender;French;30;181;75
+491;Ryan Nelsen;Defender;New Zealander;33;185;81
+492;Scott Dann;Defender;English;24;188;76
+493;Grant Hanley;Defender;Scottish;19;188;78
+494;David Dunn;Midfielder;English;31;178;80
+495;Mauro Formica;Midfielder;Argentinian;23;176;64
+496;Vincenzo Grella;Midfielder;Australian;31;183;75
+497;Morten Gamst Pedersen;Midfielder;Norwegian;30;180;76
+498;Radosav Petrovic;Midfielder;Serbian;22;193;83
+499;Steven N'zonzi;Midfielder;French;22;190;75
+500;Simon Vukcevic;Midfielder;Montenegrin;25;180;81
+501;Aiyegbeni Yakubu;Forward;Nigerian;28;183;83
+502;Ruben Rochina;Forward;Spanish;20;179;69
+503;Nick Blackman;Forward;English;21;188;75
+504;David Hoilett;Forward;Canadian;21;172;71
+505;David Goodwillie;Forward;Scottish;22;176;75
+506;Jason Roberts;Forward;Grenadian;33;185;89
+507;Jussi J<U+00E4><U+00E4>skel<U+00E4>inen;Goalkeeper;Finnish;36;191;80
+508;Gretar Steinsson;Defender;Icelandic;29;189;78
+509;Marcos Alonso;Defender;Spanish;20;188;85
+510;Paul Robinson;Defender;English;32;175;72
+511;Gary Cahill;Defender;English;25;188;71
+512;Zat Knight;Defender;English;31;200;87
+513;Tyrone Mears;Defender;English;28;181;74
+514;Sam Ricketts;Defender;Welsh;29;185;77
+515;Dedryck Boyata;Defender;Belgian;20;188;84
+516;David Wheater;Defender;English;24;194;84
+517;Fabrice Muamba;Midfielder;English;23;188;80
+518;Chris Eagles;Midfielder;English;25;182;67
+519;Stuart Holden;Midfielder;American;26;178;73
+520;Ricardo Gardner;Midfielder;Jamaican;32;175;70
+521;Mark Davies;Midfielder;English;23;180;74
+522;Nigel Reo-coker;Midfielder;English;27;175;75
+523;Darren Pratley;Midfielder;Jamaican;26;186;69
+524;Sean Davis;Midfielder;English;31;178;77
+525;Lee Chung-yong;Midfielder;South Korean;23;180;69
+526;Tuncay Sanli;Forward;Turkish;29;182;70
+527;Martin Petrov;Forward;Bulgarian;32;183;76
+528;Kevin Davies;Forward;English;34;183;80
+529;Ivan Klasnic;Forward;Croatian;31;186;79
+530;Robbie Blake;Forward;English;35;175;76
+531;David N'gog;Forward;French;22;190;76
+532;Gael Kakuta;Forward;French;20;173;68
+533;Petr Cech;Goalkeeper;Czech;29;195;87
+534;Ross Turnbull;Goalkeeper;English;26;193;85
+535;Henrique Hilario;Goalkeeper;Portuguese;35;188;86
+536;Branislav Ivanovic;Defender;Serbian;27;188;84
+537;Ashley Cole;Defender;English;30;176;66
+538;David Luiz;Defender;Brazilian;24;188;84
+539;Jose Bosingwa;Defender;Portuguese;29;183;75
+540;Paulo Ferreira;Defender;Portuguese;32;182;76
+541;John Terry;Defender;English;30;188;84
+542;Alex Rodrigo Dias Da Costa;Defender;Brazilian;29;189;92
+543;Ryan Bertrand;Defender;English;22;179;70
+544;Michael Essien;Midfielder;Ghanaian;28;178;84
+545;Oriol Romeu;Midfielder;Spanish;19;182;82
+546;Ramires Santos Do Nascimento;Midfielder;Brazilian;24;180;67
+547;Frank Lampard;Midfielder;English;33;183;78
+548;John Obi Mikel;Midfielder;Nigerian;24;188;82
+549;Raul Meireles;Midfielder;Portuguese;28;179;69
+550;Josh Mceachran;Midfielder;English;18;178;66
+551;Fernando Torres;Forward;Spanish;27;185;78
+552;Juan Manuel Mata;Forward;Spanish;23;170;63
+553;Didier Drogba;Forward;Ivorian;33;188;88
+554;Florent Malouda;Forward;French;31;181;73
+555;Romelu Lukaku;Forward;Belgian;18;192;94
+556;Salomon Kalou;Forward;Ivorian;26;184;77
+557;Daniel Sturridge;Forward;English;22;182;76
+558;Nicolas Anelka;Forward;French;32;183;77
+559;Jan Mucha;Goalkeeper;Slovakian;28;189;87
+560;Tim Howard;Goalkeeper;American;32;191;88
+561;Tony Hibbert;Defender;English;30;173;79
+562;Leighton Baines;Defender;English;26;173;74
+563;Joseph Yobo;Defender;Nigerian;31;188;76
+564;Johnny Heitinga;Defender;Dutch;27;180;75
+565;Phil Jagielka;Defender;English;29;183;83
+566;Sylvain Distin;Defender;French;33;193;88
+567;Philip Neville;Defender;English;34;180;75
+568;Diniyar Bilyaletdinov;Midfielder;Russian;26;186;75
+569;Royston Drenthe;Midfielder;Dutch;24;168;73
+570;Leon Osman;Midfielder;English;30;173;64
+571;Seamus Coleman;Midfielder;Irish;22;178;67
+572;Marouane Fellaini;Midfielder;Belgian;23;194;85
+573;Jack Rodwell;Midfielder;English;20;188;71
+574;Louis Saha;Forward;French;33;181;80
+575;Denis Stracqualursi;Forward;Argentinian;23;190;87
+576;Tim Cahill;Forward;Australian;31;175;68
+577;Apostolos Vellios;Forward;Greek;19;191;79
+578;Victor Anichebe;Forward;Nigerian;23;191;85
+579;Jose Baxter;Forward;English;19;179;74
+580;Mark Schwarzer;Goalkeeper;Australian;38;194;85
+581;Stephen Kelly;Defender;Irish;28;184;82
+582;John Arne Riise;Defender;Norwegian;30;185;77
+583;Brede Hangeland;Defender;Norwegian;30;195;92
+584;Chris Baird;Defender;Northern Irish;29;179;71
+585;Philippe Senderos;Defender;Swiss;26;190;84
+586;Aaron Hughes;Defender;Northern Irish;31;183;78
+587;Zdenek Grygera;Defender;Czech;31;185;78
+588;Rafik Halliche;Defender;Algerian;25;187;77
+589;Steve Sidwell;Midfielder;English;28;178;70
+590;Pajtim Kasami;Midfielder;Swiss;19;187;75
+591;Danny Murphy;Midfielder;English;34;175;67
+592;Damien Duff;Midfielder;Irish;32;175;77
+593;Bj<U+00F6>rn Helge Riise;Midfielder;Norwegian;28;175;70
+594;Dickson Etuhu;Midfielder;Nigerian;29;187;82
+595;Clint Dempsey;Midfielder;American;28;185;77
+596;Simon Davies;Midfielder;Welsh;31;178;76
+597;Andrew Johnson;Forward;English;30;170;71
+598;Orlando Sa;Forward;Portuguese;23;188;85
+599;Bryan Ruiz;Forward;Costa Rican;26;188;78
+600;Bobby Zamora;Forward;English;30;191;73
+601;Moussa Dembele;Forward;Belgian;24;183;83
+602;Brad Jones;Goalkeeper;Australian;29;191;76
+603;Pepe Reina;Goalkeeper;Spanish;29;188;84
+604;Doni;Goalkeeper;Brazilian;31;194;91
+605;Glen Johnson;Defender;English;27;183;80
+606;Jose Enrique;Defender;Spanish;25;184;76
+607;Daniel Agger;Defender;Danish;26;191;80
+608;Fabio Aurelio;Defender;Brazilian;31;178;75
+609;Sebastian Coates;Defender;Uruguayan;20;196;85
+610;Danny Wilson;Defender;Scottish;19;187;79
+611;Jamie Carragher;Defender;English;33;185;83
+612;Martin Kelly;Defender;English;21;191;77
+613;Martin <U+0160>krtel;Defender;Slovakian;26;191;81
+614;John Flanagan;Defender;English;18;179;69
+615;Jack Robinson;Defender;English;18;180;77
+616;Steven Gerrard;Midfielder;English;31;183;79
+617;Maxi Rodriguez;Midfielder;Argentinian;30;180;75
+618;Jordan Henderson;Midfielder;English;21;183;70
+619;Dirk Kuyt;Midfielder;Dutch;31;183;77
+620;Stewart Downing;Midfielder;English;27;180;64
+621;Jay Spearing;Midfielder;English;22;168;70
+622;Lucas Leiva;Midfielder;Brazilian;24;179;74
+623;Charlie Adam;Midfielder;Scottish;25;185;83
+624;Jonjo Shelvey;Midfielder;English;19;183;70
+625;Luis Suarez;Forward;Uruguayan;24;181;81
+626;Andy Carroll;Forward;English;22;191;81
+627;Craig Bellamy;Forward;Welsh;32;168;70
+628;Stuart Taylor;Goalkeeper;English;30;196;90
+629;Joe Hart;Goalkeeper;English;24;191;82
+630;Costel Pantilimon;Goalkeeper;Romanian;24;203;100
+631;Gunnar Nielsen;Goalkeeper;Faroese;24;191;82
+632;Micah Richards;Defender;English;23;180;83
+633;Wayne Bridge;Defender;English;31;177;68
+634;Vincent Kompany;Defender;Belgian;25;191;85
+635;Pablo Zabaleta;Defender;Argentinian;26;174;74
+636;Joleon Lescott;Defender;English;29;188;83
+637;Aleksandar Kolarov;Defender;Serbian;25;187;83
+638;Stefan Savic;Defender;Montenegrin;20;186;73
+639;Gael Clichy;Defender;French;26;176;65
+640;Nedum Onuoha;Defender;English;24;183;94
+641;Kolo Toure;Defender;Ivorian;30;183;76
+642;James Milner;Midfielder;English;25;176;70
+643;Adam Johnson;Midfielder;English;24;180;68
+644;Gareth Barry;Midfielder;English;30;181;80
+645;Samir Nasri;Midfielder;French;24;177;75
+646;Owen Hargreaves;Midfielder;English;30;180;74
+647;David Silva;Midfielder;Spanish;25;170;67
+648;Nigel De Jong;Midfielder;Dutch;26;174;72
+649;Yaya Toure;Midfielder;Ivorian;28;191;90
+650;Gai Assulin;Forward;Israeli;20;173;65
+651;Edin Dzeko;Forward;Bosnian;25;193;84
+652;Sergio Ag<U+00FC>ero;Forward;Argentinian;23;172;74
+653;Carlos Tavez;Forward;Argentinian;27;173;73
+654;Mario Balotelli;Forward;Italian;21;189;88
+655;David De Gea;Goalkeeper;Spanish;20;192;82
+656;Tomasz Kuszczak;Goalkeeper;Polish;29;190;84
+657;Anders Lindegaard;Goalkeeper;Danish;27;193;80
+658;Patrice Evra;Defender;French;30;175;75
+659;Phil Jones;Defender;English;19;185;82
+660;Rio Ferdinand;Defender;English;32;189;77
+661;Jonny Evans;Defender;Northern Irish;23;188;77
+662;Chris Smalling;Defender;English;21;192;81
+663;Nemanja Vidic;Defender;Serbian;29;189;84
+664;Fabio Da Silva;Defender;Brazilian;21;173;69
+665;Rafael Da Silva;Defender;Brazilian;21;172;69
+666;Anderson;Midfielder;Brazilian;23;176;69
+667;Ryan Giggs;Midfielder;Welsh;37;180;71
+668;Park Ji-sung;Midfielder;South Korean;30;175;70
+669;Michael Carrick;Midfielder;English;30;189;78
+670;Nani;Midfielder;Portuguese;24;175;66
+671;Ashley Young;Midfielder;English;26;175;65
+672;Tom Cleverley;Midfielder;English;22;175;69
+673;Darren Fletcher;Midfielder;Scottish;27;185;83
+674;Luis Antonio Valencia;Midfielder;Ecuadorian;26;181;78
+675;Darron Gibson;Midfielder;Irish;23;183;80
+676;Matthew James;Midfielder;English;20;183;76
+677;Ravel Morrison;Midfielder;English;18;175;71
+678;Michael Owen;Forward;English;31;173;70
+679;Dimitar Berbatov;Forward;Bulgarian;30;188;79
+680;Wayne Rooney;Forward;English;25;178;79
+681;Javier Chicharito Hernandez;Forward;Mexican;23;173;62
+682;Danny Welbeck;Forward;English;20;188;73
+683;Federico Macheda;Forward;Italian;20;186;73
+684;Mame Biram Diouf;Forward;Senegalese;23;185;81
+685;Steve Harper;Goalkeeper;English;36;188;83
+686;Tim Krul;Goalkeeper;Dutch;23;188;75
+687;Fabricio Coloccini;Defender;Argentinian;29;183;78
+688;Davide Santon;Defender;Italian;20;187;77
+689;Mike Williamson;Defender;English;27;191;84
+690;Danny Simpson;Defender;English;24;173;72
+691;James Perch;Defender;English;25;180;74
+692;Ryan Taylor;Defender;English;27;175;65
+693;Steven Taylor;Defender;English;25;188;81
+694;Tamas Kadar;Defender;Hungarian;21;188;74
+695;Yohan Cabaye;Midfielder;French;25;175;72
+696;Daniel Guthrie;Midfielder;English;24;175;73
+697;Hatem Ben Arfa;Midfielder;French;24;178;65
+698;Dan Gosling;Midfielder;English;21;183;70
+699;Alan Smith;Midfielder;English;30;178;70
+700;Jonas Gutierrez;Midfielder;Argentinian;28;183;69
+701;Cheik Tiot<U+00E9>;Midfielder;Ivorian;25;180;79
+702;Peter Lovenkrands;Forward;Danish;31;180;75
+703;Demba Ba;Forward;Senegalese;26;189;84
+704;Leon Best;Forward;Irish;24;185;76
+705;Sylvain Marveaux;Forward;French;25;172;71
+706;Shola Ameobi;Forward;English;29;189;76
+707;Gabriel Obertan;Forward;French;22;186;79
+708;Nile Ranger;Forward;English;20;188;84
+709;John Ruddy;Goalkeeper;English;24;193;98
+710;Russell Martin;Defender;Scottish;24;183;73
+711;Adam Drury;Defender;English;33;180;73
+712;Leon Barnett;Defender;English;25;185;71
+713;Elliott Ward;Defender;English;26;185;83
+714;Kyle Naughton;Defender;English;22;178;73
+715;Daniel Ayala;Defender;Spanish;20;191;81
+716;Bradley Johnson;Midfielder;English;24;178;68
+717;Andrew Crofts;Midfielder;Welsh;27;175;73
+718;Andrew Surman;Midfielder;English;25;178;72
+719;David Fox;Midfielder;English;27;175;70
+720;Korey Smith;Midfielder;English;20;183;78
+721;Simon Lappin;Midfielder;Scottish;28;180;60
+722;Steve Morison;Forward;Welsh;28;188;85
+723;James Vaughan;Forward;English;23;180;78
+724;Grant Holt;Forward;English;31;183;81
+725;Simeon Jackson;Forward;Canadian;24;175;72
+726;Anthony Pilkington;Forward;Irish;23;183;76
+727;Wes Hoolahan;Forward;Irish;28;168;72
+728;Chris Martin;Forward;English;22;178;73
+729;Paddy Kenny;Goalkeeper;Irish;33;185;89
+730;Radek Cerny;Goalkeeper;Czech;37;191;89
+731;Brian Murphy;Goalkeeper;Irish;28;185;80
+732;Bradley Orr;Defender;English;28;183;75
+733;Clint Hill;Defender;English;32;183;72
+734;Fitz Hall;Defender;English;30;193;83
+735;Danny Gabbidon;Defender;Welsh;32;178;71
+736;Armand Traor<U+00E9>;Defender;Senegalese;21;185;67
+737;Bruno Perone;Defender;Brazilian;24;191;85
+738;Matthew Connolly;Defender;English;23;189;80
+739;Luke Young;Defender;English;32;183;73
+740;Danny Shittu;Defender;Nigerian;31;191;95
+741;Anton Ferdinand;Defender;English;26;185;78
+742;Martin Rowlands;Midfielder;Irish;32;175;68
+743;Shaun Derry;Midfielder;English;33;183;82
+744;Adel Taarabt;Midfielder;Moroccan;22;180;77
+745;Kieron Dyer;Midfielder;English;32;173;64
+746;Alejandro Faurlin;Midfielder;Argentinian;25;185;78
+747;<U+00C1>kos Buzs<U+00E1>ky;Midfielder;Hungarian;29;180;74
+748;Joey Barton;Midfielder;English;28;180;70
+749;Tommy Smith;Midfielder;English;31;179;79
+750;Hogan Ephraim;Midfielder;English;23;175;72
+751;Shaun Wright-phillips;Midfielder;English;29;167;64
+752;D.j. Campbell;Forward;English;29;178;72
+753;Jay Bothroyd;Forward;English;29;191;81
+754;Jamie Mackie;Forward;Scottish;25;178;71
+755;Patrick Agyemang;Forward;Ghanaian;30;185;89
+756;Rob Hulse;Forward;English;31;185;78
+757;Heidar Helguson;Forward;Icelandic;34;178;76
+758;Asmir Begovic;Goalkeeper;Bosnian;24;198;83
+759;Carlo Nash;Goalkeeper;English;38;195;89
+760;Thomas Sorensen;Goalkeeper;Danish;35;193;89
+761;Danny Higginbotham;Defender;English;32;185;74
+762;Robert Huth;Defender;German;27;191;90
+763;Danny Collins;Defender;Welsh;31;185;76
+764;Ryan Shawcross;Defender;English;23;191;76
+765;Matthew Upson;Defender;English;32;185;72
+766;Andrew Davies;Defender;English;26;188;82
+767;Andy Wilkinson;Defender;English;27;180;70
+768;Jonathan Woodgate;Defender;English;31;188;80
+769;Glenn Whelan;Midfielder;Irish;27;180;80
+770;Jermaine Pennant;Midfielder;English;28;175;68
+771;Tom Soares;Midfielder;English;25;183;72
+772;Marc Wilson;Midfielder;Irish;24;188;80
+773;Danny Pugh;Midfielder;English;28;183;76
+774;Salif Diao;Midfielder;Senegalese;34;184;76
+775;Dean Whitehead;Midfielder;English;29;180;76
+776;Michael Tonge;Midfielder;English;28;183;74
+777;Rory Delap;Midfielder;Irish;35;183;74
+778;Matthew Etherington;Midfielder;English;30;178;64
+779;Diego Arismendi;Midfielder;Uruguayan;23;189;82
+780;Wilson Palacios;Midfielder;Honduran;27;178;71
+781;Kenwyne Jones;Forward;Trinidadian;26;188;84
+782;Ricardo Fuller;Forward;Jamaican;31;191;78
+783;Mamady Sidibe;Forward;Malian;31;194;87
+784;Jon Walters;Forward;Irish;27;183;79
+785;Peter Crouch;Forward;English;30;201;75
+786;Cameron Jerome;Forward;English;25;185;85
+787;Craig Gordon;Goalkeeper;Scottish;28;193;77
+788;Keiren Westwood;Goalkeeper;Irish;26;188;86
+789;Simon Mignolet;Goalkeeper;Belgian;23;193;87
+790;Matthew Kilgallon;Defender;English;27;188;81
+791;Nyron Nosworthy;Defender;Jamaican;30;185;80
+792;Phil Bardsley;Defender;Scottish;26;180;77
+793;Michael Turner;Defender;English;27;193;85
+794;Wes Brown;Defender;English;31;185;75
+795;Marcos Angeleri;Defender;Argentinian;28;182;68
+796;John O'shea;Defender;Irish;30;190;88
+797;Titus Bramble;Defender;English;30;185;87
+798;Lee Cattermole;Midfielder;English;23;178;76
+799;Sebastian Larsson;Midfielder;Swedish;26;178;70
+800;Craig Gardner;Midfielder;English;24;178;75
+801;Kieran Richardson;Midfielder;English;26;178;71
+802;David Vaughan;Midfielder;Welsh;28;170;66
+803;David Meyler;Midfielder;Irish;22;190;74
+804;Ahmed Elmohamady;Midfielder;Egyptian;24;180;76
+805;Stephane Sessegnon;Midfielder;Benin;27;172;72
+806;Fraizer Campbell;Forward;English;24;180;71
+807;Connor Wickham;Forward;English;18;191;72
+808;Ji Dong-won;Forward;South Korean;20;187;74
+809;Nicklas Bendtner;Forward;Danish;23;193;84
+810;Michel Vorm;Goalkeeper;Dutch;27;183;84
+811;Jose Moreira;Goalkeeper;Portuguese;29;185;83
+812;Gerhard Tremmel;Goalkeeper;German;32;190;89
+813;Ashley Williams;Defender;Welsh;27;183;75
+814;Neil Taylor;Defender;Welsh;22;175;64
+815;Alan Tate;Defender;English;29;185;85
+816;Garry Monk;Defender;English;32;183;80
+817;Federico Bessone;Defender;Argentinian;27;178;76
+818;<U+00C0>ngel Rangel;Defender;Spanish;28;180;78
+819;Ferry Bodde;Midfielder;Dutch;29;179;79
+820;Leon Britton;Midfielder;English;29;168;64
+821;Andrea Orlandi;Midfielder;Spanish;27;183;78
+822;Nathan Dyer;Midfielder;English;23;165;57
+823;Wayne Routledge;Midfielder;English;26;170;64
+824;David Cotterill;Midfielder;Welsh;23;175;71
+825;Joe Allen;Midfielder;Welsh;21;168;62
+826;Kemy Agustien;Midfielder;Dutch;25;178;72
+827;Mark Gower;Midfielder;English;32;180;75
+828;Craig Beattie;Forward;Scottish;27;183;73
+829;Danny Graham;Forward;English;26;185;83
+830;Scott Sinclair;Forward;English;22;177;71
+831;Stephen Dobbie;Forward;Scottish;28;173;70
+832;Leroy Lita;Forward;English;26;170;75
+833;Luke Moore;Forward;English;25;180;76
+834;Ben Alnwick;Goalkeeper;English;24;183;80
+835;Heurelho Gomes;Goalkeeper;Brazilian;30;191;82
+836;Carlo Cudicini;Goalkeeper;Italian;38;185;78
+837;Brad Friedel;Goalkeeper;American;40;193;92
+838;Younes Kaboul;Defender;French;25;191;87
+839;William Gallas;Defender;French;34;181;72
+840;Sebastien Bassong;Defender;Cameroonian;25;191;75
+841;Michael Dawson;Defender;English;27;188;79
+842;Vedran Corluka;Defender;Croatian;25;193;85
+843;Ledley King;Defender;English;30;188;91
+844;Kyle Walker;Defender;English;21;178;73
+845;Benoit Assou-ekotto;Defender;Cameroonian;27;178;71
+846;Iago Falqu<U+00E9>;Midfielder;Spanish;21;173;67
+847;Gareth Bale;Midfielder;Welsh;22;183;70
+848;Tom Huddlestone;Midfielder;English;24;190;84
+849;Aaron Lennon;Midfielder;English;24;165;63
+850;Scott Parker;Midfielder;English;30;175;70
+851;Luka Modric;Midfielder;Croatian;26;174;67
+852;Niko Kranjcar;Midfielder;Croatian;27;185;74
+853;Danny Rose;Midfielder;English;21;173;75
+854;Sandro Ranieri Guimaraes Cordeiro;Midfielder;Brazilian;22;187;75
+855;Steven Pienaar;Midfielder;South African;29;176;66
+856;Roman Pavlyuchenko;Forward;Russian;29;188;80
+857;Emmanuel Adebayor;Forward;Togolese;27;191;82
+858;Rafael Van Der Vaart;Forward;Dutch;28;176;74
+859;Giovani Dos Santos;Forward;Mexican;22;174;77
+860;Jermain Defoe;Forward;English;28;170;65
+861;Ben Foster;Goalkeeper;English;28;188;77
+862;M<U+00E1>rton F<U+00FC>l<U+00F6>p;Goalkeeper;Hungarian;28;198;92
+863;Jonas Olsson;Defender;Swedish;28;193;85
+864;Steven Reid;Defender;Irish;30;183;76
+865;Gonzalo Jara Reyes;Defender;Chilean;26;178;77
+866;Nicky Shorey;Defender;English;30;175;67
+867;Gareth Mcauley;Defender;Northern Irish;31;191;76
+868;Billy Jones;Defender;English;24;181;77
+869;Gabriel Tamas;Defender;Romanian;27;188;79
+870;Somen Tchoyi;Midfielder;Cameroonian;28;190;85
+871;James Morrison;Midfielder;Scottish;25;178;70
+872;Chris Brunt;Midfielder;Northern Irish;26;185;84
+873;Jerome Thomas;Midfielder;English;28;178;74
+874;Graham Dorrans;Midfielder;Scottish;24;175;73
+875;Youssuf Mulumbu;Midfielder;DR Congolese;24;177;65
+876;Zoltan Gera;Midfielder;Hungarian;32;183;75
+877;Paul Scharner;Midfielder;Austrian;31;191;80
+878;Shane Long;Forward;Irish;24;178;71
+879;Peter Odemwingie;Forward;Nigerian;30;182;74
+880;Simon Cox;Forward;Irish;24;178;69
+881;Marc-antoine Fortun<U+00E9>;Forward;French;30;183;82
+882;Roman Bednar;Forward;Czech;28;190;84
+883;Chris Kirkland;Goalkeeper;English;30;191;74
+884;Mike Pollitt;Goalkeeper;English;39;193;89
+885;Ali Al-habsi;Goalkeeper;Omani;29;194;85
+886;Steve Gohouri;Defender;Ivorian;30;190;86
+887;Antolin Alcaraz;Defender;Paraguayan;29;187;87
+888;Gary Caldwell;Defender;Scottish;29;185;78
+889;Emmerson Boyce;Defender;Barbadian;31;181;75
+890;Ronnie Stam;Defender;Dutch;27;175;70
+891;Adrian Piscu Lopez;Defender;Spanish;24;184;77
+892;Patrick Van Aanholt;Defender;Dutch;21;175;67
+893;Maynor Figueroa;Defender;Honduran;28;180;85
+894;James Mccarthy;Midfielder;Irish;20;178;64
+895;Hendry Thomas;Midfielder;Honduran;26;180;80
+896;Ben Watson;Midfielder;English;26;178;68
+897;Shaun Maloney;Midfielder;Scottish;28;171;70
+898;Jordi Gomez;Midfielder;Spanish;26;178;74
+899;James Mcarthur;Midfielder;Scottish;23;168;64
+900;David Jones;Midfielder;English;26;180;63
+901;Mohamed Diame;Midfielder;Senegalese;24;184;80
+902;Albert Crusat;Forward;Spanish;29;165;65
+903;Franco Di Santo;Forward;Argentinian;22;193;83
+904;Victor Moses;Forward;Nigerian;20;177;73
+905;Conor Sammon;Forward;Irish;24;185;80
+906;Hugo Rodallega;Forward;Colombian;26;181;72
+907;Wayne Hennessey;Goalkeeper;Welsh;24;196;85
+908;Dorus De Vries;Goalkeeper;Dutch;30;186;80
+909;George Elokobi;Defender;Cameroonian;25;175;90
+910;Richard Stearman;Defender;English;24;191;73
+911;Jody Craddock;Defender;English;36;185;78
+912;Stephen Ward;Defender;Irish;26;179;75
+913;Roger Johnson;Defender;English;28;191;70
+914;Christophe Berra;Defender;Scottish;26;185;81
+915;Ronald Zubar;Defender;French;25;186;80
+916;David Edwards;Midfielder;Welsh;25;185;80
+917;Michael Kightly;Midfielder;English;25;175;63
+918;Karl Henry;Midfielder;English;28;183;76
+919;Stephen Hunt;Midfielder;Irish;30;172;72
+920;Matt Jarvis;Midfielder;English;25;173;70
+921;Adam Hammill;Midfielder;English;23;172;73
+922;Nenad Milijas;Midfielder;Serbian;28;188;86
+923;Jamie O'hara;Midfielder;English;25;180;78
+924;Kevin Foley;Midfielder;Irish;26;183;77
+925;Adlene Guedioura;Midfielder;Algerian;25;180;81
+926;Sylvan Ebanks-blake;Forward;English;25;178;84
+927;Steven Fletcher;Forward;Scottish;24;185;76
+928;Sam Vokes;Forward;Welsh;21;186;87
+929;Leigh Griffiths;Forward;Scottish;21;170;67
+930;Kevin Doyle;Forward;Irish;27;180;79
+931;Gorka Iraizoz;Goalkeeper;Spanish;30;191;93
+932;Raul Fernandez;Goalkeeper;Spanish;23;196;88
+933;Jon Aurtenetxe;Defender;Spanish;19;182;82
+934;Fernando Amorebieta;Defender;Venezuelan;26;192;85
+935;Mikel San Jose;Defender;Spanish;22;186;77
+936;Koikili Lertxundi;Defender;Spanish;30;168;67
+937;Andoni Iraola;Defender;Spanish;29;182;74
+938;Iban Zubiaurre;Defender;Spanish;28;177;75
+939;Aitor Ocio;Defender;Spanish;34;187;79
+940;Xabier Castillo;Defender;Spanish;25;182;71
+941;Borja Ekiza;Defender;Spanish;23;180;73
+942;David Lopez;Midfielder;Spanish;29;181;73
+943;Ander Iturraspe;Midfielder;Spanish;22;187;74
+944;<U+00D3>scar De Marcos;Midfielder;Spanish;22;181;76
+945;Igor Gabilondo;Midfielder;Spanish;32;184;77
+946;Markel Susaeta;Midfielder;Spanish;23;179;68
+947;Inigo Perez;Midfielder;Spanish;23;178;74
+948;Carlos Gurpegui;Midfielder;Spanish;31;181;75
+949;Ander Herrera;Midfielder;Spanish;22;182;70
+950;Javi Martinez;Midfielder;Spanish;23;190;86
+951;Gaizka Toquero;Forward;Spanish;27;182;78
+952;Fernando Llorente;Forward;Spanish;26;195;90
+953;Iker Muniain;Forward;Spanish;18;169;63
+954;Igor Martinez;Forward;Spanish;22;170;65
+955;Ibai Gomez;Forward;Spanish;21;179;72
+956;Joel Robles Bl<U+00E1>zquez Joel;Goalkeeper;Spanish;21;193;84
+957;Thibaut Courtois;Goalkeeper;Belgian;19;194;80
+958;Sergio Asenjo;Goalkeeper;Spanish;22;188;85
+959;Diego Godin;Defender;Uruguayan;25;185;73
+960;Antonio Lopez;Defender;Spanish;30;173;65
+961;Filipe Luis Kasmirski;Defender;Brazilian;26;182;70
+962;Silvio Manuel Azevedo;Defender;Portuguese;23;178;72
+963;<U+00C1>lvaro Dominguez;Defender;Spanish;22;183;83
+964;Luis Amaranto Perea;Defender;Colombian;32;180;76
+965;Miranda;Defender;Brazilian;27;185;78
+966;Jorge Pulido;Defender;Spanish;20;181;72
+967;Mario Suarez;Midfielder;Spanish;24;186;80
+968;Tiago Mendes;Midfielder;Portuguese;30;183;75
+969;Jose Antonio Reyes;Midfielder;Spanish;28;175;71
+970;Arda Turan;Midfielder;Turkish;NA;176;72
+971;Paulo Assuncao;Midfielder;Brazilian;31;175;67
+972;Gabi;Midfielder;Spanish;28;179;73
+973;Koke;Midfielder;Spanish;19;178;75
+974;Juanfran Torres;Midfielder;Spanish;26;181;72
+975;Diego Ribas;Midfielder;Brazilian;26;173;73
+976;Adrian Lopez;Forward;Spanish;23;180;70
+977;Eduardo Salvio;Forward;Argentinian;21;173;71
+978;Radamel Falcao;Forward;Colombian;25;177;72
+979;Pizzi;Forward;Portuguese;21;172;66
+980;Diego Costa;Forward;Brazilian;22;186;78
+981;Ricardo Lopez;Goalkeeper;Spanish;39;187;88
+982;Asier Riesgo;Goalkeeper;Spanish;26;185;76
+983;Andres Fernandez;Goalkeeper;Spanish;24;183;79
+984;Marc Bertran;Defender;Spanish;29;181;78
+985;Ruben Gonzalez;Defender;Spanish;29;187;83
+986;Miguel Flano;Defender;Spanish;27;177;72
+987;Roversio;Defender;Brazilian;27;187;70
+988;Jukka Raitala;Defender;Finnish;23;181;76
+989;Sergio Fernandez;Defender;Spanish;34;191;81
+990;Lolo;Midfielder;Spanish;27;182;72
+991;Javad Nekounam;Midfielder;Iranian;31;186;78
+992;Masoud Shojaei;Midfielder;Iranian;27;184;73
+993;Patxi Punal;Midfielder;Spanish;36;179;73
+994;Javier Calleja;Midfielder;Spanish;33;171;76
+995;Raul Garcia;Midfielder;Spanish;25;183;80
+996;Alvaro Cejudo;Midfielder;Spanish;27;180;78
+997;Xavier Annunziata;Midfielder;Spanish;24;179;66
+998;Fernando Soriano;Midfielder;Spanish;31;189;81
+999;Damia Abella;Midfielder;Spanish;29;188;82
+1000;Enrique Sola;Forward;Spanish;25;184;80
+1001;Dejan Lekic;Forward;Serbian;26;193;83
+1002;Juan Francisco Martinez Nino;Forward;Spanish;31;169;68
+1003;Ibrahima Balde;Forward;Senegalese;21;187;80
+1004;Roland Lamah;Forward;Belgian;23;180;71
+1005;Victor Valdes;Goalkeeper;Spanish;29;183;78
+1006;Jose Manuel Pinto;Goalkeeper;Spanish;35;185;82
+1007;Daniel Alves;Defender;Brazilian;28;173;64
+1008;Gerard Pique;Defender;Spanish;24;192;85
+1009;Carles Puyol;Defender;Spanish;33;178;80
+1010;Maxwell;Defender;Brazilian;30;177;81
+1011;<U+00C9>ric Abidal;Defender;French;32;186;75
+1012;Andreu Fontas Prat;Defender;Spanish;21;186;89
+1013;Cesc Fabregas;Midfielder;Spanish;24;179;75
+1014;Xavi Hernandez;Midfielder;Spanish;31;170;68
+1015;Andres Iniesta;Midfielder;Spanish;27;170;65
+1016;Thiago Alcantara;Midfielder;Spanish;20;172;71
+1017;Javier Mascherano;Midfielder;Argentinian;27;174;75
+1018;Seydou Keita;Midfielder;Malian;31;183;77
+1019;Sergio Busquets;Midfielder;Spanish;23;189;73
+1020;Adriano Correia;Midfielder;Brazilian;26;172;67
+1021;David Villa;Forward;Spanish;29;175;69
+1022;Alexis Sanchez;Forward;Chilean;22;169;70
+1023;Leo Messi;Forward;Argentinian;24;169;67
+1024;Pedro Rodriguez;Forward;Spanish;24;169;64
+1025;Ibrahim Afellay;Forward;Dutch;25;180;76
+1026;Oscar Ustari;Goalkeeper;Argentinian;25;184;82
+1027;Jordi Codina;Goalkeeper;Spanish;29;189;81
+1028;Miguel <U+00C1>ngel Moya;Goalkeeper;Spanish;27;187;82
+1029;Pablo Pintos;Defender;Uruguayan;24;182;78
+1030;Cata Diaz;Defender;Argentinian;32;182;74
+1031;Manu;Defender;Spanish;29;175;82
+1032;Miguel Torres;Defender;Spanish;25;184;76
+1033;Albert Lopo;Defender;Spanish;31;186;81
+1034;Rafa;Defender;Spanish;26;183;72
+1035;Tsepo Masilela;Defender;South African;26;174;70
+1036;Juan Valera;Defender;Spanish;26;184;70
+1037;Borja Fernandez;Midfielder;Spanish;30;188;83
+1038;Mehdi Lacen;Midfielder;Algerian;27;176;74
+1039;Jaime Gavilan;Midfielder;Spanish;26;178;71
+1040;Pedro Mosquera;Midfielder;Spanish;23;184;77
+1041;Ruben Perez;Midfielder;Spanish;22;178;72
+1042;Pedro Rios;Midfielder;Spanish;29;175;72
+1043;Diego Castro;Midfielder;Spanish;29;174;71
+1044;Michel Madera;Midfielder;Spanish;25;183;72
+1045;Javier Casquero;Midfielder;Spanish;35;180;73
+1046;Juan Rodriguez;Midfielder;Spanish;29;185;80
+1047;Pedro Leon;Midfielder;Spanish;24;183;72
+1048;Pablo Sarabia;Forward;Spanish;19;176;72
+1049;Adrian Colunga;Forward;Spanish;26;172;70
+1050;Nicolas Fedor Miku;Forward;Venezuelan;25;182;70
+1051;Dani G<U+00FC>iza;Forward;Spanish;31;182;80
+1052;Jose Juan;Goalkeeper;Spanish;32;183;82
+1053;Roberto Fernandez;Goalkeeper;Spanish;32;181;76
+1054;Julio Cesar;Goalkeeper;Brazilian;25;191;84
+1055;Allan Romeo Nyom;Defender;French;23;188;81
+1056;Noe Pamarot;Defender;French;32;180;81
+1057;Diego Mainz;Defender;Spanish;28;187;80
+1058;Guilherme Siqueira;Defender;Brazilian;25;183;81
+1059;Inigo Lopez;Defender;Spanish;29;185;72
+1060;Pape Malikou Diakhate;Defender;Senegalese;27;185;79
+1061;Jorge Ribeiro;Defender;Portuguese;29;172;67
+1062;Manolo Lucena;Defender;Spanish;28;186;84
+1063;David Cortes;Defender;Spanish;32;181;70
+1064;Yohan Mollo;Midfielder;French;22;175;74
+1065;Dani Benitez;Midfielder;Spanish;24;181;69
+1066;Mikel Rico;Midfielder;Spanish;26;182;78
+1067;Carlos Martins;Midfielder;Portuguese;29;177;73
+1068;Hassan Yebda;Midfielder;Algerian;27;188;77
+1069;Moises Hurtado;Midfielder;Spanish;30;185;85
+1070;Abel Gomez;Midfielder;Spanish;29;182;72
+1071;Odion Jude Ighalo;Forward;Nigerian;22;188;70
+1072;Ikechukwu Uche;Forward;Nigerian;27;175;73
+1073;Alex Geijo;Forward;Swiss;29;184;80
+1074;Franco Jara;Forward;Argentinian;23;179;74
+1075;Keylor Navas;Goalkeeper;Costa Rican;24;186;78
+1076;Gustavo Munua;Goalkeeper;Uruguayan;33;187;88
+1077;Nano;Defender;Spanish;31;186;79
+1078;Hector Rodas;Defender;Spanish;23;190;80
+1079;Juanfran;Defender;Spanish;35;183;78
+1080;Asier Del Horno;Defender;Spanish;30;183;72
+1081;Javi Venta;Defender;Spanish;34;180;74
+1082;Sergio Ballesteros;Defender;Spanish;36;188;93
+1083;Pedro Lopez;Defender;Spanish;27;174;72
+1084;Gustavo Cabral;Defender;Argentinian;25;182;81
+1085;Francisco Javier Farinos;Midfielder;Spanish;33;172;68
+1086;Miguel Pallardo;Midfielder;Spanish;25;173;73
+1087;Jose Javier Barkero;Midfielder;Spanish;32;180;71
+1088;Xavi Torres;Midfielder;Spanish;24;184;82
+1089;Juanlu;Midfielder;Spanish;31;173;70
+1090;Valdo;Midfielder;Spanish;30;184;78
+1091;Arouna Kone;Forward;Ivorian;27;181;81
+1092;Rafa Jorda;Forward;Spanish;27;191;87
+1093;Wellington Silva;Forward;Brazilian;18;169;65
+1094;Ruben Suarez;Forward;Spanish;32;167;67
+1095;Carlos Aranda;Forward;Spanish;31;186;82
+1096;Nabil El Zhar;Forward;Moroccan;25;170;67
+1097;Ruben Martinez;Goalkeeper;Spanish;27;187;82
+1098;Willy Caballero;Goalkeeper;Argentinian;29;186;80
+1099;Javier Malagueno;Defender;Argentinian;28;184;82
+1100;Jesus Gomez;Defender;Spanish;26;182;70
+1101;Weligton;Defender;Brazilian;32;185;72
+1102;Kris Stadsgaard;Defender;Danish;26;185;78
+1103;Martin Demichelis;Defender;Argentinian;30;184;78
+1104;Joris Mathijsen;Defender;Dutch;31;183;82
+1105;Nacho Monreal;Defender;Spanish;25;178;72
+1106;Sergio Sanchez;Defender;Spanish;25;185;78
+1107;Ignacio Camacho;Midfielder;Spanish;21;181;68
+1108;Jeremy Toulalan;Midfielder;French;28;183;77
+1109;Apono;Midfielder;Spanish;27;173;72
+1110;Santi Cazorla;Midfielder;Spanish;26;168;66
+1111;Enzo Maresca;Midfielder;Italian;31;180;77
+1112;Duda;Midfielder;Portuguese;31;175;71
+1113;Eliseu Pereira;Midfielder;Portuguese;27;177;74
+1114;Diego Buonanotte;Midfielder;Argentinian;23;161;60
+1115;Isco;Midfielder;Spanish;19;180;75
+1116;Francisco Portillo;Midfielder;Spanish;21;169;63
+1117;Recio;Midfielder;Spanish;20;183;74
+1118;Joaquin Sanchez;Forward;Spanish;30;179;75
+1119;Ruud Van Nistelrooy;Forward;Dutch;35;188;82
+1120;Sebastian Fernandez;Forward;Uruguayan;26;167;65
+1121;Julio Baptista;Forward;Brazilian;29;187;81
+1122;Jose Salomon Rondon;Forward;Venezuelan;22;186;86
+1123;Juanmi;Forward;Spanish;18;169;63
+1124;Mario Fernandez;Goalkeeper;Spanish;23;184;74
+1125;Tono;Goalkeeper;Spanish;31;182;81
+1126;Christian Fernandez;Defender;Spanish;25;182;77
+1127;Osmar Barba;Defender;Spanish;23;192;84
+1128;Domingo Cisma;Defender;Spanish;29;184;76
+1129;Francis;Defender;Spanish;29;178;70
+1130;Marc Torrejon;Defender;Spanish;25;187;87
+1131;Papakouly Diop;Midfielder;Senegalese;25;180;73
+1132;Manuel Arana;Midfielder;Spanish;26;175;73
+1133;Gonzalo Colsa;Midfielder;Spanish;32;185;77
+1134;Pedro Munitis;Midfielder;Spanish;36;167;70
+1135;<U+00D3>scar Serrano;Midfielder;Spanish;29;175;73
+1136;Kennedy Bakircioglu;Midfielder;Swedish;30;181;71
+1137;Alexandros Tziolis;Midfielder;Greek;26;189;84
+1138;Adrian Gonzalez;Midfielder;Spanish;23;183;76
+1139;Lautaro Acosta;Forward;Argentinian;23;168;68
+1140;Christian Stuani;Forward;Uruguayan;24;185;77
+1141;Ariel Nahuelpan;Forward;Argentinian;23;187;87
+1142;David  Cobeno;Goalkeeper;Spanish;29;185;82
+1143;Dani Gimenez;Goalkeeper;Spanish;28;182;77
+1144;Tito;Defender;Spanish;26;174;62
+1145;Jose Manuel Casado;Defender;Spanish;25;173;70
+1146;Mikel Labaka;Defender;Spanish;31;182;70
+1147;Alejandro Arribas;Defender;Spanish;22;182;75
+1148;Pedro Botelho;Defender;Brazilian;21;188;73
+1149;Raul Bravo;Defender;Spanish;30;176;72
+1150;Jordi Figueras;Defender;Spanish;24;185;82
+1151;Rafa Garcia;Midfielder;Spanish;25;188;84
+1152;Jose Maria Movilla;Midfielder;Spanish;36;171;70
+1153;Michel;Midfielder;Spanish;35;174;66
+1154;Francisco Medina Piti;Midfielder;Spanish;30;174;69
+1155;Nestor Susaeta;Midfielder;Spanish;26;177;74
+1156;Roberto Trashorras;Midfielder;Spanish;30;177;70
+1157;Javi Fuego;Midfielder;Spanish;27;181;74
+1158;Miguel Perez Michu;Midfielder;Spanish;25;185;80
+1159;Raul Tamudo;Forward;Spanish;33;180;74
+1160;Sergio Koke;Forward;Spanish;28;180;80
+1161;Andrija Delibasic;Forward;Montenegrin;30;187;84
+1162;Carlos Kameni;Goalkeeper;Cameroonian;27;186;86
+1163;Kiko Casilla;Goalkeeper;Spanish;24;192;83
+1164;Cristian Alvarez;Goalkeeper;Argentinian;25;186;88
+1165;Felipe Mattioni;Defender;Brazilian;22;180;75
+1166;Raul Rodriguez;Defender;Spanish;23;183;70
+1167;Jordi Amat;Defender;Spanish;19;184;78
+1168;Ernesto Galan;Defender;Spanish;25;181;76
+1169;Hector Moreno;Defender;Mexican;23;182;80
+1170;Juan Forlan;Defender;Argentinian;23;180;77
+1171;Didac Vila;Defender;Spanish;22;184;74
+1172;Javi Marquez;Midfielder;Spanish;25;178;71
+1173;Raul Baena;Midfielder;Spanish;22;179;73
+1174;Joan Verdu;Midfielder;Spanish;28;182;76
+1175;Romaric;Midfielder;Ivorian;28;187;88
+1176;Javi Lopez;Midfielder;Spanish;25;180;74
+1177;Vladimir Weiss;Midfielder;Slovakian;21;173;70
+1178;Jesus Datolo;Midfielder;Argentinian;27;177;73
+1179;Rui Fonte;Forward;Portuguese;21;181;73
+1180;<U+00C1>lvaro Vazquez;Forward;Spanish;20;182;76
+1181;Sergio Garcia;Forward;Spanish;28;176;69
+1182;Walter Pandiani;Forward;Uruguayan;35;183;77
+1183;Juan Albin;Forward;Uruguayan;25;179;77
+1184;Juan Jesus Calatayud;Goalkeeper;Spanish;31;191;85
+1185;Dudu Aouate;Goalkeeper;Israeli;33;188;84
+1186;Gianni Zuiverloon;Defender;Dutch;24;178;70
+1187;Ivan Ramis;Defender;Spanish;26;188;82
+1188;Jose Manuel Flores Chico;Defender;Spanish;24;187;82
+1189;Pablo Caceres;Defender;Uruguayan;26;172;71
+1190;Nunes;Defender;Portuguese;34;185;82
+1191;Marti Crespi;Defender;Spanish;24;181;71
+1192;Pau Cendros;Defender;Spanish;24;176;73
+1193;Kevin Garcia;Defender;Spanish;22;178;74
+1194;Joao Victor;Midfielder;Brazilian;23;181;75
+1195;Tomas Pina;Midfielder;Spanish;23;184;75
+1196;Fernando Tissone;Midfielder;Argentinian;25;182;75
+1197;Michael Pereira;Midfielder;French;23;180;69
+1198;Gonzalo Castro;Midfielder;Uruguayan;27;176;70
+1199;Akihiro Ienaga;Midfielder;Japanese;25;173;70
+1200;Jose Luis Marti;Midfielder;Spanish;36;180;74
+1201;Sergio Tejera;Midfielder;Spanish;21;183;76
+1202;Emilio Nsue;Forward;Spanish;21;182;75
+1203;Tomer Hemed;Forward;Israeli;24;185;80
+1204;Victor Casadesus;Forward;Spanish;26;180;77
+1205;Alejandro Alfaro;Forward;Spanish;24;173;72
+1206;Inaki Goitia;Goalkeeper;Spanish;29;188;79
+1207;Casto Espinosa;Goalkeeper;Spanish;29;182;80
+1208;Fabricio;Goalkeeper;Spanish;23;180;67
+1209;Jose Isidoro;Defender;Spanish;25;180;71
+1210;Mario;Defender;Spanish;29;178;75
+1211;Antonio Amaya;Defender;Spanish;28;192;81
+1212;Chechu Dorado;Defender;Spanish;29;180;69
+1213;Ustaritz;Defender;Spanish;28;183;77
+1214;Javi Chica;Defender;Spanish;26;176;78
+1215;Nelson;Defender;Portuguese;28;171;65
+1216;Nacho;Defender;Spanish;31;175;70
+1217;Miki Roque;Defender;Spanish;23;186;78
+1218;Juanma;Midfielder;Spanish;30;176;72
+1219;Javier Matilla;Midfielder;Spanish;23;176;72
+1220;Benat Etxebarria;Midfielder;Spanish;24;175;72
+1221;Momo;Midfielder;Spanish;29;182;74
+1222;Zoran Tosic;Midfielder;Serbian;24;171;70
+1223;Salva Sevilla;Midfielder;Spanish;27;178;70
+1224;Iriney;Midfielder;Brazilian;30;179;70
+1225;Jose Alberto Canas;Midfielder;Spanish;24;177;71
+1226;Jonathan Pereira;Forward;Spanish;24;163;59
+1227;Roque Santa Cruz;Forward;Paraguayan;30;187;80
+1228;Jorge Molina;Forward;Spanish;29;188;87
+1229;Jefferson Montero;Forward;Ecuadorian;22;169;68
+1230;Ruben Castro;Forward;Spanish;30;172;74
+1231;Ezequiel Calvente;Forward;Spanish;20;168;60
+1232;Iker Casillas;Goalkeeper;Spanish;30;185;80
+1233;Antonio Adan;Goalkeeper;Spanish;24;190;90
+1234;Ricardo Carvalho;Defender;Portuguese;33;183;79
+1235;Pepe;Defender;Portuguese;28;187;81
+1236;Sergio Ramos;Defender;Spanish;25;183;81
+1237;Marcelo Vieira;Defender;Brazilian;23;174;73
+1238;Fabio Coentrao;Defender;Portuguese;23;179;68
+1239;Alvaro Arbeloa;Defender;Spanish;28;183;76
+1240;Raul Albiol;Defender;Spanish;26;190;82
+1241;Raphael Varane;Defender;French;18;190;85
+1242;Nuri Sahin;Midfielder;Turkish;23;180;72
+1243;Sami Khedira;Midfielder;German;24;189;83
+1244;Kak<U+00E1>;Midfielder;Brazilian;29;186;82
+1245;Mesut <U+00D6>zil;Midfielder;German;22;183;76
+1246;Esteban Granero;Midfielder;Spanish;24;179;77
+1247;Xabi Alonso;Midfielder;Spanish;29;182;79
+1248;Hamit Altintop;Midfielder;Turkish;28;183;83
+1249;<U+00C1>ngel Di Maria;Midfielder;Argentinian;23;180;70
+1250;Lass Diarra;Midfielder;French;26;172;73
+1251;Cristiano Ronaldo;Forward;Portuguese;26;185;80
+1252;Karim Benzema;Forward;French;23;184;83
+1253;Gonzalo Higuain;Forward;Argentinian;23;184;81
+1254;Jose Callejon;Forward;Spanish;24;178;73
+1255;Alvaro Morata;Forward;Spanish;18;187;82
+1256;Claudio Bravo;Goalkeeper;Chilean;28;184;84
+1257;Enaut Zubikarai;Goalkeeper;Spanish;27;185;73
+1258;Tono Ramirez;Goalkeeper;Spanish;24;189;83
+1259;Carlos Martinez;Defender;Spanish;25;188;78
+1260;Mikel Gonzalez;Defender;Spanish;25;188;78
+1261;Ion Ansotegi;Defender;Spanish;29;192;84
+1262;Vadim Demidov;Defender;Norwegian;24;185;81
+1263;Liassine Cadamuro;Defender;French;23;186;76
+1264;Daniel Estrada;Defender;Spanish;24;177;68
+1265;Alberto De La Bella;Defender;Spanish;25;180;75
+1266;Gorka Elustondo;Midfielder;Spanish;24;182;73
+1267;Markel Bergara;Midfielder;Spanish;25;180;74
+1268;Xabi Prieto;Midfielder;Spanish;28;185;75
+1269;Mikel Aranburu;Midfielder;Spanish;32;178;71
+1270;David Zurutuza;Midfielder;French;25;184;70
+1271;Macdonald Mariga;Midfielder;Kenyan;24;188;86
+1272;Asier Illarramendi;Midfielder;Spanish;21;177;74
+1273;Antoine Griezmann;Forward;French;20;174;72
+1274;Joseba Llorente;Forward;Spanish;31;184;72
+1275;Imanol Agirretxe;Forward;Spanish;24;184;74
+1276;Jeffrey Sarpong;Forward;Dutch;23;176;67
+1277;Diego Ifran;Forward;Uruguayan;24;171;74
+1278;Carlos Vela;Forward;Mexican;22;175;72
+1279;Roberto Jimenez;Goalkeeper;Spanish;25;192;88
+1280;Leo Franco;Goalkeeper;Argentinian;34;188;79
+1281;Javier Paredes Arango;Defender;Spanish;29;175;74
+1282;Maurizio Lanzaro;Defender;Italian;29;182;83
+1283;Fernando Meira;Defender;Portuguese;33;190;85
+1284;Paulo Da Silva;Defender;Paraguayan;31;180;76
+1285;Ivan Obradovic;Defender;Serbian;23;181;74
+1286;Efrain Juarez;Midfielder;Mexican;23;181;65
+1287;Juan Carlos Perez;Midfielder;Spanish;21;178;69
+1288;<U+00C1>ngel Lafita;Midfielder;Spanish;27;188;75
+1289;Ruben Micael;Midfielder;Portuguese;25;176;70
+1290;Franco Zuculini;Midfielder;Argentinian;21;174;71
+1291;Leonardo Ponzio;Midfielder;Argentinian;29;178;75
+1292;Braulio;Forward;Spanish;25;178;82
+1293;H<U+00E9>lder Postiga;Forward;Portuguese;29;181;73
+1294;Luis Garcia;Forward;Spanish;30;180;68
+1295;Pablo Barrera;Forward;Mexican;24;175;65
+1296;Andres Palop;Goalkeeper;Spanish;37;184;75
+1297;Javi Varas;Goalkeeper;Spanish;29;182;73
+1298;Federico Fazio;Defender;Argentinian;24;195;85
+1299;Fernando Navarro;Defender;Spanish;29;178;70
+1300;Martin Caceres;Defender;Uruguayan;24;182;77
+1301;Alexis Ruano;Defender;Spanish;26;183;75
+1302;Emir Spahic;Defender;Bosnian;31;183;77
+1303;Julien Escude;Defender;French;32;183;79
+1304;Antonio Luna;Defender;Spanish;20;177;68
+1305;Jorge Andujar Moreno Coke;Defender;Spanish;24;182;78
+1306;Jesus Navas;Midfielder;Spanish;25;170;60
+1307;Gary Medel;Midfielder;Chilean;24;171;73
+1308;Diego Perotti;Midfielder;Argentinian;23;179;70
+1309;Ivan Rakitic;Midfielder;Croatian;23;184;77
+1310;Piotr Trochowski;Midfielder;German;27;169;70
+1311;Tiberio Guarente;Midfielder;Italian;25;182;74
+1312;<U+00C1>lvaro Negredo;Forward;Spanish;26;186;79
+1313;Frederic Kanoute;Forward;Malian;34;192;82
+1314;Emiliano Armenteros;Forward;Argentinian;25;178;77
+1315;Manu Del Moral;Forward;Spanish;27;186;77
+1316;Tom De Mul;Forward;Belgian;25;178;67
+1317;Juan Pablo Colinas;Goalkeeper;Spanish;33;190;85
+1318;Ivan Cuellar;Goalkeeper;Spanish;27;185;75
+1319;Alberto Botia;Defender;Spanish;22;187;80
+1320;Alberto Lora;Defender;Spanish;24;168;67
+1321;Gregory;Defender;French;30;187;88
+1322;Ivan Hernandez;Defender;Spanish;31;188;84
+1323;Roberto Canella;Defender;Spanish;23;180;70
+1324;Damien Suarez;Defender;Spanish;23;173;68
+1325;Andre Castro;Midfielder;Portuguese;23;181;75
+1326;Alberto Rivera;Midfielder;Spanish;33;170;68
+1327;Carmelo Gonzalez;Midfielder;Spanish;28;180;70
+1328;Ayoze Garcia;Midfielder;Spanish;25;172;70
+1329;Sebastian Eguren;Midfielder;Uruguayan;30;186;84
+1330;Nacho Novo;Midfielder;Spanish;32;175;70
+1331;Sergio Alvarez;Midfielder;Spanish;19;180;64
+1332;Luis Moran;Midfielder;Spanish;24;172;67
+1333;Miguel De Las Cuevas;Midfielder;Spanish;25;175;69
+1334;Nacho Cases;Midfielder;Spanish;23;174;64
+1335;Ricardo Leon;Midfielder;Spanish;28;186;67
+1336;Mate Bilic;Forward;Croatian;30;184;81
+1337;Gast<U+00F3>n Sangoy;Forward;Argentinian;26;178;79
+1338;David Barral;Forward;Spanish;28;183;78
+1339;Oscar Guido Trejo;Forward;Argentinian;23;180;79
+1340;Diego Alves;Goalkeeper;Brazilian;26;188;83
+1341;Vicente Guaita;Goalkeeper;Spanish;24;192;86
+1342;Bruno Saltor;Defender;Spanish;30;181;76
+1343;Hedwiges Maduro;Defender;Dutch;26;185;79
+1344;Adil Rami;Defender;French;25;190;90
+1345;Antonio Barragan;Defender;Spanish;24;182;76
+1346;<U+00C1>ngel Dealbert;Defender;Spanish;28;185;75
+1347;Victor Ruiz;Defender;Spanish;22;185;80
+1348;Ricardo Costa;Defender;Portuguese;30;183;80
+1349;Jeremy Mathieu;Defender;French;26;192;82
+1350;Miguel Monteiro;Defender;Portuguese;31;179;78
+1351;Mehmet Topal;Midfielder;Turkish;25;187;76
+1352;David Albelda;Midfielder;Spanish;34;181;77
+1353;Sofiane Feghouli;Midfielder;Algerian;21;178;71
+1354;<U+00C9>ver Banega;Midfielder;Argentinian;23;174;71
+1355;Sergio Canales;Midfielder;Spanish;20;176;65
+1356;Jordi Alba;Midfielder;Spanish;22;170;69
+1357;Pablo Hernandez;Midfielder;Spanish;26;173;64
+1358;Daniel Parejo;Midfielder;Spanish;22;180;73
+1359;Tino Costa;Midfielder;Argentinian;26;176;70
+1360;Jonas Goncalves Oliveira;Forward;Brazilian;27;181;75
+1361;Roberto Soldado;Forward;Spanish;26;179;81
+1362;Aritz Aduriz;Forward;Spanish;30;181;75
+1363;Pablo Piatti;Forward;Argentinian;22;163;63
+1364;Cesar Sanchez;Goalkeeper;Spanish;40;185;85
+1365;Diego Lopez;Goalkeeper;Spanish;29;196;88
+1366;Gonzalo Rodriguez;Defender;Argentinian;27;182;79
+1367;Joan Oriol;Defender;Spanish;24;175;69
+1368;Mateo Musacchio;Defender;Argentinian;21;180;73
+1369;Carlos Marchena;Defender;Spanish;32;183;78
+1370;<U+00C1>ngel Lopez;Defender;Spanish;30;180;71
+1371;Cristian Zapata;Defender;Colombian;24;186;78
+1372;Mario Gaspar;Defender;Spanish;20;178;71
+1373;Jose Manuel Catala;Defender;Spanish;26;180;72
+1374;Jonathan De Guzman;Midfielder;Dutch;24;174;70
+1375;Cani;Midfielder;Spanish;30;180;75
+1376;Javier Camunas;Midfielder;Spanish;31;173;71
+1377;Marcos Senna;Midfielder;Spanish;35;177;76
+1378;Borja Valero;Midfielder;Spanish;26;176;73
+1379;Bruno Soriano;Midfielder;Spanish;27;179;70
+1380;Wakaso Mubarak;Midfielder;Ghanaian;21;171;66
+1381;Nilmar;Forward;Brazilian;27;180;73
+1382;Marco Ruben;Forward;Argentinian;24;179;72
+1383;Giuseppe Rossi;Forward;Italian;24;173;73
+1384;Gerard Bordas;Forward;Spanish;30;177;70
+1385;Francesco Antonioli;Goalkeeper;Italian;42;188;80
+1386;Maurizio Lauro;Defender;Italian;30;181;73
+1387;Marco Rossi;Defender;Italian;23;188;78
+1388;Gianluca Comotto;Defender;Italian;32;181;79
+1389;Steve Von Bergen;Defender;Swiss;28;182;77
+1390;Yohan Benalouane;Defender;Tunisian;24;185;79
+1391;Luca Ceccarelli;Defender;Italian;28;183;70
+1392;Roberto Guana;Midfielder;Italian;30;178;72
+1393;Antonio Candreva;Midfielder;Italian;24;180;72
+1394;Giuseppe Colucci;Midfielder;Italian;31;180;73
+1395;Marco Parolo;Midfielder;Italian;26;184;75
+1396;Florin Matei;Midfielder;Romanian;NA;174;66
+1397;<U+00C9>der Citadin Martins;Forward;Brazilian;24;179;72
+1398;Adrian Mutu;Forward;Romanian;32;180;74
+1399;Abdelkader Ghezzal;Forward;Algerian;26;183;78
+1400;Dominique Malonga;Forward;French;22;183;80
+1401;Jorge Martinez;Forward;Uruguayan;28;181;80
+1402;Erjon Bogdani;Forward;Albanian;34;191;89
+1403;Christian Puggioni;Goalkeeper;Italian;30;187;81
+1404;Lorenzo Squizzi;Goalkeeper;Italian;37;191;89
+1405;Stefano Sorrentino;Goalkeeper;Italian;32;186;84
+1406;Marco Andreolli;Defender;Italian;25;186;80
+1407;Santiago Morero;Defender;Argentinian;29;184;79
+1408;Davide Mandelli;Defender;Italian;34;190;84
+1409;Bostjan Cesar;Defender;Slovenian;29;191;89
+1410;Bojan Jokic;Defender;Slovenian;25;176;75
+1411;Francesco Acerbi;Defender;Italian;23;192;90
+1412;Gennaro Sardo;Defender;Italian;32;190;87
+1413;Nicolas Frey;Defender;French;27;184;78
+1414;Marco Malago;Defender;Italian;32;184;79
+1415;Kamil Vacek;Midfielder;Czech;24;183;81
+1416;Paolo Sammarco;Midfielder;Italian;28;181;76
+1417;Rinaldo Cruzado;Midfielder;Peruvian;26;180;74
+1418;Luciano;Midfielder;Brazilian;35;181;76
+1419;Luca Rigoni;Midfielder;Italian;26;185;78
+1420;Michael Bradley;Midfielder;American;24;186;84
+1421;Perparim Hetemaj;Midfielder;Finnish;24;176;68
+1422;Davide Moscardelli;Forward;Italian;31;185;85
+1423;Sergio Pellissier;Forward;Italian;32;175;76
+1424;Alberto Paloschi;Forward;Italian;21;175;68
+1425;Fernando Uribe;Forward;Colombian;23;181;77
+1426;Marco Amelia;Goalkeeper;Italian;29;189;84
+1427;Flavio Roma;Goalkeeper;Italian;37;191;83
+1428;Christian Abbiati;Goalkeeper;Italian;34;191;92
+1429;Taye Taiwo;Defender;Nigerian;26;183;77
+1430;Philippe Mexes;Defender;French;29;187;82
+1431;Alessandro Nesta;Defender;Italian;35;187;79
+1432;Gianluca Zambrotta;Defender;Italian;34;181;76
+1433;Ignazio Abate;Defender;Italian;24;180;73
+1434;Daniele Bonera;Defender;Italian;30;183;74
+1435;Thiago Emiliano Da Silva;Defender;Brazilian;26;183;79
+1436;Mario Yepes;Defender;Colombian;35;187;79
+1437;Luca Antonini;Defender;Italian;29;182;70
+1438;Mark Van Bommel;Midfielder;Dutch;34;187;85
+1439;Gennaro Gattuso;Midfielder;Italian;33;177;77
+1440;Clarence Seedorf;Midfielder;Dutch;35;177;80
+1441;Mathieu Flamini;Midfielder;French;27;178;67
+1442;Alberto Aquilani;Midfielder;Italian;27;187;77
+1443;Antonio Nocerino;Midfielder;Italian;26;175;75
+1444;Massimo Ambrosini;Midfielder;Italian;34;182;72
+1445;Kevin-prince Boateng;Midfielder;Ghanaian;24;185;86
+1446;Urby Emanuelson;Midfielder;Dutch;25;176;68
+1447;Alexandre Pato;Forward;Brazilian;22;180;78
+1448;Filippo Inzaghi;Forward;Italian;38;181;74
+1449;Zlatan Ibrahimovic;Forward;Swedish;29;195;95
+1450;Robinho;Forward;Brazilian;27;174;61
+1451;Stephan El Shaarawy;Forward;Italian;18;178;72
+1452;Antonio Cassano;Forward;Italian;29;175;78
+1453;<U+017D>eljko Brkic;Goalkeeper;Serbian;25;196;89
+1454;Cristiano Del Grosso;Defender;Italian;28;173;65
+1455;<U+00C2>ngelo;Defender;Brazilian;30;174;78
+1456;Luca Rossettini;Defender;Italian;26;187;82
+1457;Nicola Belmonte;Defender;Italian;24;183;75
+1458;Claudio Terzi;Defender;Italian;27;182;73
+1459;Andrea Rossi;Defender;Italian;24;177;70
+1460;Matteo Contini;Defender;Italian;31;182;76
+1461;Francesco Parravicini;Midfielder;Italian;29;175;73
+1462;Paul Codrea;Midfielder;Romanian;30;174;69
+1463;Simone Vergassola;Midfielder;Italian;35;174;70
+1464;Gaetano D'agostino;Midfielder;Italian;29;183;81
+1465;Alessandro Gazzi;Midfielder;Italian;28;184;81
+1466;Francesco Bolzoni;Midfielder;Italian;22;180;78
+1467;Daniele Mannini;Midfielder;Italian;27;183;78
+1468;Alessio Sestu;Midfielder;Italian;27;179;73
+1469;Gennaro Troianiello;Forward;Italian;28;176;71
+1470;Marcelo Larrondo;Forward;Argentinian;23;191;79
+1471;Emanuele Calaio;Forward;Italian;29;179;73
+1472;Pablo Andres Gonzalez;Forward;Argentinian;26;182;72
+1473;Mattia Destro;Forward;Italian;20;178;75
+1474;Franco Brienza;Forward;Italian;32;168;65
+1475;Reginaldo Ferreira Da Silva;Forward;Brazilian;28;175;72
+1476;Artur Boruc;Goalkeeper;Polish;31;193;88
+1477;Norberto Neto;Goalkeeper;Brazilian;22;191;83
+1478;Per Kroldrup;Defender;Danish;32;194;91
+1479;Alessandro Gamberini;Defender;Italian;30;185;78
+1480;Cesare Natali;Defender;Italian;32;191;87
+1481;Mattia Cassani;Defender;Italian;28;184;75
+1482;Felipe Dal Belo;Defender;Brazilian;27;188;80
+1483;Manuel Pasqual;Defender;Italian;29;178;71
+1484;Lorenzo De Silvestri;Defender;Italian;23;185;78
+1485;Michele Camporese;Defender;Italian;19;186;75
+1486;Souza Caldeira Romulo;Defender;Brazilian;24;178;72
+1487;Juan Manuel Vargas;Midfielder;Peruvian;27;184;85
+1488;Houssine Kharja;Midfielder;Moroccan;28;181;77
+1489;Riccardo Montolivo;Midfielder;Italian;26;181;76
+1490;Gianni Munari;Midfielder;Italian;28;190;84
+1491;Andrea Lazzari;Midfielder;Italian;26;184;75
+1492;Adem Ljajic;Midfielder;Serbian;19;182;74
+1493;Marco Marchionni;Midfielder;Italian;31;175;66
+1494;Nikola Gulan;Midfielder;Serbian;22;183;73
+1495;Valon Behrami;Midfielder;Swiss;26;185;78
+1496;Alessio Cerci;Forward;Italian;24;180;78
+1497;Stevan Jovetic;Forward;Montenegrin;21;183;79
+1498;Khouma Babacar;Forward;Senegalese;18;191;85
+1499;Santiago Silva;Forward;Uruguayan;30;183;83
+1500;Alberto Gilardino;Forward;Italian;29;184;79
+1501;Bogdan Lobont;Goalkeeper;Romanian;33;185;78
+1502;Gianluca Curci;Goalkeeper;Italian;26;191;90
+1503;Maarten Stekelenburg;Goalkeeper;Dutch;28;194;84
+1504;Jos<U+00E9> <U+00C1>ngel;Defender;Spanish;22;183;75
+1505;Juan Silveira Dos Santos;Defender;Brazilian;32;182;74
+1506;Gabriel Heinze;Defender;Argentinian;33;178;72
+1507;Vitorino Antunes;Defender;Portuguese;24;175;69
+1508;Cicinho;Defender;Brazilian;31;172;68
+1509;Nicolas Burdisso;Defender;Argentinian;30;182;81
+1510;Simon Kjaer;Defender;Danish;22;189;86
+1511;Marco Cassetti;Defender;Italian;34;187;80
+1512;Ahmed Barusso;Midfielder;Ghanaian;26;185;75
+1513;David Pizarro;Midfielder;Chilean;32;170;65
+1514;Erik Lamela;Midfielder;Argentinian;19;180;70
+1515;Rodrigo Taddei;Midfielder;Brazilian;31;177;69
+1516;Miralem Pjanic;Midfielder;Bosnian;21;180;68
+1517;Daniele De Rossi;Midfielder;Italian;28;184;83
+1518;Fernando Gago;Midfielder;Argentinian;25;177;72
+1519;Simone Perrotta;Midfielder;Italian;33;178;72
+1520;Leandro Greco;Midfielder;Italian;25;183;76
+1521;Fabio Simplicio;Midfielder;Brazilian;31;173;69
+1522;Aleandro Rosi;Midfielder;Italian;24;184;80
+1523;Pablo Daniel Osvaldo;Forward;Italian;25;182;74
+1524;Francesco Totti;Forward;Italian;34;180;82
+1525;Bojan Krkic;Forward;Spanish;21;170;65
+1526;Marco Borriello;Forward;Italian;29;185;80
+1527;Fabio Borini;Forward;Italian;20;178;73
+1528;Stefano Okaka Chuka;Forward;Italian;22;186;82
+1529;Andrea Consigli;Goalkeeper;Italian;24;189;79
+1530;Stefano Lucchini;Defender;Italian;30;186;76
+1531;Daniele Capelli;Defender;Italian;25;186;84
+1532;Thomas Manfredini;Defender;Italian;31;182;82
+1533;Gianpaolo Bellini;Defender;Italian;31;180;77
+1534;Federico Peluso;Defender;Italian;27;186;77
+1535;Andrea Masiello;Defender;Italian;25;185;79
+1536;Luca Cigarini;Midfielder;Italian;25;175;72
+1537;Ezequiel Schelotto;Midfielder;Italian;22;187;76
+1538;Maximiliano Moralez;Midfielder;Argentinian;24;160;55
+1539;Fabio Caserta;Midfielder;Italian;32;179;77
+1540;Simone Padoin;Midfielder;Italian;27;179;74
+1541;Carlos Carmona;Midfielder;Chilean;24;176;74
+1542;Cristiano Doni;Midfielder;Italian;38;185;81
+1543;Matteo Brighi;Midfielder;Italian;30;179;78
+1544;Cristian Raimondi;Midfielder;Italian;30;182;78
+1545;Adriano Ferreira Pinto;Midfielder;Brazilian;31;179;81
+1546;German Denis;Forward;Argentinian;30;183;78
+1547;Manolo Gabbiadini;Forward;Italian;19;186;81
+1548;Matteo Ardemagni;Forward;Italian;24;185;84
+1549;Guido Marilungo;Forward;Italian;22;176;72
+1550;Simone Tiribocchi;Forward;Italian;33;178;85
+1551;Jean-francois Gillet;Goalkeeper;Belgian;32;181;78
+1552;Mikael Antonsson;Defender;Swedish;30;189;80
+1553;Gy<U+00F6>rgy Garics;Defender;Austrian;27;183;76
+1554;Simone Loria;Defender;Italian;34;186;78
+1555;Jos<U+00E9> <U+00C1>ngel Crespo;Defender;Spanish;24;183;72
+1556;Andrea Raggi;Defender;Italian;27;184;80
+1557;Daniele Portanova;Defender;Italian;32;185;78
+1558;Nico Pulzetti;Midfielder;Italian;27;175;70
+1559;Diego Perez;Midfielder;Uruguayan;31;177;81
+1560;Federico Casarini;Midfielder;Italian;22;181;72
+1561;Luigi Vitale;Midfielder;Italian;23;180;70
+1562;Alessandro Diamanti;Midfielder;Italian;28;179;75
+1563;Gaby Mudingayi;Midfielder;Belgian;29;180;80
+1564;Panagiotis Kone;Midfielder;Greek;NA;184;75
+1565;Marco Di Vaio;Forward;Italian;35;179;78
+1566;Gaston Ramirez;Forward;Uruguayan;20;183;77
+1567;Andrea Pisanu;Forward;Italian;29;173;72
+1568;Daniele Vantaggiato;Forward;Italian;26;177;81
+1569;Daniele Paponi;Forward;Italian;23;182;72
+1570;Henry Gimenez;Forward;Uruguayan;25;176;69
+1571;Robert Acquafresca;Forward;Italian;24;184;70
+1572;Michael Agazzi;Goalkeeper;Italian;27;189;85
+1573;Vlada Avramov;Goalkeeper;Serbian;32;188;80
+1574;Lorenzo Ariaudo;Defender;Italian;22;186;71
+1575;Davide Astori;Defender;Italian;24;188;80
+1576;Francesco Pisano;Defender;Italian;25;174;67
+1577;Michele Canini;Defender;Italian;26;187;78
+1578;Alessandro Agostini;Defender;Italian;32;174;66
+1579;Albin Ekdal;Midfielder;Swedish;22;186;75
+1580;Radja Nainggolan;Midfielder;Belgian;23;175;65
+1581;Daniele Conti;Midfielder;Italian;32;178;71
+1582;Andrea Cossu;Midfielder;Italian;31;170;63
+1583;Davide Biondini;Midfielder;Italian;28;178;67
+1584;Rui Sampaio;Midfielder;Portuguese;24;186;75
+1585;Victor Ibarbo;Midfielder;Colombian;21;186;77
+1586;Thiago Ribeiro;Forward;Brazilian;25;185;74
+1587;Joaquin Larrivey;Forward;Argentinian;27;185;80
+1588;Moestafa El Kabir;Forward;Dutch;23;178;76
+1589;Neno;Forward;Brazilian;28;183;78
+1590;Tomas  Kosicky;Goalkeeper;Slovakian;25;197;93
+1591;Mariano Andujar;Goalkeeper;Argentinian;28;194;87
+1592;Andrea Campagnolo;Goalkeeper;Italian;NA;184;80
+1593;Alessandro Potenza;Defender;Italian;NA;185;78
+1594;Nicolas Spolli;Defender;Argentinian;28;192;86
+1595;Giovanni Marchese;Defender;Italian;26;182;75
+1596;Giuseppe Bellusci;Defender;Italian;22;185;81
+1597;Pablo <U+00C1>lvarez;Defender;Argentinian;27;177;78
+1598;Ciro Capuano;Defender;Italian;30;185;78
+1599;Nicola Legrottaglie;Defender;Italian;34;185;82
+1600;Sergio Almiron;Midfielder;Argentinian;30;180;76
+1601;Mario Paglialunga;Midfielder;Argentinian;22;182;81
+1602;Pablo Ledesma;Midfielder;Argentinian;27;178;73
+1603;Francesco Lodi;Midfielder;Italian;27;183;70
+1604;Mariano Izco;Midfielder;Argentinian;28;180;77
+1605;Sergio Gontan Gallardo Keko;Midfielder;Spanish;19;173;70
+1606;Cristian Llama;Midfielder;Argentinian;25;179;77
+1607;Adrian Ricchiuti;Midfielder;Argentinian;33;168;70
+1608;Fabio Sciacca;Midfielder;Italian;22;182;76
+1609;Gennaro Delvecchio;Midfielder;Italian;33;191;83
+1610;Marco Biagianti;Midfielder;Italian;27;180;73
+1611;Pablo Barrientos;Midfielder;Argentinian;26;176;69
+1612;Davide Lanzafame;Forward;Italian;24;180;75
+1613;David Suazo;Forward;Honduran;31;182;75
+1614;Gonzalo Bergessio;Forward;Argentinian;27;178;72
+1615;Maximiliano Gaston Lopez;Forward;Argentinian;27;188;81
+1616;Alejandro Gomez;Forward;Argentinian;23;164;60
+1617;Julio Cesar;Goalkeeper;Brazilian;32;186;79
+1618;Luca Castellazzi;Goalkeeper;Italian;36;192;89
+1619;Paolo Orlandoni;Goalkeeper;Italian;39;186;78
+1620;Emiliano Viviano;Goalkeeper;Italian;25;195;89
+1621;Ivan Cordoba;Defender;Colombian;35;173;70
+1622;Javier Zanetti;Defender;Argentinian;38;178;75
+1623;Lucio;Defender;Brazilian;33;188;84
+1624;Maicon;Defender;Brazilian;30;184;77
+1625;Andrea Ranocchia;Defender;Italian;23;195;82
+1626;Nelson Rivas;Defender;Colombian;28;182;83
+1627;Walter Samuel;Defender;Argentinian;33;183;83
+1628;Cristian Chivu;Defender;Romanian;30;184;81
+1629;Jonathan;Defender;Brazilian;25;170;72
+1630;Yuto Nagatomo;Defender;Japanese;25;170;68
+1631;Dejan Stankovic;Midfielder;Serbian;33;181;75
+1632;Thiago Motta;Midfielder;Italian;29;187;83
+1633;Wesley Sneijder;Midfielder;Dutch;27;170;67
+1634;Ricardo <U+00C1>lvarez;Midfielder;Argentinian;23;188;84
+1635;Andrea Poli;Midfielder;Italian;21;181;70
+1636;Esteban Cambiasso;Midfielder;Argentinian;31;177;78
+1637;Joel Obi;Midfielder;Nigerian;20;177;72
+1638;Philippe Coutinho;Midfielder;Brazilian;19;171;72
+1639;Sulley Muntari;Midfielder;Ghanaian;27;179;79
+1640;Giampaolo Pazzini;Forward;Italian;27;180;77
+1641;Diego Forlan;Forward;Uruguayan;32;180;75
+1642;Diego Milito;Forward;Argentinian;32;183;78
+1643;Mauro Matias Zarate;Forward;Argentinian;24;176;76
+1644;Luc Castaignos;Forward;Dutch;18;188;78
+1645;Sebastien Frey;Goalkeeper;French;31;189;89
+1646;Cristiano Lupatelli;Goalkeeper;Italian;33;189;86
+1647;Alessio Scarpi;Goalkeeper;Italian;38;189;79
+1648;Dario Dainelli;Defender;Italian;32;191;87
+1649;Andreas Granqvist;Defender;Swedish;25;192;83
+1650;Kakhaber Kaladze;Defender;Georgian;33;186;76
+1651;Cesare Bovo;Defender;Italian;28;181;75
+1652;Luca Antonelli;Defender;Italian;24;184;79
+1653;Emiliano Moretti;Defender;Italian;30;183;78
+1654;Miguel Veloso;Midfielder;Portuguese;25;180;79
+1655;Marco Rossi;Midfielder;Italian;33;181;67
+1656;Valter Birsa;Midfielder;Slovenian;25;184;79
+1657;Felipe Seymour;Midfielder;Chilean;24;174;67
+1658;Cristobal Jorquera;Midfielder;Chilean;23;174;69
+1659;Giandomenico Mesto;Midfielder;Italian;29;183;77
+1660;Kevin Constant;Midfielder;Guinean;24;184;78
+1661;Juraj Kucka;Midfielder;Slovakian;24;186;85
+1662;Alexander Merkel;Midfielder;German;19;177;67
+1663;Lucas Pratto;Forward;Argentinian;23;188;82
+1664;Rodrigo Palacio;Forward;Argentinian;29;175;66
+1665;Ze Eduardo;Forward;Brazilian;23;179;82
+1666;Bosko Jankovic;Forward;Serbian;27;184;78
+1667;Sebastian Ribas;Forward;Uruguayan;23;189;86
+1668;Andrea Caracciolo;Forward;Italian;29;194;80
+1669;Gianluigi Buffon;Goalkeeper;Italian;33;191;83
+1670;Alexander Manninger;Goalkeeper;Austrian;34;188;84
+1671;Marco Storari;Goalkeeper;Italian;34;187;76
+1672;Marco Motta;Defender;Italian;25;186;76
+1673;Giorgio Chiellini;Defender;Italian;27;186;76
+1674;Fabio Grosso;Defender;Italian;33;190;82
+1675;Paolo De Ceglie;Defender;Italian;24;184;75
+1676;Andrea Barzagli;Defender;Italian;30;186;79
+1677;Leonardo Bonucci;Defender;Italian;24;190;82
+1678;Stephan Lichtsteiner;Defender;Swiss;27;183;77
+1679;Frederik S<U+00F6>rensen;Defender;Danish;19;194;80
+1680;Michele Pazienza;Midfielder;Italian;29;178;75
+1681;Claudio Marchisio;Midfielder;Italian;25;179;76
+1682;Marcelo Estigarribia;Midfielder;Paraguayan;23;181;73
+1683;Andrea Pirlo;Midfielder;Italian;32;177;68
+1684;Arturo Vidal;Midfielder;Chilean;24;180;74
+1685;Milos Krasic;Midfielder;Serbian;26;185;72
+1686;Simone Pepe;Forward;Italian;28;178;73
+1687;Vincenzo Iaquinta;Forward;Italian;31;190;85
+1688;Alessandro Del Piero;Forward;Italian;36;173;73
+1689;Mirko Vucinic;Forward;Montenegrin;27;186;76
+1690;Eljero Elia;Forward;Dutch;24;176;70
+1691;Fabio Quagliarella;Forward;Italian;28;180;79
+1692;Luca Toni;Forward;Italian;34;194;88
+1693;Emanuele Giaccherini;Forward;Italian;26;167;60
+1694;Alessandro Matri;Forward;Italian;27;183;80
+1695;Amauri;Forward;Italian;31;186;83
+1696;Samir Ujkani;Goalkeeper;Albanian;23;186;78
+1697;Giuseppe Gemiti;Defender;German;30;176;70
+1698;Michel Morganella;Defender;Swiss;22;183;75
+1699;Hernan Paolo Dellafiore;Defender;Italian;26;182;76
+1700;Massimo Paci;Defender;Italian;33;190;88
+1701;Santiago Garcia;Defender;Argentinian;23;191;86
+1702;Ivan Radovanovic;Midfielder;Serbian;23;186;76
+1703;Takayuki Morimoto;Forward;Japanese;23;180;75
+1704;Pablo Granoche;Forward;Uruguayan;28;183;74
+1705;Jeda;Forward;Brazilian;32;176;74
+1706;Riccardo Meggiorini;Forward;Italian;26;181;74
+1707;Nicola Pavarini;Goalkeeper;Italian;NA;190;81
+1708;Antonio Mirante;Goalkeeper;Italian;28;188;79
+1709;Cristian Zaccardo;Defender;Italian;29;184;77
+1710;Alessandro Lucarelli;Defender;Italian;NA;182;78
+1711;Goncalo Brandao;Defender;Portuguese;24;182;75
+1712;Massimo Gobbi;Defender;Italian;30;183;79
+1713;Matteo Rubin;Defender;Italian;24;183;75
+1714;Francesco Modesto;Defender;Italian;NA;177;73
+1715;Filipe Oliveira;Defender;Portuguese;27;182;72
+1716;Gabriel Paletta;Defender;Argentinian;25;190;80
+1717;Fabiano Santacroce;Defender;Italian;25;181;72
+1718;Stefano Morrone;Midfielder;Italian;NA;178;71
+1719;Daniele Galloppa;Midfielder;Italian;NA;181;74
+1720;Jaime Valdes;Midfielder;Chilean;30;176;71
+1721;Manuele Blasi;Midfielder;Italian;31;179;73
+1722;Gianluca Musacci;Midfielder;Italian;24;180;72
+1723;Francesco Valiani;Midfielder;Italian;30;173;68
+1724;Jose Fernando Marques;Forward;Spanish;26;177;73
+1725;Jonathan Ludovic Biabiany;Forward;French;23;177;73
+1726;Hernan Crespo;Forward;Argentinian;36;184;78
+1727;Sebastian Giovinco;Forward;Italian;24;164;62
+1728;Sergio Floccari;Forward;Italian;29;180;79
+1729;Raffaele Palladino;Forward;Italian;27;179;71
+1730;Graziano Pell<U+00E9>;Forward;Italian;26;193;89
+1731;Albano Bizzarri;Goalkeeper;Argentinian;33;188;82
+1732;Federico Marchetti;Goalkeeper;Italian;28;186;76
+1733;Juan Pablo Carrizo;Goalkeeper;Argentinian;27;188;88
+1734;Guglielmo Stendardo;Defender;Italian;30;190;89
+1735;Andre Dias;Defender;Brazilian;32;184;80
+1736;Lionel Scaloni;Defender;Argentinian;33;182;80
+1737;Javier Garrido;Defender;Spanish;26;178;75
+1738;Giuseppe Biava;Defender;Italian;34;180;72
+1739;Modibo Diakite;Defender;French;24;192;84
+1740;Stefan Radu;Defender;Romanian;24;183;79
+1741;Abdoulay Konko;Defender;French;27;182;71
+1742;Marius Stankevicius;Defender;Lithuanian;30;190;83
+1743;Luciano Zauri;Defender;Italian;33;178;75
+1744;Stefano Mauri;Midfielder;Italian;31;184;79
+1745;Hernanes;Midfielder;Brazilian;26;180;76
+1746;Francelino Matuzalem Da Silva;Midfielder;Brazilian;31;175;73
+1747;<U+00C1>lvaro Rafael Gonzalez;Midfielder;Uruguayan;27;176;72
+1748;Senad Lulic;Midfielder;Bosnian;25;183;78
+1749;Cristian Daniel Ledesma;Midfielder;Italian;28;180;78
+1750;Lorik Cana;Midfielder;Albanian;28;186;80
+1751;Cristian Brocchi;Midfielder;Italian;35;171;70
+1752;Simone Del Nero;Midfielder;Italian;30;187;76
+1753;Giuseppe Sculli;Forward;Italian;30;178;75
+1754;Tommaso Rocchi;Forward;Italian;33;177;75
+1755;Pasquale Foggia;Forward;Italian;28;170;71
+1756;Libor Kozak;Forward;Czech;22;193;84
+1757;Miroslav Klose;Forward;German;33;184;84
+1758;Stephen Makinwa;Forward;Nigerian;NA;186;77
+1759;Djibril Cisse;Forward;French;30;183;83
+1760;Roberto Colombo;Goalkeeper;Italian;36;190;80
+1761;Morgan De Sanctis;Goalkeeper;Italian;34;190;86
+1762;Antonio Rosati;Goalkeeper;Italian;28;195;90
+1763;Gianluca Grava;Defender;Italian;34;172;68
+1764;Ignacio Fideleff;Defender;Argentinian;22;188;82
+1765;Salvatore Aronica;Defender;Italian;33;181;78
+1766;Hugo Armando Campagnaro;Defender;Argentinian;31;181;85
+1767;Camilo Zuniga;Defender;Colombian;25;172;72
+1768;Federico Fernandez;Defender;Argentinian;22;189;81
+1769;Paolo Cannavaro;Defender;Italian;30;185;83
+1770;Leandro Rinaudo;Defender;Italian;28;191;78
+1771;Miguel Britos;Defender;Uruguayan;26;188;82
+1772;Andrea Dossena;Midfielder;Italian;30;180;77
+1773;Christian Maggio;Midfielder;Italian;29;184;79
+1774;Marek Hamsik;Midfielder;Slovakian;24;183;73
+1775;Blerim Dzemaili;Midfielder;Swiss;25;181;78
+1776;Walter Gargano;Midfielder;Uruguayan;27;168;65
+1777;Marco Donadel;Midfielder;Italian;28;179;73
+1778;G<U+00F6>khan Inler;Midfielder;Swiss;27;182;80
+1779;Edinson Cavani;Forward;Uruguayan;24;184;74
+1780;Giuseppe Mascara;Forward;Italian;32;175;68
+1781;Mario Santana;Forward;Argentinian;29;180;75
+1782;Ezequiel Lavezzi;Forward;Argentinian;26;173;75
+1783;Goran Pandev;Forward;Macedonian;28;184;75
+1784;Cristian Gabriel Chavez;Forward;Argentinian;24;171;66
+1785;Cristiano Lucarelli;Forward;Italian;35;188;84
+1786;Samir Handanovic;Goalkeeper;Slovenian;27;193;88
+1787;Emanuele Belardi;Goalkeeper;Italian;33;187;80
+1788;Daniele Padelli;Goalkeeper;Italian;25;191;82
+1789;Nikola Vujadinovic;Defender;Montenegrin;NA;191;84
+1790;Mauricio Isla;Defender;Chilean;23;175;72
+1791;Danilo;Defender;Brazilian;27;184;72
+1792;Dusan Basta;Defender;Serbian;27;184;77
+1793;Maurizio Domizzi;Defender;Italian;31;185;80
+1794;Neuton;Defender;Brazilian;21;182;79
+1795;Andrea Coda;Defender;Italian;26;188;81
+1796;Mehdi Benatia;Defender;Moroccan;24;190;84
+1797;Giovanni Pasquale;Defender;Italian;29;182;73
+1798;Pablo Armero;Defender;Colombian;NA;174;71
+1799;Damiano Ferronetti;Defender;Italian;26;183;70
+1800;Gabriel Torje;Midfielder;Romanian;21;167;64
+1801;Emmanuel Agyemang Badu;Midfielder;Ghanaian;20;182;77
+1802;Kwadwo Asamoah;Midfielder;Ghanaian;22;178;78
+1803;Almen Abdi;Midfielder;Swiss;24;180;75
+1804;Thierry Doubai;Midfielder;Ivorian;23;180;75
+1805;Diego Fabbrini;Midfielder;Italian;21;181;66
+1806;Roberto Pereyra;Midfielder;Argentinian;20;182;74
+1807;Giampiero Pinzi;Midfielder;Italian;30;180;73
+1808;Barreto;Forward;Brazilian;26;171;59
+1809;Antonio Di Natale;Forward;Italian;33;170;70
+1810;Federico Laurito;Forward;Argentinian;21;182;71
+1811;Antonio Floro Flores;Forward;Italian;28;182;76
+1812;Rubinho;Goalkeeper;Brazilian;29;186;82
+1813;Alexandros Tzorvas;Goalkeeper;Greek;29;188;80
+1814;Francesco Benussi;Goalkeeper;Italian;29;189;86
+1815;Andrea Mantovani;Defender;Italian;27;185;79
+1816;Matias Silvestre;Defender;Argentinian;26;184;80
+1817;Mauro Cetto;Defender;Argentinian;29;182;78
+1818;Ezequiel Munoz;Defender;Argentinian;20;186;82
+1819;Matias Aguirregaray;Defender;Uruguayan;22;174;78
+1820;Eros Pisano;Defender;Italian;24;185;77
+1821;Federico Balzaretti;Defender;Italian;29;178;70
+1822;Edgar Barreto;Midfielder;Paraguayan;27;182;78
+1823;Francesco Della Rocca;Midfielder;Italian;24;182;77
+1824;Giulio Migliaccio;Midfielder;Italian;NA;178;72
+1825;Nicolas Bertolo;Midfielder;Argentinian;25;180;75
+1826;Armin Bacinovic;Midfielder;Slovenian;21;183;73
+1827;Josip Ilicic;Midfielder;Slovenian;23;190;73
+1828;Edgar <U+00C1>lvarez;Midfielder;Honduran;31;171;75
+1829;Igor Budan;Forward;Croatian;31;185;80
+1830;Fabrizio Miccoli;Forward;Italian;32;168;64
+1831;Abel Hernandez;Forward;Uruguayan;21;185;73
+1832;Mauricio Pinilla;Forward;Chilean;27;186;77
+1833;Julio Sergio Bertagnoli;Goalkeeper;Brazilian;32;187;80
+1834;Souleymane Diamoutene;Defender;Malian;28;185;78
+1835;Andrea Esposito;Defender;Italian;25;187;78
+1836;Massimo Oddo;Defender;Italian;35;182;76
+1837;Nenad Tomovic;Defender;Serbian;24;184;81
+1838;Moris Carrozzieri;Defender;Italian;30;192;90
+1839;Bryan Bergougnoux;Midfielder;French;28;178;82
+1840;Juan Guillermo Cuadrado;Midfielder;Colombian;23;176;67
+1841;Christian Obodo;Midfielder;Nigerian;27;180;78
+1842;Djamel Mesbah;Midfielder;Algerian;26;180;72
+1843;Guillermo Giacomazzi;Midfielder;Uruguayan;33;183;81
+1844;Carlos Grossm<U+00FC>ller;Midfielder;Uruguayan;28;184;79
+1845;Ignacio Piatti;Midfielder;Argentinian;26;181;77
+1846;Andrea Bertolacci;Midfielder;Italian;20;179;75
+1847;Luis Fernando Muriel;Forward;Colombian;20;178;70
+1848;Daniele Corvia;Forward;Italian;26;181;81
+1849;Ruben Olivera;Forward;Uruguayan;28;182;79
+1850;David Di Michele;Forward;Italian;35;171;72
+1851;Cristian Pasquato;Forward;Italian;22;172;70

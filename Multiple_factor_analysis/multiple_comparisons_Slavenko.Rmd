@@ -1,0 +1,1514 @@
+---
+title: "Multiple Comparisons"
+author: "Matvei Slavenko / Матвей Славенко"
+date: "11.11.2023"
+output:
+  slidy_presentation:
+    duration: 90
+  ioslides_presentation: default
+  footer: "Проблема множественных сравнений"
+subtitle: Проблема множественных сравнений
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+library(dplyr)
+library(tidyr)
+library(kableExtra)
+library(mvtnorm)
+library(ggplot2)
+library(purrr)
+
+#source("scratches.R")
+```
+
+```{r plot-functions, include = FALSE}
+add_vert_line <- function(x, a, b, ...){
+  lines(x = rep(x, 2), 
+        y = c(a, b), ...)
+}
+
+plot.playground <-
+  function(x, y, true.x = NULL, true.y = NULL, xlab = "X", ylab = "Y", square = FALSE) {
+    # Prepare the canvas
+    plot(
+      x = x,
+      y = y,
+      type = "n",
+      frame.plot = FALSE,
+      xlab = xlab,
+      ylab = ylab
+    )
+    
+    # Plot Y rug 
+    rug(y, side = 2, col = "cadetblue")
+  
+    
+    # Plot X rug
+    rug(x, col = "salmon3")
+    
+    if(square){
+      plot.square(x, y, true.x, true.y)
+    }
+    
+  }
+
+
+
+plot.square <- function(x, y, true.x = NULL, true.y = NULL, alpha = 0.05){
+  
+  x.confint <- t.test(x, conf.level = 1 - alpha)$conf.int[c(1, 2)]
+  y.confint <- t.test(y, conf.level = 1 - alpha)$conf.int[c(1, 2)]
+  
+  abline(h = true.y, col = "deepskyblue3", lty = 5)
+  abline(v = true.x, col = "deepskyblue3", lty = 5)
+  
+  points(true.x, true.y, col = "deepskyblue3", pch = 18, cex = 2)
+  
+  if(is.null(true.x)){
+    col.x <- "grey40"
+  } else if(x.confint[1] <= true.x & true.x <= x.confint[2]){
+    col.x <- "darkolivegreen3"
+  } else {
+    col.x <- "brown2"
+  }
+  
+  if(is.null(true.y)){
+    col.y <- "grey40"
+  } else if(y.confint[1] <= true.y & true.y <= y.confint[2]){
+    col.y <- "darkolivegreen3"
+  } else {
+    col.y <- "brown2"
+  }
+  
+  lines(x = x.confint, y = rep(y.confint[1], 2), col = col.x, lwd = 2)
+  lines(x = x.confint, y = rep(y.confint[2], 2), col = col.x, lwd = 2)
+  
+  
+  lines(y = y.confint, x = rep(x.confint[1], 2), col = col.y, lwd = 2)
+  lines(y = y.confint, x = rep(x.confint[2], 2), col = col.y, lwd = 2)
+}
+
+soccer_general <- read.csv("soccer.csv", sep=";")[, 2:6] %>%
+  mutate(Position = as.factor(Position),
+         Nationality = as.factor(Nationality),
+         Age = as.numeric(Age),
+         Height = as.numeric(Height)) %>%
+  filter(Nationality %in% c("Spanish", "Italian", "German", "English", "Argentinian"))
+
+set.seed(1)
+
+soccer_wrk <- soccer_general[sample(1:nrow(soccer_general), 50), ] %>%
+  mutate(Nationality = factor(Nationality))
+
+```
+
+
+
+## Программа занятий
+
+* **11.11.2023** Проблема множественных сравнений
+  * Повторение пройденного материала, который пригодится на занятии
+  * Постановка вопроса, общая рамка проблемы
+  * Основные способы решения проблемы, FWER, FDR
+* **25.11.2023** Проблема множественных сравнений 2, дисперсионный анализ
+  * Доделываем из базы по множественным сравнениям то, что не успели в прошлый раз
+  * Повторение нужного материала
+  * Теоретический блок про дисперсию
+  * Множественные сравнения в контексте линейных моделей, в том числе ANOVA и post hocs
+
+# Часть 1. Разминка
+
+## Постановка вопроса
+
+```{r results='hold'}
+j <- 0
+
+for(i in 1:1000) {
+  x <- rnorm(30)
+  
+  p <- t.test(x)$p.val
+  
+  if(p < 0.05) {
+    j <- j + 1 
+  }
+}
+
+print(j)
+
+rm(x, j, i, p)
+```
+
+
+## Данные. Наша рабочая выборка
+
+```{r}
+library(mvtnorm)
+
+set.seed(727)
+
+df <- rmvnorm(30,
+              mean = c(0, 3),
+              sigma = matrix(c(1, 0.6,
+                               0.6, 1),
+                             nrow = 2,
+                             byrow = TRUE))
+
+colnames(df) <- c("X", "Y")
+
+df <- df %>% as_tibble()
+
+head(df)
+
+```
+
+
+## Данные -- сводка
+
+```{r results='hold', fig.align='center', out.extra = 'style="float:left; padding:10px"'}
+df %>% ggplot + aes(X, Y) + geom_point(colour = "cadetblue") + stat_ellipse(colour = "cadetblue", alpha = 1/2) + theme_classic()
+```
+
+```{r}
+df %>% summary
+```
+
+```{r}
+cor(df) %>% round(digits = 2)
+```
+
+
+## Сфокусируемся на переменной $X$
+
+```{r}
+df %>% pull(X) %>% summary
+```
+
+## Разминка 1. Принятие решений aka Тестирование гипотез
+
+Матожидание $X$ в генеральной совокупности равно 0. Протестируем соответствующую нулевую гипотезу $H0: \mu = 0$.
+
+```{r}
+df %>% select(X) %>% t.test()
+```
+
+## Разминка 2. Типы ошибок при тестировании гипотез
+
+Какие два типа ошибок мы можем допустить при тестировании гипотез?
+
+## Разминка 2. Типы ошибок при тестировании гипотез
+
+Какие два типа ошибок мы можем допустить при тестировании гипотез?
+
+```{r echo=FALSE}
+data.frame(c("H0 отклонили", "H0 не отклонили")
+           , c("Ошибка I рода<br>Type I error", "OK"), 
+           c("OK", "Ошибка II рода<br>Type II error")) %>%
+  kbl(booktabs = T,
+      digits = 2,
+      col.names = c("", "H0 верна", "H0 неверна"), 
+      escape = FALSE,
+      align = c("lcc")) %>%
+  kable_styling(
+    latex_options = "hold_position",
+    bootstrap_options = c("hover"),
+    full_width = F
+  ) %>%
+  column_spec(1, bold = T)
+```
+
+## Разминка 2. Типы ошибок при тестировании гипотез
+
+```{r echo=FALSE}
+data.frame(c("H0 отклонили", "H0 не отклонили")
+           , c("Ошибка I рода<br>Type I error", "OK"), 
+           c("OK", "Ошибка II рода<br>Type II error")) %>%
+  kbl(booktabs = T,
+      digits = 2,
+      col.names = c("", "H0 верна", "H0 неверна"), 
+      escape = FALSE,
+      align = c("lcc")) %>%
+  kable_styling(
+    latex_options = "hold_position",
+    bootstrap_options = c("hover"),
+    full_width = F
+  ) %>%
+  column_spec(1, bold = T)
+```
+
+1. Можем ли мы контролировать ошибку первого типа?
+2. А ошибку второго типа?
+
+## Разминка 2. Типы ошибок при тестировании гипотез
+
+```{r echo=FALSE}
+data.frame(c("H0 отклонили", "H0 не отклонили")
+           , c("Ошибка I рода<br>Type I error", "OK"), 
+           c("OK", "Ошибка II рода<br>Type II error")) %>%
+  kbl(booktabs = T,
+      digits = 2,
+      col.names = c("", "H0 верна", "H0 неверна"), 
+      escape = FALSE,
+      align = c("lcc")) %>%
+  kable_styling(
+    latex_options = "hold_position",
+    bootstrap_options = c("hover"),
+    full_width = F
+  ) %>%
+  column_spec(1, bold = T)
+```
+
+
+- Можем ли мы контролировать ошибку первого типа?
+  - => да, выбираем $\alpha$ => Comparison-Wise Error Rate (CWER).
+- А ошибку второго типа? 
+  - => косвенно, через увеличение размера выборки.
+  - => power analysis.
+  - вероятность ошибки второго рода (aka $1 - \beta$) $\approx$ "неопределенность", сопряженная с процедурой.
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+p-value -- это здорово, но нам бы хотелось иметь более детальное представление о матожидании переменной $X$.
+
+```{r}
+df %>% pull(X) %>% t.test()
+```
+
+* Что такое 95% доверительный интервал?
+
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+p-value -- это здорово, но нам бы хотелось иметь более детальное представление о матожидании переменной $X$.
+
+```{r}
+df %>% pull(X) %>% t.test()
+```
+
+
+
+* Что такое 95% доверительный интервал?
+  * Это процедура.
+  * Процедура на основе данных (= выборки) генерирует интервал.
+  * При многократном повторении эксперимента, сгененерированный интервал в 95% процентов случаев покроет среднее генеральной совокупности.
+
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+p-value -- это здорово, но нам бы хотелось иметь более детальное представление о матожидании переменной $X$.
+
+* Что такое 95% доверительный интервал?
+  * Это процедура.
+  * Процедура на основе данных (= выборки) генерирует интервал.
+  * При многократном повторении эксперимента, сгененерированный интервал в 95% процентов случаев покроет среднее генеральной совокупности.
+
+* Бывают ли интервалы не для среднего?
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+p-value -- это здорово, но нам бы хотелось иметь более детальное представление о матожидании переменной $X$.
+
+* Что такое 95% доверительный интервал?
+  * Это процедура.
+  * Процедура на основе данных (= выборки) генерирует интервал.
+  * При многократном повторении эксперимента, сгененерированный интервал в 95% процентов случаев покроет среднее генеральной совокупности.
+
+* Бывают ли интервалы не для среднего?
+  * Потенциально для любой другой характеристики распределения: дисперсия, медиана, risk ratio и тд.
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+* Какова вероятность "осечки" для 95% интервала? 
+* Бывают ли не 95% интервалы?
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+* Какова вероятность "осечки" для 95% интервала?
+  * 95% вероятность покрытия -- 5% ошибка => Comparison-Wise Error Rate (CWER).
+* Бывают ли не 95% интервалы?
+  * Конечно, опять выбираем $\alpha$, вероятность покрытия тогда будет $1-\alpha$.
+
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+* Какова вероятность "осечки" для 95% интервала?
+  * 95% вероятность покрытия -- 5% ошибка => Comparison-Wise Error Rate (CWER).
+* Бывают ли не 95% интервалы?
+  * Конечно, опять выбираем $\alpha$, вероятность покрытия тогда будет $1-\alpha$.
+* "Осечка" для 95% интервала -- это ошибка первого или второго рода?
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+* Какова вероятность "осечки" для 95% интервала?
+  * 95% вероятность покрытия -- 5% ошибка => Comparison-Wise Error Rate (CWER).
+* Бывают ли не 95% интервалы?
+  * Конечно, опять выбираем $\alpha$, вероятность покрытия тогда будет $1-\alpha$.
+* "Осечка" для 95% интервала -- это ошибка первого или второго рода?
+  * "Ошибка первого рода" -- мы можем ее контролировать.
+* А что тогда соответствует "ошибке второго рода"?
+
+## Разминка 3. Доверительные интервалы aka Оценка и ее неопределенность
+
+* Какова вероятность "осечки" для 95% интервала?
+  * 95% вероятность покрытия -- 5% ошибка => Comparison-Wise Error Rate (CWER).
+* Бывают ли не 95% интервалы?
+  * Конечно, опять выбираем $\alpha$, вероятность покрытия тогда будет $1-\alpha$.
+* "Осечка" для 95% интервала -- это ошибка первого или второго рода?
+  * "Ошибка первого рода" -- мы можем ее контролировать.
+* А что тогда соответствует "ошибке второго рода"?
+  * В каком-то смысле длина интервала -- контролируем только косвенно, тоже "неопределенность" процедуры.
+
+## Подведем итоги
+
+В частотнической статистике есть две главные оптики:
+
+* Принятие решений aka тестирование гипотез
+* Оценка параметра и неопределенность этой оценки aka доверительные интервалы
+
+```{r echo=FALSE}
+data.frame(c("H0 отклонили", "H0 не отклонили")
+           , c("Ошибка I рода<br>Type I error", "OK"), 
+           c("OK", "Ошибка II рода<br>Type II error")) %>%
+  kbl(booktabs = T,
+      digits = 2,
+      col.names = c("", "H0 верна", "H0 неверна"), 
+      escape = FALSE,
+      align = c("lcc")) %>%
+  kable_styling(
+    latex_options = "hold_position",
+    bootstrap_options = c("hover"),
+    full_width = F
+  ) %>%
+  column_spec(1, bold = T)
+```
+
+## Экономика $\alpha$, $\beta$ и длины интервала
+
+* Как именно мы выбираем $\alpha$? Почему 0,05?
+
+## Экономика $\alpha$, $\beta$ и длины интервала
+
+* Как именно мы выбираем $\alpha$? Почему 0,05?
+  * Так сложилось исторически.
+  * Выбор $\alpha$ внешний по отношению к математической статистике, диктуется экономическими, этическими, эстетическими и прочими соображениями исследователя.
+
+# Часть 2. Доверительные области aka многомерные оценки
+
+## Еще раз $X$
+
+```{r}
+df %>% pull(X) %>% t.test %>% with(conf.int)
+```
+
+
+## А что там с $Y$?
+
+```{r}
+df %>% pull(Y) %>% t.test
+```
+
+## А что там с $Y$?
+
+Матожидание $Y$ в генеральной совокупности равно 3.
+
+```{r}
+df %>% pull(Y) %>% t.test(mu = 3)
+```
+
+## Итак, два интервала
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"'}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                square = TRUE)
+```
+
+С какой вероятностью доверительный квадр покроет точку (матожидание $X$; матожидание $Y$)?
+
+## Итак, два интервала
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"'}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                square = TRUE)
+```
+
+С какой вероятностью доверительный квадр покроет точку (матожидание $X$; матожидание $Y$)?
+
+$0.95 \cdot 0.95 = 0.9025 < 0.95$ -- в случае независимых интервалов; в общем случае -- сложно сказать.
+
+## Итак, два интервала
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"'}
+
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+
+```
+
+С какой вероятностью доверительный квадр покроет точку (матожидание $X$; матожидание $Y$)?
+
+$0.95 \cdot 0.95 = 0.9025 < 0.95$ -- в случае независимых интервалов; в общем случае -- сложно сказать.
+
+## Интермеццо: зависимость тестов
+
+```{r}
+set.seed(33)
+
+t_stats <- tibble("X_t" = numeric(), "Y_t" = numeric())
+
+for(i in 1:100) {
+  
+  temp <- rmvnorm(30,
+              mean = c(0, 3),
+              sigma = matrix(c(1, 0.6,
+                               0.6, 1),
+                             nrow = 2,
+                             byrow = TRUE))
+  
+  t_stats <- rbind(t_stats, 
+                   c(t.test(temp[,1])$statistic, 
+                   t.test(temp[,2])$statistic))
+}
+
+colnames(t_stats) <- c("X_t", "Y_t")
+```
+
+## Интермеццо: зависимость тестов
+
+```{r fig.align='center', fig.width=7, fig.asp=1, out.extra = 'style="float:left; padding:10px"'}
+t_stats %>% 
+  ggplot() +
+  aes(X_t, Y_t) + 
+  geom_point(colour = "cadetblue4") +
+  stat_ellipse(colour = "cadetblue4", alpha = 1/2) +
+  theme_classic()
+```
+```{r}
+cor(t_stats) %>% round(digits = 2)
+```
+
+## Итак, два интервала
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"'}
+
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+
+```
+
+С какой вероятностью доверительный квадр покроет точку (матожидание $X$; матожидание $Y$)?
+
+$0.95 \cdot 0.95 = 0.9025 < 0.95$ -- в случае независимых интервалов; в общем случае -- сложно сказать.
+
+## А что если интервалов больше? Family-Wise Error Rate
+
+Вероятность покрытия квадром (n независимых интервалов, каждый должен "попасть"): $(1-\alpha)^n = (1-CWER)^n$.
+
+Вероятность "осечки" квадра (хотя бы один интервал "промахнулся") aka FWER: $1 - (1-\alpha)^n = 1 - (1-CWER)^n$
+
+```{r out.width = "50%", echo = FALSE, fig.align= 'center'}
+x <- 1:100
+y <- 1-(1-0.05)^x
+
+plot(x, y, type = "l", pch = 21,
+     main = "FWER depending on number of intervals",
+     sub = "Comparison-Wise Error Rate = 0.05",
+     xlab = "Number of tests",
+     ylab = "Family-Wise Error Rate",
+     frame.plot = FALSE,
+     col = "salmon3",
+     lwd = 2)
+
+lines(x = c(0, 45), y = c(0.9, 0.9), col = "cadetblue3", lwd = 2)
+lines(x = c(45, 45), y = c(0, 0.9), col = "cadetblue3", lwd = 2)
+
+lines(x = c(0, 14), y = c(0.5, 0.5), col = "cadetblue3", lwd = 2)
+lines(x = c(14, 14), y = c(0, 0.5), col = "cadetblue3", lwd = 2)
+
+```
+
+## Итого
+
+* В нашем контексте под одним "сравнением" мы понимаем одну оценку или один статистический тест
+* На оценку многих параметров мы можем смотреть как на оценку одного многомерного параметра, _в нашем случае двумерного_
+* Аналогом доверительного интервала является доверительная область (ДО), _в нашем случае доверительный квадр_
+  * Существуют и другие формы ДО: доверительные эллипсы, пояса и т.д.
+* Доверительный квадр составляется из доверительных интервалов. Вероятность осечки ДИ в нашем контексте называется CWER
+* Вероятность осечки для доверительного квадра в нашем контексте называется FWER
+
+
+
+## Итого
+
+* В нашем контексте под одним "сравнением" мы понимаем одну оценку или один статистический тест
+* На оценку многих параметров мы можем смотреть как на оценку одного многомерного параметра, _в нашем случае двумерного_
+* Аналогом доверительного интервала является доверительная область (ДО), _в нашем случае доверительный квадр_
+  * Существуют и другие формы ДО: доверительные эллипсы, пояса и т.д.
+* Доверительный квадр составляется из доверительных интервалов. Вероятность осечки ДИ в нашем контексте называется CWER
+* Вероятность осечки для доверительного квадра в нашем контексте называется FWER
+
+
+**Также:**
+
+* Тесты и доверительные интервалы могут быть зависимы / коррелировать
+* В случае, если ДИ независимы, мы можем вычислить FWER на основе CWER
+* Обычно $FWER \geq CWER$. В случае если параметров много $FWER >> CWER$
+
+
+
+# Часть 3. Доверительные квадры с заданной вероятностью покрытия
+
+## FWER -- как из многих доверительных интервалов "слепить" доверительную область
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+```
+
+Мы имеем семейство из двух интервалов -- два сравнения -- и мы хотим контролировать "общую" ошибку первого рода, т.е. FWER. Иными словами, мы хотим построить доверительный квадр с заданной вероятностью покрытия.
+
+* Ошибка первого рода -- "доверительный квадр" "промахнулся" => FWER
+* Квадр "промахивается" тогда, когда хотя бы один из интервалов "промахивается"
+
+Как добиться: поправить CWER (т.е.\ $\alpha$) так, чтобы FWER = 0.05
+
+## FWER -- как из многих доверительных интервалов "слепить" доверительную область
+
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+```
+
+
+Как добиться: поправить CWER (т.е.\ $\alpha$) так, чтобы FWER = 0.05
+
+Мы "поправляем" $\alpha$ -- отсюда название для таких процедур -- поправки на множественные сравнения (multiple comparison correction)
+
+Результат поправки: $\alpha_{adj}$, adjusted $\alpha$, поправленное альфа
+
+Интервалы, построенные с вероятностью покрытия $1 - \alpha_{adj}$: simultaneous CI
+
+## FWER. Поправка Бонферрони
+
+Пусть мы хотим построить $n$ интервалов с $FWER = \alpha$
+
+Бонферрони предлагает: $CWER = \alpha_{adj} := \alpha/n$. Такая процедура гарантирует, что $FWER <= 0.05$
+
+__В нашем случае:__
+
+*  Хотим квадр для матожиданий $X$ и $Y$ с вероятностью "осечки" $\alpha = 0.05 = FWER$
+  * Вероятность покрытия для квадра тогда...
+  
+## FWER. Поправка Бонферрони. Пример 1
+
+Пусть мы хотим построить $n$ интервалов с $FWER = \alpha$
+
+Бонферрони предлагает: $CWER = \alpha_{adj} := \alpha/n$. Такая процедура гарантирует, что $FWER <= 0.05$
+
+__В нашем случае:__
+
+* Хотим квадр для матожиданий $X$ и $Y$ с вероятностью "осечки" $\alpha = 0.05 = FWER$.
+  * Вероятность покрытия для квадра тогда $1- \alpha = 1-FWER = 0.95$. 95% квадр.
+* Чему должен быть равен CWER по Бонферрони?
+
+## FWER. Поправка Бонферрони. Пример 1
+
+Пусть мы хотим построить $n$ интервалов с $FWER = \alpha$
+
+Бонферрони предлагает: $CWER = \alpha_{adj} := \alpha/n$. Такая процедура гарантирует, что $FWER \leq 0.05$
+
+__В нашем случае:__
+
+* Хотим квадр для матожиданий $X$ и $Y$ с вероятностью "осечки" $\alpha = 0.05 = FWER$
+  * Вероятность покрытия для квадра тогда $1- \alpha = 1-FWER = 0.95$. 95% квадр
+* Чему должен быть равен CWER по Бонферрони?
+  * $\alpha_{adj} = 0.05/2 = 0.025$
+  * Отдельные интервалы имеют вероятность покрытия $1-0.025=0.975$
+  
+## FWER. Поправка Бонферрони. Пример 1
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+```
+
+__В нашем случае:__
+
+* Хотим квадр для матожиданий $X$ и $Y$ с вероятностью "осечки" $\alpha = 0.05 = FWER$
+  * Вероятность покрытия для квадра тогда $1- \alpha = 1-FWER = 0.95$. 95% квадр
+* Чему должен быть равен CWER по Бонферрони?
+  * $\alpha_{adj} = 0.05/2 = 0.025$
+  * Отдельные интервалы имеют вероятность покрытия $1-0.025=0.975$
+
+## FWER. Поправка Бонферрони. Пример 1
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/2)
+```
+
+__В нашем случае:__
+
+* Хотим квадр для матожиданий $X$ и $Y$ с вероятностью "осечки" $\alpha = 0.05 = FWER$
+  * Вероятность покрытия для квадра тогда $1- \alpha = 1-FWER = 0.95$. 95% квадр
+* Чему должен быть равен CWER по Бонферрони?
+  * $\alpha_{adj} = 0.05/2 = 0.025$
+  * Отдельные интервалы имеют вероятность покрытия $1-0.025=0.975$
+
+```{r}
+df %>% pull(X) %>% t.test(conf.level = 0.975)
+df %>% pull(Y) %>% t.test(mu = 3, conf.level = 0.975)
+```
+
+
+## FWER. Поправка Бонферрони. Пример 1
+
+```{r, fig.height=6, fig.width=6, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/2)
+```
+
+__В нашем случае:__
+
+  * Отдельные интервалы имеют вероятность покрытия $1-0.025=0.975$
+
+```{r}
+df %>% pull(X) %>% t.test(conf.level = 0.975)
+df %>% pull(Y) %>% t.test(mu = 3, conf.level = 0.975)
+```
+
+## Пример 2. Оценка эффективности лекарства 
+
+**Легенда:** Пусть у нас есть действующие вещества A, B и С. Каждое из них мы можем использовать в концентрации 1, 2 или 3 — реальные концентрации для каждого вещества свои, мы для простоты не рассматриваем реальную концентрацию, а используем "ярлычки". 
+
+Мы изучаем отклик пациента (0/1) на терапию веществом. Каждую комбинацию вещества и концентрации получили двадцать пациентов. Как описать эффективность терапии?
+
+```{r echo=FALSE}
+set.seed(48)
+
+df2 <- tibble(subst = c(rep("A", 3), rep("B", 3), rep("C", 3)),
+              conc = rep(1:3, 3),
+              true_resp = c(0.1, 0.15, 0.25,
+                           0.9, 0.95, 0.95, 
+                           0.4, 0.6, 0.8)
+) %>% mutate(
+  obs_resp = rbinom(n(), 20, true_resp)
+)
+```
+
+```{r}
+df2 %>% select(-true_resp)
+```
+
+## Пример 2. Оценка эффективности лекарства 
+
+**Легенда:** Пусть у нас есть действующие вещества A, B и С. Каждое из них мы можем использовать в концентрации 1, 2 или 3 — реальные концентрации для каждого вещества свои, мы для простоты не рассматриваем реальную концентрацию, а используем "ярлычки". 
+
+Мы изучаем отклик пациента (0/1) на терапию веществом. Каждую комбинацию вещества и концентрации получили двадцать пациентов. Как описать эффективность терапии?
+
+В каждой клетке количество пациентов, показавших отклик на этой терапии, из 20 получивших ее.
+
+```{r}
+df2 %>% select(-true_resp) %>% pivot_wider(names_from = subst, values_from = obs_resp)
+```
+
+```{r}
+df2 %>% mutate(obs_resp = obs_resp / 20) %>% 
+  select(-true_resp) %>% pivot_wider(names_from = subst, values_from = obs_resp)
+```
+
+## Пример 2. Оценка эффективности лекарства 
+
+
+```{r}
+df2 %>% mutate(obs_resp = obs_resp / 20) %>% 
+  select(-true_resp) %>% pivot_wider(names_from = subst, values_from = obs_resp)
+```
+
+Доверительные интервалы Клоппера-Пирсона! В нашем случае поточечные (pointwise).
+
+```{r}
+df2 <- df2 %>% 
+  rowwise() %>% 
+  mutate(ci = binom.test(obs_resp, 20)$conf.int %>% 
+           setNames(c("L_raw", "R_raw")) %>%
+           list
+         ) %>% 
+  unnest_wider(ci) %>%
+  mutate(ci = sprintf("(%4.2f; %4.2f)", L_raw, R_raw))
+
+df2 %>%
+  select(subst, conc, ci) %>%
+  pivot_wider(names_from = subst, values_from = ci)
+```
+
+## Пример 2. Оценка эффективности лекарства 
+
+```{r echo = FALSE}
+df2 %>% mutate(obs_resp = obs_resp / 20) %>% 
+  select(conc, subst, obs_resp) %>% pivot_wider(names_from = subst, values_from = obs_resp)
+```
+
+Доверительные интервалы Клоппера-Пирсона с поправкой на три сравнения, $CWER=0.05/3$. Вероятность покрытия отдельного интервала тогда $1-0.05/3$
+
+```{r}
+df2 <- df2 %>% 
+  rowwise() %>% 
+  mutate(ci_2 = binom.test(obs_resp, 20, conf.level = 1 - 0.05/3)$conf.int %>% 
+           setNames(c("L_BF", "R_BF")) %>%
+           list
+         ) %>% 
+  unnest_wider(ci_2) %>%
+  mutate(ci_BF = sprintf("(%4.2f; %4.2f)", L_BF, R_BF))
+
+df2 %>%
+  select(subst, conc, ci_BF) %>%
+  pivot_wider(names_from = subst, values_from = ci_BF)
+```
+
+## Пример 2. Оценка эффективности лекарства 
+
+```{r echo = FALSE}
+df2 %>% mutate(obs_resp = obs_resp / 20) %>% 
+  select(subst, conc, obs_resp) %>% pivot_wider(names_from = subst, values_from = obs_resp)
+```
+
+
+```{r echo = FALSE}
+df2 %>%
+  select(subst, conc, ci) %>%
+  pivot_wider(names_from = subst, values_from = ci)
+```
+
+Доверительные интервалы Клоппера-Пирсона с поправкой на три сравнения, $CWER=0.05/3$. Вероятность покрытия отдельного интервала тогда $1-0.05/3$.
+
+```{r echo = FALSE}
+df2 %>%
+  select(subst, conc, ci_BF) %>%
+  pivot_wider(names_from = subst, values_from = ci_BF)
+```
+
+## Пример 2. Оценка эффективности лекарства -- иллюстрация
+
+```{r fig.align='center', echo = FALSE, out.extra = 'style="float:left; padding:10px"'}
+df2 %>%
+  ggplot() +
+  aes(conc, ymin = L_raw, ymax = R_raw) +
+  geom_linerange(aes(ymin = L_BF, ymax = R_BF), colour = "cadetblue3", linewidth = 1.5) +
+  geom_errorbar(colour = "salmon3", linewidth = 1.5) +
+  geom_point(aes(y = obs_resp / 20), colour = "salmon4", size = 3) +
+  theme_classic() + 
+  facet_wrap(~ subst) +
+  ylab("Вероятность отклика") +
+  xlab("Концентрация")
+```
+
+Без поправки
+
+```{r echo = FALSE}
+df2 %>%
+  select(subst, conc, ci) %>%
+  pivot_wider(names_from = subst, values_from = ci)
+```
+
+С поправкой
+
+```{r echo = FALSE}
+df2 %>%
+  select(subst, conc, ci_BF) %>%
+  pivot_wider(names_from = subst, values_from = ci_BF)
+```
+
+
+## Пример 3. Функция выживания. Поточечный пояс
+
+$$S_X(a) := \mathsf{P}[X > a]$$
+
+```{r fig.align='center'}
+library(survival)
+
+srv <- survfit(Surv(df$X, rep(1, 30)) ~ 1)
+srv %>% plot(conf.int = FALSE, col = "cadetblue", bty = "L")
+```
+
+## Пример 3. Функция выживания. Поточечный пояс
+
+```{r echo=FALSE, out.extra = 'style="float:left; padding:10px"'}
+library(survival)
+
+srv <- survfit(Surv(df$X, rep(1, 30)) ~ 1)
+srv %>% plot(conf.int = FALSE, col = "cadetblue", bty = "L")
+```
+
+**"Point-wise confidence band"**
+
+```{r results='hold'}
+sum(df$X > -1) / nrow(df)
+sum(df$X > 0) / nrow(df)
+sum(df$X > 0.5) / nrow(df)
+```
+
+```{r results='hold'}
+binom.test(sum(df$X > -1), nrow(df))$conf.int
+binom.test(sum(df$X > 0), nrow(df))$conf.int
+binom.test(sum(df$X > 0.5), nrow(df))$conf.int
+```
+
+## Пример 3. Доверительный пояс для функции выживания. Поточечный пояс
+
+```{r echo = FALSE, out.extra = 'style="float:left; padding:10px"'}
+srv %>% plot(conf.int = FALSE, col = "cadetblue", bty = "L")
+
+for(x in c(-1, 0, 0.5)){
+  conf.int <- binom.test(sum(df$X > x), nrow(df))$conf.int
+  
+  add_vert_line(x, conf.int[1], conf.int[2], col = "salmon3", type = "b", pch = 20)
+}
+```
+
+**"Point-wise confidence band"**
+
+```{r results='hold', out.extra = 'style="float:left; padding:10px"'}
+binom.test(sum(df$X > -1), nrow(df))$conf.int
+binom.test(sum(df$X > 0), nrow(df))$conf.int
+binom.test(sum(df$X > 0.5), nrow(df))$conf.int
+```
+
+## Пример 3. Доверительный пояс для функции выживания. Поточечный пояс "из коробки"
+
+```{r out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+srv %>% plot(col = "cadetblue", bty = "L", conf.type = "plain")
+
+for(x in c(-1, 0, 0.5)){
+  conf.int <- binom.test(sum(df$X > x), nrow(df))$conf.int
+  
+  add_vert_line(x, conf.int[1], conf.int[2], col = "salmon3", type = "b", pch = 20)
+}
+
+
+```
+
+**"Point-wise confidence band"**
+
+```{r results='hold'}
+binom.test(sum(df$X > -1), nrow(df))$conf.int
+binom.test(sum(df$X > 0), nrow(df))$conf.int
+binom.test(sum(df$X > 0.5), nrow(df))$conf.int
+```
+
+## Пример 3. Доверительный пояс для функции выживания. Поточечный пояс + Bonferroni
+
+```{r out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+srv %>% plot(col = "cadetblue", bty = "L", conf.type = "plain")
+
+for(x in c(-1, 0, 0.5)){
+  conf.int <- binom.test(sum(df$X > x), nrow(df))$conf.int
+  
+  add_vert_line(x, conf.int[1], conf.int[2], col = "salmon3", type = "b", pch = 20)
+}
+
+for(x in c(-1, 0, 0.5)){
+  conf.int <- binom.test(sum(df$X > x), nrow(df), conf.level = 1 - 0.05/3)$conf.int
+  
+  add_vert_line(x, conf.int[1], conf.int[2], col = "darkolivegreen4", type = "b", pch = 20)
+}
+
+```
+
+* "Point-wise confidence band" + Bonferroni
+
+```{r results='hold'}
+binom.test(sum(df$X <= -1), nrow(df), conf.level = 1 - 0.05/3)$conf.int
+binom.test(sum(df$X <= 0), nrow(df), conf.level = 1 - 0.05/3)$conf.int
+binom.test(sum(df$X <= 0.5), nrow(df), conf.level = 1 - 0.05/3)$conf.int
+```
+
+## Пример 3. Контролируем FWER. Simultaneous confidence band for survival function: Hall-Wellner
+
+```{r out.extra = 'style="float:left; padding:10px"', warning = FALSE, message=FALSE}
+library(km.ci)
+
+srv <- survfit(Surv(df$X, rep(1, 30)) ~ 1)
+srv <- srv %>% km.ci(method = "hall-wellner")
+
+srv %>% plot(col = "cadetblue", bty = "L", ylim = c(0, 1))
+
+for(x in c(-1, 0, 0.5)){
+  conf.int <- binom.test(sum(df$X > x), nrow(df))$conf.int
+  add_vert_line(x, conf.int[1], conf.int[2], col = "salmon3", type = "b", pch = 20)
+}
+```
+
+* Достигается работой со случайными процессами.
+* Больше можно прочитать [здесь](http://www.karlin.mff.cuni.cz/~kulich/vyuka/cens/doc/cens_notes_ext_220102.pdf) (глава 4, особенно раздел 4.3) и [здесь](https://www.karlin.mff.cuni.cz/~vavraj/cda/exercise_04.html).
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/2)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/10)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятность ошибки второго рода (длины интервалов) очень большие.
+    
+_-- Не подскажете, где вход в метро?_
+
+_-- Где-то в Евразии._
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/100)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятность ошибки второго рода (длины интервалов) очень большие.
+    
+_-- Не подскажете, где вход в метро?_
+
+_-- Где-то в Евразии._
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/200)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятности ошибки второго рода (длины интервалов) очень большие.
+    
+_-- Не подскажете, где вход в метро?_
+
+_-- Где-то в Евразии._
+
+Заметим: $1- \frac{\alpha}{n} \rightarrow 1$ при $n \rightarrow \infty$, т.е. отдельный интервал почти всегда покроет реальное значение -- ценой большой длины.
+
+## FWER. Промежуточные итоги
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/2)
+```
+
+* Оцениваем сложную систему, состоящую из разных частей
+  * Оцениваем поведение каждой части / отдельный параметр, из них составляем оценку всей системы
+    * Оценки средних $X$ и $Y$
+    * Поведение препарата при трех данных концентрациях
+    * Поведение трех препаратов при данной концентрации
+    * Функция дожития как пример бесконечномерного параметра
+  * Нам важно совместное поведение оценок, а не поведение отдельных оценок в среднеи. _"Все или ничего"_
+  * Сравните с последовательным соединением элементов в цепи: чтобы сигнал прошел, отработать должен каждый из них
+
+# Часть 4. FWER в терминах тестирования гипотез
+
+## FWER. Поправка Бонферрони на языке p-values
+
+Поправку Бонферрони мы можем использовать и в контексте тестирования. 
+
+Пусть мы хотим протестировать $n$ гипотез с $FWER = \alpha$.
+
+Бонферрони предлагает: $CWER = \alpha_{adj} := \alpha/n$.
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+## FWER. Поправка Бонферрони на языке p-values. Пример 1
+
+Пусть мы хотим протестировать $n$ гипотез с $FWER = \alpha$.
+
+Бонферрони предлагает: $CWER = \alpha_{adj} := \alpha/n$.
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+* $X$: $p_1 = 0.4402$
+* $Y$: $p_2 = 0.0337$
+
+## FWER. Поправка Бонферрони на языке p-values. Пример 1
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+* $X$: $p_1 = 0.4402$, $p_1^{adj} = 0.8804$
+* $Y$: $p_2 = 0.0337$, $p_2^{adj} = 0.0674$
+
+## FWER. Поправка Бонферрони на языке p-values. Пример 1
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+* $X$: $p_1 = 0.4402$, $p_1^{adj} = 0.8804$
+* $Y$: $p_2 = 0.0337$, $p_2^{adj} = 0.0674$
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "bonferroni")
+```
+
+## FWER. Поправка Бонферрони на языке p-values. Пример 1
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+* $X$: $p_1 = 0.4402$, $p_1^{adj} = 0.8804$
+* $Y$: $p_2 = 0.0337$, $p_2^{adj} = 0.0674$
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "bonferroni")
+```
+
+Если мы говорим про p-values, значит мы тестировали гипотезу.
+
+Какую гипотезу мы таким образом протестировали?
+
+## FWER. Поправка Бонферрони на языке p-values. Пример 1
+
+Поправлять будем p-values, в результате получим _adjusted p-values_, $p_{adj}$.
+
+$p^{adj}_i := n \cdot p_i$
+
+```{r}
+df %>% pull(X) %>% t.test() %>% `$`("p.value")
+df %>% pull(Y) %>% t.test(mu = 3) %>% `$`("p.value")
+```
+
+* $X$: $p_1 = 0.4402$, $p_1^{adj} = 0.8804$
+* $Y$: $p_2 = 0.0337$, $p_2^{adj} = 0.0674$
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "bonferroni")
+```
+
+Если мы говорим про p-values, значит мы тестировали гипотезу.
+
+Какую гипотезу мы таким образом протестировали?
+
+$$H0: \mathsf{E}X = 0\quad  \textit{AND} \quad \mathsf{E}Y = 3 \qquad vs. \qquad H1: \mathsf{E}X \neq 0 \quad \textit{OR} \quad \mathsf{E}Y \neq 3$$
+
+## (Почти) бесплатный тюнинг Бонферрони. Поправка Холма.
+
+В случае, если мы хотим контролировать FWER, но фокусируемся на p-values, а доверительные области/интервалы нас не особо интересуют, мы можем использовать поправку Холма.
+
+* Поправка Холма (как и Бонферрони) контролирует FWER.
+* Поправка Холма однако часто более мягкая, чем поправка Бонферрони. Соответственно, тесты имеют большую силу. 
+* Поправка Холма универсальна, как и Бонферрони: никаких дополнительных требований, можно "склеивать" любые тесты.
+* Минус -- перевод поправки на язык доверительных интервалов неочевиден.
+* Минус -- это нестатическая процедура, склеивает конкретные тесты вместе, нельзя разделить и пересобрать.
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "bonferroni")
+```
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "holm")
+```
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/200)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятности ошибки второго рода (длины интервалов) очень большие.
+    
+_-- Не подскажете, где вход в метро?_
+
+_-- Где-то в Евразии._
+
+Заметим: $1- \frac{\alpha}{n} \rightarrow 1$ при $n \rightarrow \infty$, т.е. отдельный интервал почти всегда покроет реальное значение -- ценой большой длины.
+
+## No Free Sandwich: чем расплачиваемся?
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/1000)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятности ошибки второго рода (длины интервалов) очень большие.
+    
+_-- Не подскажете, где вход в метро?_
+
+_-- Где-то в Евразии._
+
+Заметим: $1- \frac{\alpha}{n} \rightarrow 1$ при $n \rightarrow \infty$, т.е. отдельный интервал почти всегда покроет реальное значение -- ценой большой длины.
+
+Также заметим: $p_{adj} = min(1, n\cdot p) \rightarrow 1$ при $n \rightarrow \infty$, т.е. нулевая гипотеза (почти) никогда не будет отвергнута.
+
+## FWER. Итого
+
+```{r, fig.height=7, fig.width=7, out.extra = 'style="float:left; padding:10px"', echo = FALSE}
+plot.playground(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3, 
+                square = TRUE)
+plot.square(df %>% pull(X),
+                df %>% pull(Y),
+                0, 3,
+                alpha = 0.05/3000)
+```
+
+* Любая поправка снижает CWER. Какой у этого побочный эффект?
+    * Увеличение вероятности ошибки второго рода aka удлинение интервалов по отдельности.
+    * Конкретно Бонферрони очень консервативен. Т.е. для большого количества тестов $FWER << 0.05$, вероятности ошибки второго рода (длины интервалов) очень большие.
+
+* Существуют альтернативные поправки: Шидак, Симс, Шеффе, Хохберг (не путать с Бенджамини-Хохбергом!) и т.д.
+  * Не очень популярны, на практике для контроля FWER все обычно используют Бонферрони (или Холма).
+  * Обращайте внимание на условия применимости. Бонферрони бронебоен и универсален, другие поправки могут иметь дополнительные условия (например, Шидак требует независимости тестовых статистик).
+  * Бонферрони можно использовать для "склеивания" каких угодно тестов. Некоторые процедуры узкоспециальны (например, ANOVA и post-hoc процедуры к ней).
+  * Поправки часто конструировались для тестов. Некоторые из поправок непросто или невозможно перевести на язык доверительных интервалов.
+  * Поправка Бонферрони — "статическая" процедура: достаточно знать количество сравнений, на которое делаем поправку, не требуется иметь все p-values или полной ковариационной матрицы оценок параметров.
+  
+* Контроль FWER тесно сопряжен с построением доверительных областей (квадров, эллипсов, поясов и т.д.).
+
+# Часть 5. Другой подход к проблеме. FDR
+
+## А что если тестов очень много? FDR
+
+Мы можем подойти к обобщению ошибки первого рода с другого конца.
+
+Предположим мы провели 1000 тестов, 100 из которых показали $p<0.05$ -- т.е. мы совершили 100 "открытий" (discoveries). Сколько из этих открытий ложные, т.е. сколько ошибок первого рода мы совершили? 
+
+Интуитивно мы ожидаем, что процент ложных открытий должен быть в среднем около 5%. 
+
+## А что если тестов очень много? FDR
+
+Мы можем подойти к обобщению ошибки первого рода с другого конца. 
+
+Предположим мы провели 1000 тестов, 100 из которых показали $p<0.05$ -- т.е. мы совершили 100 "открытий" (discoveries). Сколько из этих открытий ложные, т.е. сколько ошибок первого рода мы совершили? 
+
+Интуитивно мы ожидаем, что процент ложных открытий должен быть в среднем около 5%. 
+
+_Ожидаемая_ доля _ложных_ открытий от _всех_ открытий называется False Discovery Rate (FDR). Мы можем контролировать FDR вместо FWER -- обычно это приводит к более мягким поправкам и, соответственно, более сильным тестам. Зачастую более разумно контролировать FDR вместо FWER: особенно это касается геномики, протеомики и прочих -ик.
+
+Можно сравнить с обогащением руды: мы отбрасываем мусор и контролируем средний процент "истинных" окрытий.
+
+## А что если тестов очень много? FDR
+
+Мы можем подойти к обобщению ошибки первого рода с другого конца. 
+
+Предположим мы провели 1000 тестов, 100 из которых показали $p<0.05$ -- т.е. мы совершили 100 "открытий" (discoveries). Сколько из этих открытий ложные, т.е. сколько ошибок первого рода мы совершили? 
+
+Интуитивно мы ожидаем, что процент ложных открытий должен быть в среднем около 5%. 
+
+_Ожидаемая_ доля _ложных_ открытий от _всех_ открытий называется False Discovery Rate (FDR). Мы можем контролировать FDR вместо FWER -- обычно это приводит к более мягким поправкам и, соответственно, более сильным тестам. Зачастую более разумно контролировать FDR вместо FWER: особенно это касается геномики, протеомики и прочих -ик.
+
+Можно сравнить с обогащением руды: мы отбрасываем мусор и контролируем средний процент "истинных" окрытий.
+
+Самая популярная поправка, которая контролирует FDR -- поправка / процедура Бенджамини-Хохберга. __Процедура предполагает независимость тестовых статистик!__
+
+## А что если тестов очень много? FDR
+
+Мы можем подойти к обобщению ошибки первого рода с другого конца. 
+
+Предположим мы провели 1000 тестов, 100 из которых показали $p<0.05$ -- т.е. мы совершили 100 "открытий" (discoveries). Сколько из этих открытий ложные, т.е. сколько ошибок первого рода мы совершили? 
+
+Интуитивно мы ожидаем, что процент ложных открытий должен быть в среднем около 5%. 
+
+_Ожидаемая_ доля _ложных_ открытий от _всех_ открытий называется False Discovery Rate (FDR). Мы можем контролировать FDR вместо FWER -- обычно это приводит к более мягким поправкам и, соответственно, более сильным тестам. Зачастую более разумно контролировать FDR вместо FWER: особенно это касается геномики, протеомики и прочих -ик.
+
+Можно сравнить с обогащением руды: мы отбрасываем мусор и контролируем средний процент "истинных" окрытий.
+
+Самая популярная поправка, которая контролирует FDR -- поправка / процедура Бенджамини-Хохберга. __Процедура предполагает независимость тестовых статистик!__
+
+```{r}
+p.adjust(c(0.4402, 0.0337), method = "BH")
+```
+
+## FDR. Пример 1. Стандарты педиатрической паллиативной помощи
+
+```{r echo=FALSE}
+set.seed(33)
+
+df3 <- tibble(
+  standard_n = rep(1:90),
+  pos_rate = c(
+    rep(0.47, 15),
+    0.1,
+    rep(0.42, 20),
+    0.2,
+    0.16,
+    rep(0.36, 20),
+    0.05,
+    rep(0.52, 31)
+  )
+) %>%
+  mutate(
+    younger = rbinom(n(), 30, pos_rate),
+    experienced = rbinom(n(), 30, 1 - pos_rate)
+  ) %>%
+  select(-pos_rate)
+```
+
+**Легенда:** В Чехии планируют вводить новые стандарты педиатрической паллиативной помощи. Каждый стандарт это формула типа:
+
+* "Healthcare providers should evaluate the specific needs of the child and their family and define a care plan and priorities accordingly"
+* "The evaluation of needs must take into account the situation of the child and family, but also the foreseeable needs, wishes and desires, and those ‘hidden’ (i.e., those covered or unaddressed by the child and family during consultations)"
+* "Symptom control should be adapted to the child's age, setting and culture"
+* "Parents should be helped to function effectively in their parenting role"
+* "Spiritual support should be provided to every child who wishes to discuss spiritual issues and concerns"
+
+Всего девяносто формул.
+
+## FDR. Пример 1. Стандарты педиатрической паллиативной помощи
+
+**Легенда:** В Чехии планируют вводить новые стандарты педиатрической паллиативной помощи.
+
+Всего девяносто формул. Перед введением стандартов проводится "прощупывание почвы" на предмет того, насколько стандарты вообще реализуемы по мнению работников системы здравоохранения. Сначала провели качественный онлайн опрос: респондентов просили оценить, насколько, по их мнению, реализуемы отдельные стандарты. На втором шаге планируется проведение качественных исследований для уточнения картины: фокус-групп, глубинных интервью. Для формирования плана качественного исследования помимо прочего нам нужно выяснить, в каких стандартах мнения начинающих и более опытных врачей расходятся.
+
+В опросе приняло участие тридцать человек с опытом клинической работы менее пяти лет и тридцать человек с опытом более тридцати лет. Для простоты будем считать, что ответы приведены к бинарной форме 0/1, где 0 -- стандарт скорее нереализуем, 1 -- наоборот.
+
+Как бы вы организовали отбор вопросов, по которым врачи с разным опытом не достигли консенсуса?
+
+
+```{r}
+df3 %>% head()
+```
+
+
+## FDR. Пример 1. Стандарты педиатрической паллиативной помощи
+
+```{r}
+df3 <- df3 %>% 
+  rowwise() %>%
+  mutate(pvalue = fisher.test(matrix(c(younger, experienced, 30-younger, 30-experienced),
+                                     nrow = 2, byrow = TRUE)
+                              
+                              )$p.value
+         )
+
+df3$pvalue.BH <- p.adjust(df3$pvalue, method = "BH")
+
+df3$pvalue.Bonf <- p.adjust(df3$pvalue, method = "bonferroni")
+
+df3 %>% arrange(pvalue) %>%
+  mutate(across(c(pvalue, pvalue.BH, pvalue.Bonf), ~ round(.x, digits = 3)))
+```
+
+## FDR. Пример 1. Стандарты педиатрической паллиативной помощи
+
+```{r echo=FALSE}
+df3 <- df3 %>% 
+  rowwise() %>%
+  mutate(pvalue = fisher.test(matrix(c(younger, experienced, 30-younger, 30-experienced),
+                                     nrow = 2, byrow = TRUE)
+                              
+                              )$p.value
+         )
+
+df3$pvalue.adj <- p.adjust(df3$pvalue, method = "BH")
+
+df3$pvalue.adj2 <- p.adjust(df3$pvalue, method = "bonferroni")
+
+df3 %>% arrange(pvalue) %>%
+  mutate(pvalue.adj = round(pvalue.adj, digits = 3))
+```
+
+```{r fig.align='center'}
+par(mfrow = c(1, 3))
+df3$pvalue %>% hist(col = "cadetblue3", ylim = c(0, 80))
+df3$pvalue.adj %>% hist(col = "cadetblue3", ylim = c(0, 80))
+df3$pvalue.adj2 %>% hist(col = "cadetblue3", ylim = c(0, 80))
+```
+
+
+# Часть 5. Практические рекомендации и итоги
+
+## Итоги
+
+* В частотнической статистике можно выделить две оптики: тестирование гипотез и оценивание параметров
+
+Если мы говорим про FWER, то:
+
+* FWER хорошо ложится на концепцию оценки параметров. Контролируя FWER мы оцениваем поведение составного / многомерного параметра и контролируем неопределенность этой оценки
+* FWER можно использовать и в контексте тестирования гипотез. Результирующая процедура тестирует составную нулевую гипотезу, которая объединяет отдельные нулевые гипотезы через логический оператор И
+
+Что касается FDR:
+
+* Плохо дружит с концепцией оценки параметров
+* Хорошо работает в контексте тестирования гипотез
+* Контролирует поведение отдельных сравнений / тестов в среднем
+
+## Применение поправок. Практические рекомендации
+
+* Проводить только те тесты, которые действительно нужны/важны и применять поправки к ним
+  * Альтернатива: разумная группировка тестов в "семейства" и применять поправки внутри семейств. Например, сгруппировать тесты по группам пациентов
+  * Грамотный план статистического анализа и разделение конечных точек / научных гипотез на первичные и вторичные. Первичные контролируются более жестко и воспринимаются как конфирматорные результаты, вторичные скорее эксплораторные и генерерующие гипотезы, основу для последующих конфирматорных исследований
+  
+## Применение поправок. Практические рекомендации
+
+Общая логика применения поправок: важно решить, ошибка первого или второго рода более нежелательна и на основании этого выбирать поправку
+
+* В эксплораторных исследованиях можно применять более мягкие поправки или не применять поправки вообще.
+  * Обычно после этого следует конфирматорное исследование, где поправки уже применяются
+  * Сюда же можно отнести геномику и прочие области с 1000+ тестов на одном датасете
+* Обычно поправки не применяются в safety studies -- исследование побочных или негативных эффектов
+
+## Применение поправок. Практические рекомендации.
+
+* FWER как правило обеспечивает более строгий контроль над ошибками первого рода. Его разумно применять в конфирматорных исследованиях
+  * FWER разумно применять, когда нужно проконтролировать все тесты / параметры __вместе__. Пример: бета-блокаторы должны _одновременно_ снижать давление и ЧСС. См. также примеры в лекции.
+* FDR дает более мягкий контроль над ошибками первого рода и более низкую вероятность ошибки второго рода. Его разумно использовать при поиске "зацепок" для дальнейших исследований (эксплораторные исследования).
+* Иногда пачку тестов с поправками можно заменить одним более сильным тестом (change-point models, Hotelling T-test, AN(C)OVA...). Помните, обычно существует более одного способа подойти к задаче.
+
+## Рекомендованная литература
+
+1. _Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing_ by Yoav Benjamini and Yoav Hochberg
+
+2. _Neural Correlates of Interspecies Perspective Taking in the Post-Mortem Atlantic Salmon: An Argument For Proper Multiple Comparisons Correction_ by Craig M. Bennett et al.
+
+## Задание к следующему занятию
+
+```{r}
+soccer_general <- read.csv("soccer.csv", sep=";")[, 2:6] %>%
+  mutate(Position = as.factor(Position),
+         Nationality = as.factor(Nationality),
+         Age = as.numeric(Age),
+         Height = as.numeric(Height)) %>%
+  filter(Nationality %in% c("Spanish", "Italian", "German", "English", "Argentinian"))
+
+set.seed(1)
+
+soccer_wrk <- soccer_general[sample(1:nrow(soccer_general), 150), ] %>%
+  mutate(Nationality = factor(Nationality))
+
+```
+
+Есть ли разница между средним ростом футболистов, играющих на разных позициях?
+
+1. Постройте доверительные интервалы для попарных разниц между средними (без поправок и с поправкой Бонферрони). Покрывают ли интервалы реальную разницу между средним ростом? Иллюстрации приветствуются.
+2. Проведите попарные тесты для разниц между средними (без поправок, с поправкой Холма и поправкой Бенджамини-Хохберга). Сколько открытий получилось в каждом случае? Сколько из них ложные?
+
+Hint: вам может пригодиться функция `paired.t.test`.
+
+Hint 2: параметр задайте параметр `pool.sd = FALSE`.
