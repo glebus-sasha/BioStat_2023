@@ -1,0 +1,5 @@
+"0","library(ggpubr)"
+"0","  t.test(Americas$`Life expectancy`, Africa$`Life expectancy`) %>% "
+"0","stat.test"
+"2","Ошибка в stat.test(.) :не могу найти функцию ""stat.test""
+"
