@@ -1,0 +1,184 @@
+---
+title: "Анализ пациентов, госпитализированных в больницу после получения черепно-мозговой травмы вследствие
+падения с электросамоката"
+output: html_document
+date: "2023-10-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(tidyverse)
+library(rstatix)
+library(pROC)
+library(gtsummary)
+```
+
+## 1. Дайте описательную статистику для переменных, включённых в датасет. Дополнительно рассчитайте, у какого количества пациентов и в каком проценте случаев у пациентов был снижен уровень гемоглобина? Используйте следующие референтные значения (Мужчины:13.5–16 г/дл, Женщины: 12–14 г/дл).
+
+Загружаем датафрейм. Посмотрим описательную статистику.
+```{r}
+trauma <- read_excel('trauma.xlsx', range = cell_cols("B:M"))
+trauma %>% 
+  summary()
+```
+
+Приведем переменные к нужному формату. 
+```{r}
+trauma <- trauma %>% 
+  mutate(id = as.factor(id),
+         Sex = as.factor(Sex),
+         Height = as.numeric(sub("\"", "", Height)),
+         Death  = as.factor(Death),
+         Hb = ifelse(Hb == 0, NA, Hb))
+trauma %>% 
+  summary()
+```
+
+Рассчитываем, у какого количества пациентов и в каком проценте случаев у пациентов был
+снижен уровень гемоглобина. Референтные значения (Мужчины: 13.5–16 г/дл, Женщины: 12–14 г/дл).
+
+```{r}
+n_male <- trauma %>% 
+  filter(Sex == 'Male') %>% 
+  filter(!is.na(Hb)) %>%
+  nrow()
+Hb_low_male <- trauma %>% 
+  filter(Sex == 'Male') %>% 
+  filter(!is.na(Hb)) %>%
+  filter(Hb <= 13.5) %>% 
+  nrow()
+n_female <- trauma %>% 
+  filter(Sex == 'Female') %>% 
+  filter(!is.na(Hb)) %>%
+  nrow()
+Hb_low_female <- trauma %>% 
+  filter(Sex == 'Female') %>% 
+  filter(!is.na(Hb)) %>%
+  filter(Hb <= 12) %>% 
+  nrow()
+
+data.frame(n_male = Hb_low_male,
+           p_male = round(Hb_low_male/n_male, 2),
+           n_female = Hb_low_female,
+           p_female = round(Hb_low_female/n_female, 2))
+```
+## 2. Рассчитайте индекс массы тела у пациентов (кг / м2). Каков был средний (M (SD)) уровень ИМТ у пациентов, включённых в исследование? Какая доля пациентов имела ожирение (ИМТ> 30)?
+
+Рассчитываю индекс массы тела (BMI). Посмотрим, какое среднее значение ИМТ у пациентов, включённых в исследование.
+
+```{r}
+trauma <- trauma %>% 
+  mutate(BMI = (Weight / 2.2) / ((Height * 0.0254) ** 2))
+
+mean_bmi <- mean(trauma$BMI, na.rm = TRUE)
+sd_bmi <- sd(trauma$BMI, na.rm = TRUE)
+
+data.frame(
+  Mean_BMI = round(mean_bmi, 2),
+  SD_BMI = round(sd_bmi, 2)
+)
+```
+Рассчитываю долю пациентов с ожирением (ИМТ> 30).
+
+```{r}
+n <- trauma %>% 
+  nrow()
+n_obese <- trauma %>% 
+  filter(BMI > 30) %>% 
+  nrow()
+round(n_obese / n, 4)
+```
+## 3. Как выглядит ROC-кривая для предсказания летального исхода в течение 24 часов по переменной, характеризующей уровень гемоглобина? Постройте график. Чем может быть обусловлена такая форма кривой?
+
+См. ниже
+
+## 4. Чему равна площадь под ROC-кривой, которую вы построили в вопросе 3? Чему равен 95% двусторонний ДИ для площади под ROC-кривой, которую вы построили в вопросе 3?
+
+Создадим ROC-кривую и посмотрим 95% доверительнй интервал.
+```{r}
+library(pROC)
+roc_curve_HB <- roc(Death ~ Hb, data=trauma, ci = T)
+roc_curve_HB
+```
+Доверительный интервал 95% для ROC-кривой: 0.6763-0.7392.
+
+Построим ROC-кривую, добавив площадь под ней.
+```{r, fig.height=3, fig.width=3, dpi=300}
+roc_curve_HB %>% 
+  ggroc() +
+  ggtitle(paste0('AUC = ', round(roc_curve_HB$auc, 2))) +
+  theme_minimal()
+```
+
+Площадь под ROC-кривой равна 0.71, что не очень хорошо. Форма кривой тоже далека от идеальной. Это определяется бимодальностью распределения (подсказка от преподавателя).
+
+Построим отдельно для мужчин.
+
+```{r, fig.height=3, fig.width=3, dpi=300}
+trauma_male <- trauma %>% 
+  filter(Sex=='Male')
+roc_curve_HB_male <- roc(Death ~ Hb, data=trauma_male, ci = T)
+roc_curve_HB_male %>% 
+  ggroc() +
+  ggtitle(paste0('AUC = ', round(roc_curve_HB_male$auc, 2))) +
+  theme_minimal()
+```
+Построим отдельно для женщин.
+
+```{r, fig.height=3, fig.width=3, dpi=300}
+trauma_female <- trauma %>% 
+  filter(Sex=='Female')
+roc_curve_HB_female <- roc(Death ~ Hb, data=trauma_female, ci = T)
+roc_curve_HB_female %>% 
+  ggroc() +
+  ggtitle(paste0('AUC = ', round(roc_curve_HB_female$auc, 2))) +
+  theme_minimal()
+```
+
+## 5. Проведите ROC-анализ и определите, какое пороговое значение является оптимальным для предсказания летального исхода в течение 24 часов по шкале комы Глазго. Какой чувствительностью и специфичностью обладает данный порог?
+
+Проведем ROC-анализ предсказания летального исхода по шкале комы Глазго.
+
+```{r}
+library(pROC)
+roc_curve_GSC <- roc(Death ~ GSC, data=trauma, ci = T)
+roc_curve_GSC
+```
+
+Построим ROC-кривую.
+```{r, fig.height=3, fig.width=3, dpi=300}
+roc_curve_GSC %>% 
+  ggroc() +
+  ggtitle(paste0('AUC = ', round(roc_curve_GSC$auc, 2))) +
+  theme_minimal()
+```
+Определим пороговое значение по методу closest.topleft, чувствительность и специфичность для данного критерия.
+```{r}
+roc_curve_GSC %>% coords(x = "best", best.method = "closest.topleft")
+```
+
+
+## 6. Какая из количественных переменных в датасете (включая рассчитанный вами ранее ИМТ) обладает наибольшей площадью под ROC-кривой? Как вы можете интерпретировать это знание? Какая количественная переменная имеет наименьшую площадь?
+
+
+Проведем ROC-анализ дял всех количественных переменных.
+```{r message=FALSE, warning=FALSE}
+
+trauma %>% names()
+
+trauma %>% 
+    select(Death | is.numeric) %>% # выберем колонку Death и все колонки numeric
+    pivot_longer(cols = !Death) %>% 
+    group_by(name) %>% 
+    summarise(AUC = roc(Death, value, ci = T)$ci[2] %>% round(3),
+              AUC_LCL = roc(Death, value, ci = T)$ci[1] %>% round(3),
+              AUC_UCL = roc(Death, value, ci = T)$ci[3] %>% round(3)) %>% 
+  arrange(-AUC)
+```
+Переменная FOUR имеет большую площать под ROC-кривой, следовательно балл по шкале комы FOUR при поступлении является наилучшим предиктором летального исхода.
+
+Height имеет наименьшую площадь под кривой (0.482). Исходя из этого ИМТ является случайной диагностикой летального исхода.
+
