@@ -1,6 +1,4 @@
-*.gz
-*.zip
-.nextflow*
 .Rproj.user
-.RData
 .Rhistory
+.RData
+.Ruserdata
