@@ -1,0 +1,1 @@
+{"frames":[{"func":"t.test(Americas$`Life expectancy`, Africa$`Life expectancy`) %>% \n    stat.test","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Ошибка в stat.test(.) :не могу найти функцию \"stat.test\"\n"}
