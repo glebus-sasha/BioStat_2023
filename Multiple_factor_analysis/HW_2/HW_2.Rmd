@@ -1,0 +1,209 @@
+---
+title: "HW_2"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(ggfortify)
+library(sandwich)
+library(lmtest)
+```
+
+
+## Загрузка данных
+
+Загрузим данные, выберем нужные, сделаем EDA
+
+```{r}
+cataract <- read.csv('congenital_cataract.csv', ) %>% 
+  select(-X) %>% 
+  mutate(id = as.numeric(id),
+       age_flwp = as.numeric(age_flwp),
+       strat = as.factor(strat),
+       side = as.factor(side),
+       glau = as.factor(glau),
+       bcdva = as.numeric(bcdva),
+       bcnva = as.numeric(bcnva))
+cataract %>% summary()
+```
+
+```{r}
+# График для остроты зрения вдали (bcdva)
+ggplot(cataract, aes(x = age_flwp, y = bcdva, color = strat)) +
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(title = "График зависимости остроты зрения вдали от возраста",
+       x = "Возраст во время фоллоу-апа (года)",
+       y = "Острота зрения вдали",
+       color = "Стратегия лечения") +
+  theme_minimal()
+
+# График для остроты зрения вблизи (bcnva)
+ggplot(cataract, aes(x = age_flwp, y = bcnva, color = strat)) +
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(title = "График зависимости остроты зрения вблизи от возраста",
+       x = "Возраст во время фоллоу-апа (года)",
+       y = "Острота зрения вблизи",
+       color = "Стратегия лечения") +
+  theme_minimal()
+```
+
+## 1. Какая стратегия предпочтительна для лечения врожденной катаракты, с точки зрения остроты зрения? Не используйте информацию о наличии глаукомы при ответе на этот вопрос.
+
+### 1.1. Оцените эффект стратегии без коррекции на ковариаты.
+
+```{r}
+fit <- lm(bcdva ~ strat, data = cataract)
+fit %>% summary()
+```
+
+```{r}
+fit <- lm(bcnva ~ strat, data = cataract)
+fit %>% summary()
+```
+Модели без включения ковариат объясняют меньше 1% дисперсии.
+
+### 1.2. Оцените эффект стратегии с коррекцией на ковариаты. Обоснуйте необходимость включения каждой ковариаты в вашу модель.
+
+Включим в модель переменные  strat, age_flwp, side, потому что они могут повлиять на эффективность терапии. glau не включена по условию. bcnva и bcdva ассоциированы, поэтому не будем одновременно включать их в модель.
+
+```{r}
+fit <- lm(bcnva ~ strat + age_flwp + side, data = cataract)
+fit %>% summary()
+autoplot(fit)
+```
+```{r}
+fit2 <- lm(bcdva ~ strat + age_flwp + side, data = cataract)
+fit2 %>% summary()
+autoplot(fit)
+```
+
+Модели стали лишь ненамного лучше.
+Наблюдается небольшое отклонение он нормальности остатков регрессии, гетероскедастичность. Кластеризации остатков не наблюдается.
+
+Проведем коррекцию на гетероскедастичность.
+
+```{r}
+fit <- lm(bcdva ~ strat + age_flwp, data = cataract)
+robust_fit <- coeftest(fit, vcov = vcovHC, type = "HC4")
+robust_fit
+```
+```{r}
+fit <- lm(bcnva ~ strat + age_flwp, data = cataract)
+robust_fit <- coeftest(fit, vcov = vcovHC, type = "HC4")
+robust_fit
+```
+
+Если выбрана стратегия Artephakia, то среднее значение острота зрения вдали увеличится на примерно 0.1016 по сравнению с Aphakia (p = 0.04251).  Для острота зрения вблизи статистической разницы не обнаружено.
+
+##  2. Какой эффект оказывает глаукома на остроту зрения? Зависит ли этот эффект от выбранной стратегии? Опишите эффект от терапии с учетом потенциального развития глаукомы. Какая терапия предпочтительнее с учетом потенциального развития глаукомы?
+
+### 2.1. Оцените эффект без коррекции на ковариаты.
+
+Модель без ковариат.
+
+```{r}
+fit <- lm(bcdva ~ glau + strat, data = cataract)
+fit %>% summary()
+```
+```{r}
+fit <- lm(bcnva ~ glau + strat, data = cataract)
+fit %>% summary()
+```
+Модель без ковариат объясняет около 1% дисперсии, статистически значемого результата не получено. Про влияние глаукомы с учетом выбранной стратегии ничего сказать нельзя.
+
+Добавим пересечение факторов glau и strat
+
+```{r}
+fit <- lm(bcdva ~ glau * strat, data = cataract)
+fit %>% summary()
+```
+
+```{r}
+fit <- lm(bcnva ~ glau * strat, data = cataract)
+fit %>% summary()
+```
+Модели стали значительно лучше с учетом взаимного влияния стратегии и наличия глаукомы. Однако, превосходство одной терапии над другой статистически не значимо.
+
+
+### 2.2. Оцените эффект с коррекцией на ковариаты. Обоснуйте необходимость включения каждой ковариаты в вашу модель.
+
+Добавим ковариаты age_flwp, side которые могут влиять на результат терапии.
+
+```{r}
+fit2 <- lm(bcdva ~ strat * glau + age_flwp + side, data = cataract)
+fit2 %>% summary()
+autoplot(fit)
+```
+```{r}
+fit2 <- lm(bcnva ~ strat * glau + age_flwp + side, data = cataract)
+fit2 %>% summary()
+autoplot(fit)
+```
+Модель стала еще лучше. Теперь можно говорить о статистически значимом превосходстве Артефакии над Афакей с учетом риска возникновения глаукомы.
+Наблюдается небольшое отклонение он нормальности остатков регрессии, гетероскедастичность. Кластеризации остатков не наблюдается.
+Проведем коррекцию на гетероскедастичность.
+
+```{r}
+fit <- lm(bcdva ~ strat * glau + age_flwp + side, data = cataract)
+robust_fit <- coeftest(fit, vcov = vcovHC, type = "HC4")
+robust_fit
+```
+
+
+```{r}
+fit <- lm(bcnva ~ strat * glau + age_flwp + side, data = cataract)
+robust_fit <- coeftest(fit, vcov = vcovHC, type = "HC4")
+robust_fit
+```
+Теперь можно говорить о статистически значимом превосходстве Артефакии над Афакей с точки зрения остроты зрения вдали (p = 0.0057)
+
+## 3. Как связана частота развития глаукомы с выбранной стратегией?
+
+### 3.1. Оцените эффект стратегии без коррекции на ковариаты.
+
+Построим логистическую регрессию без ковариат.
+
+```{r}
+fit <- glm(glau ~  strat, data = cataract, family = binomial)
+fit %>% summary()
+autoplot(fit)
+```
+В целом, эти результаты позволяют сделать предварительные выводы о связи выбранной стратегии с развитием глаукомы. Однако, статистическая значимость пока не подтверждает наличие этой связи. 
+
+### 3.2. Оцените эффект стратегии с коррекцией на ковариаты. Обоснуйте необходимость включения каждой ковариаты в вашу модель.
+
+Добавим ковариаты. bcnva добавлять не будем, потому что она зависима с bcdva.
+
+```{r}
+fit <- glm(glau ~  strat + age_flwp + side + bcdva, data = cataract, family = binomial)
+fit %>% summary()
+```
+Модель стала хуже.
+В целом, результаты показывают, что после коррекции на ковариаты эффект стратегии Artephakia остается отрицательным, но не является статистически значимым. При этом включение других ковариат также не приводит к статистически значимым результатам. 
+
+```{r}
+glm(glau ~ strat + bcdva + age_flwp + side, data = cataract, family = binomial) %>% 
+  summary()
+```
+
+Статистически значимых результатов получить не удалось.
+Может step() поможет?
+
+```{r}
+glm(glau ~ ., data = cataract, family = binomial) %>% 
+  step(trace = 0) %>% 
+  summary()
+```
+
+Не помог, самая лучшая модель по Intercept ((.
