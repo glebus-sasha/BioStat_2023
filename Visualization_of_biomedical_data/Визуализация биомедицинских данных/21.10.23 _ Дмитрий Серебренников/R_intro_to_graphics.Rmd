@@ -1,0 +1,897 @@
+---
+title: "Построение основных типов графиков в R"
+author: "Дмитрий Серебренников"
+date: "20.05.2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Где вам понадобится дата-виз?
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Эксплораторный анализ 
+2. Визуализация результатов/Коммуникация результатов
+
+Сейчас мы займёмся первым и вернёмся к принципам второго только в конце второго занятия.
+
+
+
+
+
+
+
+# Загрузим библиотеки 
+
+```{r message=FALSE, warning=FALSE}
+# Если у вас не установлены какие-то из библиотек ниже, то установить их можно следующей командой. Эти библиотеки пригодятся нам во время занятия, но подгружать в library() мы их будем тогда, когда будем затрагивать соответствующую тему.
+# install.packages(c('dplyr', 'ggplot2')
+
+library(dplyr)
+```
+
+
+
+# Загрузим данные для работы
+
+
+Датасет с которым мы будем работать взят [отсюда](https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database)
+
+```{r}
+pima <- read.csv('pima.csv',
+                 stringsAsFactors = T)
+
+head(pima)
+```
+
+
+Давайте посмотрим на наши данные. Для примера возьмём pima.
+
+Посмотрим структуру:
+```{r}
+str(pima)
+```
+
+Посмотрим описательные статистики:
+```{r}
+summary(pima)
+```
+
+
+```{}
+Проинтерпретируйте результат. Что здесь не так?
+```
+
+
+...
+
+
+```{}
+Что такое factor? Чем он отличается от character?
+```
+
+
+...
+
+Сделаем дополнительную переменную в которой колонка factor будет character. Кроме того, для дальнейшей работы сделаем переменную возрастных категорий:
+
+```{r}
+pima <- pima %>% 
+  mutate(
+    diabetes_ch = as.character(diabetes),
+    age_group = case_when(
+      age < 35 ~ "21-34",
+      age >= 35 & age < 50 ~ "35-49",
+      age >= 50 ~ "50+"
+    ))
+summary(pima)
+table(pima$age_group)
+```
+
+
+
+Посмотрим теперь на данные с помощью библиотеки по их удобному представлению - skimr
+```{r}
+# install.packages("skimr")
+library(skimr)
+skim(pima)
+```
+
+
+
+
+
+
+...
+
+
+
+```{}
+Помните о трёх всадниках ошибочного кода в R!
+
+1. Неправильный формат данных пожанных на аргумент функции
+2. Синтаксис (запятые, скобки)
+3. Кириллические кодировка
+```
+
+
+
+...
+
+# Создание графиков и ggplot2
+
+В R есть стандартные библиотеки для визуализации данных, но обычно все стараются побыстрее начать работать с самой известной библиотекой по созданию графиков - ggplot2.
+Начнём и мы!
+
+Загрузим её.
+```{r warning=FALSE}
+library(ggplot2)
+```
+
+Сделаем свой первый график. Для этого подадим наш датафрейм в аргумент data, а указание на колонки (по оси x или по оси y) во внутреннюю функцию aes() (о ней позже).
+Нарисуем:
+```{r}
+ggplot(data = pima, 
+       aes(x = glucose))
+```
+
+Если вы видите отсутствие графика - это нормально.
+Дело в том, что для работы ggplot нужна база-подложка для графика. Мы её задали. Теперь нужно понять, а какой тип графика мы хотим нарисовать. Типы графика зависят от используемых векторов. Посмотрим на то, какими они бывают по [ссылке](https://activewizards.com/content/blog/How_to_Choose_the_Right_Chart_Type_[Infographic]/chart-types-infographics04.png).
+
+...
+
+## Распределение одной числовой переменной
+
+### Histogram
+
+```{r}
+ggplot(data = pima, 
+       aes(x = glucose)) +
+  geom_histogram()
+```
+
+### Density plot
+```{r}
+ggplot(data = pima, 
+       aes(x = glucose)) +
+  geom_density()
+```
+
+
+
+```{}
+Промежуточный итог
+
+Для построения графика вам нужны:
+
+1. Data
+2. Aesthetic
+3. Plot type indicator (geom)
+```
+
+
+
+### Box plot
+
+Начнём усложнять эту базовую конструкцию.
+Пока что, мы не осветили последний популярный способ представления распределения одной переменной - Box plot или "ящик с усами"
+
+```{r}
+ggplot(data = pima, 
+       aes(x = glucose)) +
+  geom_boxplot()
+```
+
+Объясните, что значит этот график? 
+
+
+...
+
+
+[Подсказка](https://thumb.tildacdn.com/tild3630-3335-4562-a334-393538313035/-/format/webp/Boxplot.jpg).
+
+
+...
+
+**Одна числовая и одна категориальная переменные**
+
+Усложним график. Добавим вторую переменную по которой мы сделаем разбиение box plot:
+```{r}
+ggplot(data = pima, 
+       aes(x = glucose, y = diabetes_ch)) +
+  geom_boxplot()
+```
+
+
+*ЗАДАНИЕ*
+
+В чанке ниже напишите код для графика распределения индекса массы тела (mass) для возрастных групп в виде box plot 
+```{r}
+
+```
+
+
+...
+
+## Изменене настройки отображения
+
+В ggplot вы можете делать любой график. Давайте посмотрим основные способы изменять график.
+
+- Ggplot - конструктор. Элементы в нём можно переставлять. Например три следующих кода дают по итогам одинаковый график. 
+
+
+```{}
+Опишите, в чём различия кода?
+```
+
+
+```{r}
+# 1
+ggplot(data = pima, aes(x = glucose, 
+                        y = diabetes_ch)) +
+  geom_boxplot()
+# 2
+pima %>% 
+  ggplot(aes(x = glucose, y = diabetes_ch)) +
+  geom_boxplot()
+# 3
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch))
+```
+
+
+...
+
+
+- Можно менять общую тему (т.е. подготовленный набор настроек). Описания стандартных тем (дополнительные можно подгружать через пакеты или настраивать самостоятельно) [здесь](https://ggplot2.tidyverse.org/reference/ggtheme.html).
+
+```{r}
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch)) +
+  theme_minimal()
+```
+
+
+...
+
+
+- В тех случаях, когда это уместно (например для гистограм или графиков плотности), можно создавать дополнительные объекты информации. Например линию, которая покажет среднюю:
+
+```{r}
+# Найдём среднюю
+glucose_mean <- round(mean(pima$glucose),1)
+
+ggplot(data = pima, 
+       aes(x = glucose)) +
+  geom_density() +
+  geom_vline(aes(xintercept = glucose_mean)) +
+  annotate("text", 
+           x= glucose_mean+30, 
+           y=0.013, 
+           label=paste0("Mean=", glucose_mean))
+```
+
+
+
+
+...
+
+
+- Можно детально изменять тему. Например, настроить размер шрифтов, да и изменить сами названия осей или, например, перевернуть оси!
+
+```{r}
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch)) +
+  theme_minimal() +
+  ggtitle('Распределение уровня глюкозы относительно болеющих и не болеющих диабетом') + 
+  labs(y = 'Диабет-статус', x = 'Уровень глюкозы') +
+  theme( # Ниже идут настройки тем (их огромное количество, но мы меняем лишь две)
+    title = element_text(size = 12), # Задаем стандартный размер текста для любого элемента графика
+    axis.title.y = element_text(size=14) # Задаём размер для названия оси y отдельно + 
+    ) +
+  coord_flip() # Переворачиваем оси
+```
+
+
+*ЗАДАНИЕ*
+
+В чанке ниже напишите код для графика распределения числа беременностей в виде гистограммы. Выберете для неё любую [стандуртную тему](https://ggplot2.tidyverse.org/reference/ggtheme.html). Дайте осям графика названия.
+
+```{r}
+
+```
+
+
+...
+
+
+- Можно задавать цвет для графика. Можно использовать стандартные названия цветов на английском или вставлять специальный [код того или иного цвета ](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/hextable.png) в формате '#номер_кода'. Обратите внимание на разницу 'color' и 'fill':
+
+```{r}
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch), 
+               color = 'blue') +
+  theme_minimal() +
+  ggtitle('color = "blue"')
+
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch), 
+               fill = 'blue') +
+  theme_minimal() +
+  ggtitle('fill = "blue"')
+```
+
+
+...
+
+**Одна числовая и две категориальные переменные**
+
+- Но, с помощью закраски можно добавлять для отображения ещё одну переменную! Нужно лишь переместить fill|color в аэстэтики и дать им значение колонки.
+
+```{r}
+ggplot() +
+  geom_boxplot(data = pima, 
+               aes(x = glucose, y = diabetes_ch, fill = age_group)) +
+  theme_minimal()
+
+ggplot() +
+  geom_density(data = pima, 
+               aes(x = glucose, fill = age_group), 
+               alpha = 0.5 # Показатель альфа указывает насколько прозрачным должно быть отображение фигур. Измеряется от 0 до 1.
+               ) +
+  theme_minimal()
+```
+
+*ЗАДАНИЕ*
+
+В чанке ниже напишите код для двух графиков:
+
+1. Распределение возраста. Цвет графика выберете кодом из [палитры](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/hextable.png).
+
+2. Распределение значения инсулина в крови в виде гистограммы, которое будет цветом разбито на возрастные подгруппы.
+  подсказка: в данных в этом смысле будет некоторая проблема, подумайте, как её можно устранить
+
+```{r}
+
+```
+
+
+...
+
+
+## Распределение одной номинативной/текстовой переменной
+
+### Bar plot
+
+```{r}
+ggplot() +
+  geom_bar(data = pima, 
+           aes(x = age_group)) +
+  theme_minimal()
+```
+
+
+...
+
+**Две номинативные переменные**
+
+Если мы хотим сделать разбивку по другой номинативной переменной, также используем "fill", но с position="dodge"
+
+```{r}
+ggplot() +
+  geom_bar(data = pima, 
+           aes(x = age_group, fill = diabetes), 
+           position="dodge") +
+  theme_minimal()
+```
+
+*ЗАДАНИЕ*
+
+В чанке ниже создайте номинативную переменную была ли пациентка беремена хотя бы один раз или нет. После этого постройте bar plot в котором визуализируйте эту переменную, а также разбейте её на группы по переменной diabetes
+
+```{r}
+
+```
+
+
+...
+
+
+## Отношение двух числовых переменных
+
+
+### Scatter plot
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) + 
+    geom_point(size=3)
+```
+
+
+*ЗАДАНИЕ*
+
+Опираясь на [это](http://www.sthda.com/sthda/RDoc/images/points-symbols.png), добавьте в чанке ниже недостающий элемент "_" к графику.
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) + 
+    geom_point(size=3, shape = _)
+```
+
+
+...
+
+
+**Три численные переменные**
+
+*ЗАДАНИЕ*
+
+Добавьте отображение третьей численной переменной с помощью градиента цвета по колонке pressure. Для этого вам понадобится аргумент color.
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) + 
+    geom_point(size=3)
+```
+
+
+...
+
+
+**Две числовые и одна категориальная переменная**
+
+*ЗАДАНИЕ*
+
+В чанке ниже добавьте к предыдущему графику группировку по diabetes. Поэксперементируйте с группировкой не только по "color", но и по "shape", "alpha", "size".
+
+```{r}
+
+```
+
+
+...
+
+
+### Line plot
+
+Отношение одной переменной (обычно связанной со временем) к другой числовой переменной
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) +
+  geom_line( color="#69b3a2", alpha=0.9, linetype=2) +
+  theme_minimal()
+```
+
+Вышло не идеально. Тут надо либо вручную округлять по отрезкам (например каждые 10 единиц ИМТ), либо воспользоваться трендом (т.е. моделью линейной регрессии или lm). За это отвечает geom_smooth():
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) + 
+  geom_point() +
+  geom_smooth(method=lm, # Выбираем модель. Стандартно - линейная модель
+              # formula = y ~ poly(x, 3, raw=TRUE), # Формула. В данном случае приведён полином третьей степени. Поскольку в данных хорошая линейная связь - он не обязателен.
+              color="red", fullrange = T,
+              fill="#69b3a2", 
+              se=TRUE # Используем ли доверительные интервалы?
+              ) +
+  theme_minimal()
+```
+
+
+...
+
+
+**Две числовые и одна категориальная переменная**
+
+Но и здесь мы также можем усложнять график
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps, color = diabetes, fill = diabetes, group = diabetes)) + 
+  geom_point() +
+  geom_smooth(method=lm, 
+              # fullrange = T, # Протягивать ли линию от края до края или делать её только в границах значений, которые принимает переменная?
+              alpha = 0.2,
+              se=TRUE 
+              ) +
+  theme_minimal()
+```
+
+
+
+*ЗАДАНИЕ*
+
+В чанке ниже постройте свой график с регрессионной линией для отношений глюкозы и артериального давления. Сделайте группировку по возрастным группам. Измените размер линий.
+
+```{r}
+
+```
+
+
+...
+
+
+## Фасеты
+
+**Две числовые и одна категориальная переменная**
+
+Фасеты это разбивка графика по какой-то категориальной переменной на два или больше графиков (в зависимости от числа категорий в переменной). В результате на каждом графике отображается подвыборка какого-то значения категории. 
+
+```{r}
+pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps, color = diabetes, fill = diabetes, group = diabetes)) + 
+  geom_point() +
+  facet_grid(. ~ diabetes) +
+  theme_minimal()
+```
+
+
+## Расположение двух и более разных графиков вместе
+
+Используем функцию ggarrange() из пакета "ggpubr".
+
+Сохраним наш график по scatter plot и график по bar plot
+
+```{r}
+scatter <- pima %>% 
+  filter(mass != 0 & triceps != 0) %>% 
+  ggplot(aes(x=mass, y=triceps)) + 
+  geom_point(size=3) +
+  theme_minimal()
+
+bar <- ggplot() +
+  geom_bar(data = pima, 
+           aes(x = age_group)) +
+  theme_minimal()
+```
+
+Загрузим библиотеку и объединим графики:
+```{r}
+# install.packages('ggpubr')
+library(ggpubr)
+
+combine_plot <- ggarrange(scatter, bar,
+                          ncol = 2, nrow = 1) # Указываем формат расположения графиков в виде таблицы, где будет 2 ячейки (для графиков) по колонкам и 1 по строке
+combine_plot
+```
+
+
+
+*ЗАДАНИЕ*
+
+В чанке ниже постройте scatter plot уровня инсулина и глюкозы в крови. Разбейте его по возрастным группам. Сохраните. 
+Сделайте второй график density plot по возрасту пациентов. Сохраните.
+Объедините два графика и покажите результат.
+
+```{r}
+
+```
+
+
+
+# Сохранение графиков
+
+```{r}
+ggsave(
+  plot = combine_plot, # Какой объект хотим сохранить?
+  "combine_plot.png", # Название файла + указываем формат (можно указать другие популярные форматы)
+  width = 8.5, # Ширина картинки
+  height = 9, # Высота картинки
+  dpi = 1000) # Качество - dots per inch
+
+```
+
+
+
+
+
+...
+
+
+# Как выбираем тип графика?
+
+1. Хотим ли мы показать распределение одной перемнной или отношение нескольких?
+
+2. Какие дополнительные переменные структурно могут оказать влияние на те, что интересуют вас? Дополнительные переменные нужно задать через цвет если они числовые и через цвет, форму, размер и проч. если они категориальные. 
+
+3. Есть ли какая-то категориальная переменная, которая разбивает данные на осмысленные фасеты?
+
+...
+
+
+
+
+
+# Специфические типы графиков 
+
+
+## Геоданные
+
+Геоданные (и пространственный анализ вообще) - отдельная и большая область для работы. Для знакомства с ней приглашаю вам посмотреть лекцию и тетрадку по ссылкам [1](https://meetups.rintro.ru/p/14-may-2022-eu-spb-meetup/), [2](https://tsamsonov.github.io/r-geo-course/).
+
+Базово, что стоит помнить, существует три базовых формата геоданных:
+
+- POINT
+- LINESTRING
+- POLYGON
+
+```{r}
+library(maps)
+world <- map_data('world') # Датасет из ggplotw о странах мира и их границах. Это данные по полигонам.
+
+earthquakes <- quakes # Предустановленный датасет о точках извержения вулканов на Фиджи магнитудой больше 4 баллов с 1964 г. Это данные по точкам.
+
+# Обрежем данные только по Фиджи и её соседям
+fiji <- world[world$region %in% c("Fiji", "New Zealand", "Vanuatu", "Tonga"), ] 
+
+
+### Сделаем наложение одного на другое
+
+# Посмотрим как устроенны карты в первом приближении по точкам.
+ggplot() + 
+  geom_point(data = earthquakes, # Откуда мы берём данные для карты (здесь у нас точки)
+             aes(x=long, # Долгота
+                 y = lat, # Широта
+                 colour = mag)) + 
+  scale_colour_gradient(low = "#00AA00",high = "#FF00AA") + # Задаём цвета от которого и до которого должен идти градиент по магнитуде
+  ggtitle("Fiji earthquakes map ") +
+  theme(
+    legend.position = "bottom" # Легенда для карты помещена под неё
+  )
+
+
+# Добавим границы государств
+ggplot() + 
+  geom_map(data = fiji, 
+           map = fiji, # Откуда мы берём данные для карты (здесь у нас полигоны)
+           aes(x = long, # Долгота
+               y=lat, # Широта
+               group=group, # Как мы группируем строки в полигоны
+               map_id=region # Через что мы обращаемся к тому или иному полигону
+               ), 
+           fill="white", colour="#7f7f7f", size=0.5) +
+  geom_point(data = earthquakes, # Здесь у нас точки и все становится проще
+             aes(x=long, 
+                 y = lat, 
+                 colour = mag)) + 
+  scale_colour_gradient(low = "#00AA00",high = "#FF00AA") + # Задаём цвета от которого и до которого должен идти градиент по магнитуде
+  ggtitle("Fiji earthquakes map ") +
+  theme(
+    legend.position = "bottom" # Легенда для карты помещена под неё
+  )
+
+```
+
+Далее всё становится сложнее и стоит копать в пакеты sf и ggmap.
+
+...
+
+## Дэшборды для эксплораторного анализа
+
+```{r}
+# install.packages("GWalkR")
+library(GWalkR)
+
+gwalkr(pima)
+```
+
+
+...
+
+# Визуализация таблиц
+
+Вам часто нужно будет визуализировать не просто графики, но и таблицы. Разберём основные решения для этого, но сначала сделаем таблицу для виза:
+
+```{r}
+pima_tab <- pima %>% 
+  group_by(age_group) %>% 
+  summarise_if(is.numeric, mean, na.rm=T) %>% 
+  group_by(age_group) %>% # NB: Bad practice!
+  summarise_if(is.numeric, round, 1)
+```
+
+
+
+
+
+## Визуализация простых таблиц
+
+### formattable
+
+Одно из самых популярных решений - formattable
+
+```{r}
+# install.packages('formattable')
+library(formattable)
+
+formattable(pima_tab, 
+            align = c("l",rep("r", NCOL(pima_tab) - 1)), # Форматировать колонки, где "l" по левому краю, "r" - по правому, "c" - по центру
+            list(
+              `age_group` = formatter("span", style = ~ style(color = "grey", font.weight = "bold")),
+              `age` = color_bar("#71CA97")))
+```
+
+Больше деталей [здесь](https://www.r-bloggers.com/2018/11/make-beautiful-tables-with-the-formattable-package/)
+
+
+...
+
+
+### flextable
+
+Мини-дэшборды
+
+```{r}
+# install.packages("flextable")
+library(flextable)
+
+```
+
+
+Больше информации [здесь](https://ardata-fr.github.io/flextable-book/)
+
+
+
+...
+
+### gtExtras
+
+```{r}
+# install.packages("gtExtras")
+library(gtExtras)
+
+
+pima_tab %>%
+  gt::gt() %>%
+  gt_hulk_col_numeric(insulin)
+```
+
+Больше информации [здесь](https://jthomasmock.github.io/gtExtras/)
+
+
+
+...
+
+
+## Саммари для датасета
+
+### gtsummary
+
+```{r}
+# install.packages("gtsummary")
+library(gtsummary)
+
+pima %>% 
+  tbl_summary()
+
+```
+
+
+Больше информации [здесь](https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html)
+
+
+...
+
+
+
+## Регрессионные таблицы и оценка моделей
+
+На будущее... Когда пройдёте регрессии
+
+```{r}
+# Сделаем учебные модели
+mod1 <- lm(insulin ~ glucose + mass, pima)
+mod2 <- lm(insulin ~ glucose + age, pima)
+```
+
+...
+
+
+### stargazer
+
+```{r}
+# install.packages('stargazer')
+library(stargazer)
+
+stargazer(mod1, mod2, type = 'text')
+```
+Больше информации [здесь](https://rstudio-pubs-static.s3.amazonaws.com/940172_637b14deb86e4c4493a126e7416cd3da.html)
+
+
+...
+
+
+
+
+### modelsummary
+
+```{r}
+# install.packages('modelsummary')
+library(modelsummary)
+
+# Визуализируем
+modelsummary(
+  list(mod1, mod2))
+```
+
+Больше информации [здесь](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html)
+
+
+...
+
+
+В modelsummary можно также рисовать график сравнения регрессий.
+
+```{r}
+modelplot(
+  list(mod1, mod2))
+```
+
+Больше информации [здесь](https://vincentarelbundock.github.io/modelsummary/articles/modelplot.html)
+
+См. также аналогичную библиотеку [SjPlot](https://strengejacke.github.io/sjPlot/)
+
+...
+
+
+
+## Описание датасета (кодбук)
+
+```{r}
+# install.packages('summarytools')
+library(summarytools)
+
+view(dfSummary(pima, 
+               plain.ascii = FALSE, 
+               style = "grid"))
+```
+
+Больше информации [здесь](https://cran.r-project.org/web/packages/summarytools/vignettes/introduction.html)
+
+
+
+
+
+# Полезные ссылки
+
+* [Книга-гайд](http://www.cookbook-r.com/Graphs/) по ggplot;
+
+* [Мастицкий С.Э. - Визуализация данных с помощью ggplot2](https://dmkpress.com/catalog/computer/statistics/978-5-97060-470-0/)
+
+* [Балтыжакова Т. - Визуализируй это: визуализация данных в R](https://baltti.github.io/workshop-DH21/ggplot2-tutorial-DH.html) 
+
+* [Рассказ](https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/) про фирменные палетки (сочетания цветов для графиков) R;
+
+* [Ресурс](https://coolors.co/0d3b66-faf0ca-f4d35e-ee964b-f95738), где можно собрать свою палетку;
+
+
+
+
+

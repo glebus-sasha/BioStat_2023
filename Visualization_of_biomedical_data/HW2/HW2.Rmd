@@ -1,0 +1,131 @@
+---
+title: "HW2"
+author: "Glebus Alexandr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+
+## 1. Загрузите датасет life_expectancy_data.RDS (лежит в папке домашнего задания).Это данные с основными показателями, через которые высчитывается ожидаемая продолжительности жизни по метрике World Development Indicator на уровне стран2. В данных оставлены строки, относящиеся к положению женщин в 2019 г.
+
+```{r}
+life_expectancy_data <- readr::read_rds('life_expectancy_data.RDS')
+life_expectancy_data %>% glimpse()
+life_expectancy_data %>% summary()
+```
+
+
+```{r, fig.width = 5, fig.height=5}
+library(plotly)
+plot_ly(data = life_expectancy_data[(life_expectancy_data$`Rural population` != 0) & (life_expectancy_data$`Sucide Rate` != 0),],
+        x = ~ `Rural population`,
+        y = ~ `Sucide Rate`,
+        color = ~ continent)
+```
+
+
+## 2. Проведите тест, на сравнение распределений колонки `Life expectancy` между группами стран Африки и Америки. Вид статистического теста определите самостоятельно. Визуализируйте результат через библиотеку `rstatix`.
+
+Проведем тест Колмогорова-Смирнова.
+
+```{r, fig.width = 5, fig.height=5}
+library(rstatix)
+library(ggpubr)
+africa_data <- life_expectancy_data %>% 
+  filter(continent == 'Africa')
+americas_data <- life_expectancy_data %>% 
+  filter(continent == 'Americas')
+ks_test_result <- ks.test(africa_data$`Life expectancy`, americas_data$`Life expectancy`)
+
+ggboxplot(data = rbind(africa_data, americas_data), x = "continent", y = "Life expectancy",
+          title = "Comparison of Life Expectancy Distributions",
+          ylab = "Life Expectancy",
+          color = "continent") +
+  stat_compare_means(label = "p.format") +
+  theme_pubr()
+```
+
+## 4. Сделайте новый датафрейм, в котором оставите все численные колонки кроме `Year`. Сделайте корреляционный анализ этих данных. Постройте два любых типа графиков для визуализации корреляций.
+
+
+```{r}
+LED_numeric <- life_expectancy_data %>% 
+  select_if(is.numeric) %>% 
+  select(-Year)
+```
+
+```{r, fig.width = 10, fig.height=10}
+
+library(corrplot)
+LED_numeric_cor <- cor(LED_numeric)
+corrplot(LED_numeric_cor, method = 'color', tl.cex = 0.8, tl.col = "blue", tl.srt = 45, order = 'AOE')
+```
+```{r}
+library(corrr)
+rplot(LED_numeric_cor) 
+  
+```
+
+## 5. Постройте иерархическую кластеризацию на этом датафрейме.
+
+```{r, fig.width = 5, fig.height=5}
+library(factoextra)
+LED_numeric_scaled <- scale(LED_numeric)
+distance_matrix <- dist(LED_numeric_scaled)
+
+hc <- hclust(distance_matrix, method = "ward.D2")
+
+fviz_dend(hc, cex = 0.5, k = 5, k_colors = "jco", type = "circular")
+```
+
+## 6. Сделайте одновременный график heatmap и иерархической кластеризации. Содержательно интерпретируйте результат.
+```{r, fig.width = 7, fig.height=7}
+library(pheatmap)
+pheatmap(LED_numeric_scaled, 
+         show_rownames = FALSE, 
+         clustering_distance_rows = distance_matrix,
+         clustering_method = "ward.D2", 
+         cutree_rows = 5,
+         cutree_cols = length(colnames(LED_numeric_scaled)),
+         angle_col = 45, 
+         main = "Dendrograms for clustering rows and columns with heatmap")
+```
+
+## 7. Проведите PCA анализ на этих данных. Проинтерпретируйте результат.
+
+```{r}
+library(FactoMineR)
+LED_numeric.pca <- prcomp(LED_numeric, 
+                        scale = T)
+summary(LED_numeric.pca)
+```
+
+## 8. Постройте biplot график для PCA. Раскрасьте его по значениям континентов. Переведите его в `plotly`. Желательно, чтобы при наведении на точку, вы могли видеть название страны.
+
+
+```{r}
+library(ggbiplot)
+fig <- ggbiplot(LED_numeric.pca, 
+         scale=0, alpha = 0.1) + 
+  theme_minimal()
+```
+
+```{r}
+library(plotly)
+ggplotly(fig)
+```
+
+## 9. Дайте содержательную интерпретацию PCA анализу.
+
+DPT Immunization, HepB3 Immunization, Measles Immunization исходя из графика целесообразно объединить в одну компоненту - Immunization.
+Life expectancy, Basic sanitation services, Clean fuels and cooking technologies - тоже сильно коррелируют.
+
+
